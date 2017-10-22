@@ -1,0 +1,15 @@
+POST http://localhost:4300/circle
+Content-Type: application/json
+
+{
+  "name": "First circle",
+  "description": "A group of people"
+}
+
+###
+
+GET http://localhost:4300/circle
+
+###
+
+GET http://localhost:4300
