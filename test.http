@@ -1,15 +1,61 @@
-POST http://localhost:4300/circle
+POST http://localhost:4300/circles/
 Content-Type: application/json
 
 {
   "name": "First circle",
+  "handle": "first",
   "description": "A group of people"
 }
 
 ###
+DELETE http://localhost:4300/users/59ed566b067dbd33c0f58cae
+Content-Type: application/json
 
-GET http://localhost:4300/circle
+{
+  "updatedAt": "2017-10-23T10:39:24.323Z",
+  "createdAt": "2017-10-23T02:39:39.501Z",
+  "email_address": "derin@gmail.com",
+  "username": "aderinola",
+  "first_name": "derin",
+  "password": "derin",
+  "circles": [],
+  "admin_circles": [],
+  "answerered_polls": [],
+  "starred_polls": []
+}
+
 
 ###
 
-GET http://localhost:4300
+POST http://localhost:4300/polls
+Content-Type: application/json
+
+{
+  "question": "Who is best most attractive",
+  "comment": "No comment o",
+  "options": [
+    { "option": "Ekene", "votes": 0 },
+    { "option": "Alex", "votes": 0 },
+    { "option": "Segbee", "votes": 0 },
+    { "option": "Derin", "votes": 0 }
+  ]
+}
+
+
+###
+
+GET http://localhost:4300/circles/
+
+###
+
+GET http://localhost:4300/polls/
+
+###
+
+GET http://localhost:4300/users
+
+###
+
+//ADD ADMIN
+
+POST http://localhost:4300/circles/59ed621dcef7d5360080f098/fellow/59ed55f2067dbd33c0f58cab

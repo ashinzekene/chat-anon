@@ -9,14 +9,56 @@ function hash(whatToHash) {
   return bcrypt.hashSync(whatToHash, salt);
 }
 
-function isValidInput(...input) {
-  return input.every(elem => typeof elem === 'string' && elem.length > 30);
+function allowAdminPoll(err) {
+  return (req, res, next) => {
+    if (!req.user.admin_circles.some(circle => circle === req.poll.circle)) {
+      const result = err || 'You cannot modify this poll, you are not an admin';
+      res.status(401).json(result);
+      return;
+    }
+    next();
+  };
+}
+
+function allowFellowPoll(err) {
+  return (req, res, next) => {
+    if (!req.user.circles.some(circle => circle === req.poll.circle) === -1) {
+      const result = err || 'You cannot access this poll, you are not a fellow';
+      res.status(401).json(result);
+      return;
+    }
+    next();
+  };
+}
+
+
+function allowAdminCircle() {
+  return (req, res, next) => {
+    if (!req.fellow.admin_circles.some(circle => circle === req.circle._id) === -1) {
+      res.status(401).json('You cannot modify this circle, you are not an admin');
+      return;
+    }
+    next();
+  };
+}
+
+function allowFellowCircle() {
+  return (req, res, next) => {
+    if (!req.fellow.circles.some(circle => circle === req.circle._id) === -1) {
+      res.status(401).json('You cannot access this circle, you are not a fellow');
+      return;
+    }
+    next();
+  };
 }
 
 module.exports = {
   SALT_FACTOR,
   hash,
   bcrypt,
-  isValidInput,
   isProduction,
+  allowFellowPoll,
+  allowAdminPoll,
+  allowFellowCircle,
+  allowAdminCircle,
 };

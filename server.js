@@ -11,7 +11,7 @@ require('./utils/mongoose');
 const port = 4300 || process.env.PORT;
 const app = express();
 
-if (isProduction) {
+if (!isProduction) {
   app.use(morgan('dev'));
 }
 
