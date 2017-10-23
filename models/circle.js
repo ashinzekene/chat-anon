@@ -79,6 +79,19 @@ circleSchema.methods.removeFellow = function (user) {
 };
 
 
+circleSchema.methods.addPoll = function (user) {
+  if (this.polls.findIndex(id => `${id}` === `${user}`) === -1) {
+    this.polls.push(user);
+  }
+  return this.save();
+};
+
+circleSchema.methods.removePoll = function (user) {
+  this.polls.remove(user);
+  return this.save();
+};
+
+
 const Circle = mongoose.model('Circle', circleSchema);
 
 module.exports = Circle;

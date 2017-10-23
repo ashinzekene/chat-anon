@@ -1,5 +1,6 @@
 POST http://localhost:4300/circles/
 Content-Type: application/json
+AuthID:
 
 {
   "name": "First circle",
@@ -8,8 +9,9 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:4300/users/59ed566b067dbd33c0f58cae
+POST http://localhost:4300/users
 Content-Type: application/json
+AuthID:
 
 {
   "updatedAt": "2017-10-23T10:39:24.323Z",
@@ -29,10 +31,12 @@ Content-Type: application/json
 
 POST http://localhost:4300/polls
 Content-Type: application/json
+AuthID:
 
 {
   "question": "Who is best most attractive",
   "comment": "No comment o",
+  "circle": "59ed621dcef7d5360080f098",
   "options": [
     { "option": "Ekene", "votes": 0 },
     { "option": "Alex", "votes": 0 },
@@ -44,11 +48,11 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4300/circles/
+GET http://localhost:4300/circles
 
 ###
 
-GET http://localhost:4300/polls/
+GET http://localhost:4300/polls/all
 
 ###
 
@@ -58,4 +62,5 @@ GET http://localhost:4300/users
 
 //ADD ADMIN
 
-POST http://localhost:4300/circles/59ed621dcef7d5360080f098/fellow/59ed55f2067dbd33c0f58cab
+POST http://localhost:4300/polls/59eddfc448a5e32c04d0c854/vote/59eddfc448a5e32c04d0c858
+AuthID: 

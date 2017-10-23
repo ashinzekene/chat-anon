@@ -15,6 +15,7 @@ const pollSchema = new Schema({
   circle: {
     type: Schema.Types.ObjectId,
     ref: 'Circle',
+    required: true,
   },
   options: [optionSchema],
 }, { timestamps: true });
@@ -23,18 +24,32 @@ pollSchema.virtual('isAppropriate').get(function () {
   return this.appropriate.length > this.in_appropriate.length;
 });
 
+pollSchema.query.forCircle = function (circle) {
+  return this.find({ circle });
+};
+
 pollSchema.methods.markAppropriate = function (user) {
   if (!this.appropriate.some(id => id === user)) {
     this.appropriate.push(user);
   }
-  this.save();
+  return this.save();
 };
 
 pollSchema.methods.markInAppropriate = function (user) {
   if (!this.appropriate.some(id => id === user)) {
     this.appropriate.push(user);
   }
-  this.save();
+  return this.save();
+};
+
+pollSchema.methods.vote = function (option) {
+  this.options.map((options) => {
+    if (`${options._id}` === `${option}`) {
+      options.votes += 1;
+    }
+    return options;
+  });
+  return this.save();
 };
 
 module.exports = mongoose.model('Poll', pollSchema);
