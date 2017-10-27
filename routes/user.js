@@ -31,7 +31,7 @@ router.route('/:user')
     User.findByIdAndUpdate(req.params.user, { $set: req.body }, (err, user) => {
       if (err) {
         console.log(err);
-        return res.status(501).json('Could not update user');
+        return res.status(500).json('Could not update user');
       }
       if (!user) {
         console.log(err);

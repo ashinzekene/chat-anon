@@ -1,0 +1,2 @@
+- Remove the schema methods and do them on the routers
+  - use $addToSet **OR** a query (reusable) helper function

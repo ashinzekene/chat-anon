@@ -1,66 +1,57 @@
 POST http://localhost:4300/circles/
 Content-Type: application/json
-AuthID:
+AuthID: 59f375c40f8507376c6b63e3
 
 {
-  "name": "First circle",
-  "handle": "first",
-  "description": "A group of people"
+  "name": "DEV circle",
+  "handle": "dev",
+  "description": "DEV 2018"
 }
-
 ###
 POST http://localhost:4300/users
 Content-Type: application/json
-AuthID:
 
 {
-  "updatedAt": "2017-10-23T10:39:24.323Z",
-  "createdAt": "2017-10-23T02:39:39.501Z",
-  "email_address": "derin@gmail.com",
-  "username": "aderinola",
-  "first_name": "derin",
-  "password": "derin",
-  "circles": [],
-  "admin_circles": [],
-  "answerered_polls": [],
-  "starred_polls": []
+  "email_address": "segebee@gmail.com",
+  "username": "segebee",
+  "first_name": "segebee",
+  "password": "segebee"
 }
 
-
+###
+GET http://localhost:4300/circles/all
+authid: 59f1782b568e4c18cc22a695
+###
+GET http://localhost:4300/polls/all
+authid: 59f375c40f8507376c6b63e3
+###
+GET http://localhost:4300/users
 ###
 
-POST http://localhost:4300/polls
+POST http://localhost:4300/polls/
 Content-Type: application/json
-AuthID:
+AuthID: 59f375c40f8507376c6b63e3
 
 {
-  "question": "Who is best most attractive",
-  "comment": "No comment o",
-  "circle": "59ed621dcef7d5360080f098",
+  "question": "Who is the best JS framwork",
+  "comment": "Let's know what it is",
+  "circle": "59f37eb657ba4e1dec3e13c0",
   "options": [
-    { "option": "Ekene", "votes": 0 },
-    { "option": "Alex", "votes": 0 },
-    { "option": "Segbee", "votes": 0 },
-    { "option": "Derin", "votes": 0 }
+    {
+      "option": "Angular",
+      "votes":0
+    },
+    {
+      "option": "React",
+      "votes":0
+    },
+    {
+      "option": "Vue",
+      "votes":0
+    },
+    {
+      "option": "Ember",
+      "votes":0
+    }
   ]
 }
-
-
-###
-
-GET http://localhost:4300/circles
-
-###
-
-GET http://localhost:4300/polls/all
-
-###
-
-GET http://localhost:4300/users
-
-###
-
-//ADD ADMIN
-
-POST http://localhost:4300/polls/59eddfc448a5e32c04d0c854/vote/59eddfc448a5e32c04d0c858
-AuthID: 

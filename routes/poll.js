@@ -1,44 +1,23 @@
 const express = require('express');
 const Polls = require('../models/poll');
-// const Circles = require('../models/circle');
+const Circles = require('../models/circle');
 const Users = require('../models/user');
-
-function getEditor() {
-  return (req, res, next) => {
-    const id = req.headers.authid;
-    if (id) {
-      console.log(req.headers);
-      Users.findById(id, (err, user) => {
-        req.editor = user;
-      });
-    }
-    next();
-  };
-}
+const {
+  adminPoll, fellowPoll, hasNotVoted, auth,
+} = require('./middlewares');
 
 const router = express.Router();
 
-// Verifies if user is an fellow
-function isFellow() {
-  return (req, res, next) => {
-    if (req.editor && req.editor.circles.some(circle => `${circle}` === `${req.poll.circle}`)) {
-      return next();
-    }
-    return res.status(401).json({ err: 'You do not have access to this poll' });
+function handleError(res, err = 'An error occurred') {
+  return (error) => {
+    console.log(error);
+    return res.status(403).json({ err });
   };
 }
 
-// Verifies if user is an admin
-function isAdmin() {
-  return (req, res, next) => {
-    if (req.editor && req.editor.admin_circles.some(circle => `${circle}` === `${req.poll.circle}`)) {
-      return next();
-    }
-    return res.status(401).json({ err: 'You can not modify polls' });
-  };
-}
+// ensure anyone accessing these routes is authenticated
+router.use(auth.required());
 
-router.use('*', getEditor());
 // Get the poll in params
 router.param('poll', (req, res, next, id) => {
   Polls.findById(id, (err, poll) => {
@@ -59,49 +38,48 @@ router.param('user', (req, res, next, id) => {
 
 // Get the circle in params
 router.param('circle', (req, res, next, id) => {
-  Users.findById(id, (err, circle) => {
+  Circles.findById(id, (err, circle) => {
     if (err) return res.status(404).json({ err: 'Circle not found' });
     req.circle = circle;
     return next();
   });
 });
 
-
-router.route('/')
+router
+  .route('/')
+  .get((req, res) => {
+    // GETTING A FELLOWS POLLS
+    Polls.find()
+      .where('circle')
+      .in(req.payload.circles)
+      .exec()
+      .then(res.json)
+      .catch(handleError(res));
+  })
   .post((req, res) => {
-    // Create a new poll if editor is an admin
-    if (req.editor.admin_circles.some(req.body.circle)) {
-      res.status(401).json({ err: 'You cannot create a poll. You are not an admin' });
-      return;
-    }
-    Polls.create(req.body, (err, poll) => {
-      if (err) {
-        console.log(err);
-        return res.status(404).json({ err: 'Could not create poll' });
-      }
-      return res.json({ poll });
-    });
+    // CREATING A NEW POLL
+    req.body.creator = req.payload._id;
+    Polls.create(req.body)
+      .then(poll => req.payload.createPoll(poll._id))
+      .then(res.json)
+      .catch(handleError(res));
   });
 
-router.route('/all')
+router
+  .route('/all')
   // Get all poll TEMPORARY *******************
   .get((req, res) => {
-    Polls.find((err, polls) => {
-      if (err) {
-        console.log(err);
-        res.status(500).json({ err: 'Could not load polls' });
-      }
-      return res.json(polls);
-    });
+    Polls.find({})
+      .then(polls => res.json(polls))
+      .catch(handleError(res, 'Could not fetch all polls'));
   });
 
-router.route('/:poll')
-  // Get a poll, restrict to fellows
-  .get(isFellow(), (req, res) => {
-    res.json(req.poll);
-  })
-  // Edit a poll, restrict to admins
-  .post(isAdmin(), (req, res) => {
+router
+  .route('/:poll')
+  // GETTING A POLL
+  .get(fellowPoll(), (req, res) => res.json(req.poll))
+  .post(adminPoll(), (req, res) => {
+    // EDITING A POLL
     const newPoll = Object.assign({}, req.poll, req.body);
     Polls.findByIdAndUpdate(req.poll._id, { $set: newPoll }, (err, poll) => {
       if (err) {
@@ -111,8 +89,8 @@ router.route('/:poll')
       return res.json(poll);
     });
   })
-  // Delete a poll, restrict to admins
-  .delete(isAdmin(), (req, res) => {
+  .delete((req, res) => {
+    // DELETING A POLL
     Polls.findByIdAndRemove(req.poll._id, (err, poll) => {
       if (err) {
         console.log(err);
@@ -122,19 +100,24 @@ router.route('/:poll')
     });
   });
 
-router.route('/:poll/vote/:option')
-  // Vote in a poll, restrict to admin
-  .post(isFellow(), (req, res) => {
+router.post('/:poll/appropriate', fellowPoll(), (req, res) => {
+  Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.payload._id } })
+    .then(poll => res.json(poll))
+    .catch(handleError(res));
+});
+
+router.post('/:poll/inappropriate', fellowPoll(), (req, res) => {
+  Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { in_appropriate: req.payload._id } })
+    .then(poll => res.json(poll))
+    .catch(handleError(res));
+});
+
+router
+  .route('/:poll/vote/:option')
+  // VOTE IN A POLL
+  .post(fellowPoll(), hasNotVoted(), (req, res) => {
     req.poll.vote(req.params.option);
     res.json(req.poll);
-  });
-
-router.route('/circle/:circle')
-  // Get polls for a circle. TEMPORARY ************
-  .get((req, res) => {
-    Polls.find().forCircle(req.params.circle).exec((err, polls) => {
-      res.json(polls);
-    });
   });
 
 module.exports = router;

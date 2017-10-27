@@ -10,8 +10,20 @@ const optionSchema = new Schema({
 const pollSchema = new Schema({
   question: String,
   comment: String,
-  appropriate: Number,
-  in_appropriate: Number,
+  stars: Number,
+  appropriate: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  in_appropriate: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   circle: {
     type: Schema.Types.ObjectId,
     ref: 'Circle',
@@ -29,7 +41,7 @@ pollSchema.query.forCircle = function (circle) {
 };
 
 pollSchema.methods.markAppropriate = function (user) {
-  if (!this.appropriate.some(id => id === user)) {
+  if (this.appropriate.some(id => id === user)) {
     this.appropriate.push(user);
   }
   return this.save();
@@ -52,4 +64,10 @@ pollSchema.methods.vote = function (option) {
   return this.save();
 };
 
-module.exports = mongoose.model('Poll', pollSchema);
+pollSchema.methods.forUser = function (user) {
+  return Object.assign({}, this, { hasVoted: user.hasVoted() }, { starred: user.hasStarred() }, { created: user.createdByMe() });
+};
+
+const Poll = mongoose.model('Poll', pollSchema);
+
+module.exports = Poll;

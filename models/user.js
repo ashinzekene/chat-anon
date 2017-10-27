@@ -16,40 +16,76 @@ const userSchema = new Schema({
   },
   starred_polls: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Poll',
   }],
-  answered_polls: [{
+  voted_polls: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Poll',
+  }],
+  created_polls: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Poll',
+  }],
+  invitee_circles: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Circle',
   }],
   admin_circles: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Circle',
   }],
   circles: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Circle',
   }],
 }, { timestamps: true });
 
-userSchema.methods.answeredPoll = function (poll) {
-  if (this.answered_polls.findIndex(id => `${id}` === `${poll}`) === -1) {
-    this.answered_polls.push(poll);
+
+userSchema.methods.createdByMe = function (poll) {
+  return this.created_polls.some(id => `${id}` === `${poll}`);
+};
+
+userSchema.methods.isAdmin = function (circle) {
+  return this.admin_circles.some(id => `${id}` === `${circle}`);
+};
+
+userSchema.methods.isFellow = function (circle) {
+  return this.circles.some(id => `${id}` === `${circle}`);
+};
+
+userSchema.methods.hasStarred = function (poll) {
+  return this.voted_polls.some(id => `${id}` === `${poll}`);
+};
+
+userSchema.methods.hasVoted = function (poll) {
+  return this.voted_polls.some(id => `${id}` === `${poll}`);
+};
+
+userSchema.methods.vote = function (poll) {
+  if (!this.voted_polls.some(id => `${id}` === `${poll}`)) {
+    this.voted_polls.push(poll);
   }
+  return this.save();
+};
+
+userSchema.methods.createPoll = function (poll) {
+  if (!this.created_polls.some(id => `${id}` === `${poll}`)) {
+    this.created_polls.push(poll);
+  }
+  return this.save();
+};
+
+userSchema.methods.uncreatePoll = function (poll) {
+  this.created_polls.remove(poll);
   return this.save();
 };
 
 userSchema.methods.starPoll = function (poll) {
-  if (this.starred_polls.findIndex(id => `${id}` === `${poll}`) === -1) {
+  if (!this.starred_polls.some(id => `${id}` === `${poll}`)) {
     this.starred_polls.push(poll);
   }
   return this.save();
 };
-
 
 userSchema.methods.unStarPoll = function (poll) {
   this.starred_polls.remove(poll);
@@ -57,7 +93,7 @@ userSchema.methods.unStarPoll = function (poll) {
 };
 
 userSchema.methods.addToFellow = function (circle) {
-  if (this.circles.findIndex(id => `${id}` === `${circle}`) === -1) {
+  if (!this.circles.some(id => `${id}` === `${circle}`)) {
     this.circles.push(circle);
   }
   return this.save();
@@ -70,7 +106,7 @@ userSchema.methods.removeFromFellow = function (circle) {
 };
 
 userSchema.methods.addToAdmin = function (circle) {
-  if (this.admin_circles.findIndex(id => `${id}` === `${circle}`) === -1) {
+  if (!this.admin_circles.some(id => `${id}` === `${circle}`)) {
     this.admin_circles.push(circle);
   }
   return this.save();
@@ -81,4 +117,26 @@ userSchema.methods.removeFromAdmin = function (circle) {
   return this.save();
 };
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.methods.addToInvitee = function (circle) {
+  if (!this.invitee_circles.some(id => `${id}` === `${circle}`)) {
+    this.invitee_circles.push(circle);
+  }
+  return this.save();
+};
+
+userSchema.methods.removeFromInvitee = function (circle) {
+  this.invitee_circles.remove(circle);
+  return this.save();
+};
+
+userSchema.statics.addToAdmin = function(user_id, circle_id, cb) {
+  return this.findByIdAndUpdate(user_id, { $addToSet : { admins_circles: circle_id, circles: circle_id } }, cb)
+}
+
+userSchema.statics.addToFellow = function(user_id, circle_id, cb) {
+  return this.findByIdAndUpdate(user_id, { $addToSet : { circles: circle_id } }, cb)
+}
+
+User = mongoose.model('User', userSchema);
+
+module.exports = User

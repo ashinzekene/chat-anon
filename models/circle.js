@@ -6,27 +6,28 @@ const circleSchema = new Schema({
   name: String,
   handle: {
     type: String,
-    unique: true,
+    required: true,
+    unique: true
   },
   description: String,
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   fellows: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'User',
   }],
   invitees: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'User',
   }],
   admins: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'User',
   }],
   polls: [{
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Poll',
   }],
 }, { timestamps: true });
@@ -38,6 +39,10 @@ circleSchema.methods.isAdmin = function (user) {
 
 circleSchema.methods.isFellow = function (user) {
   return this.fellows.findIndex(id => `${id}` === `${user}`) > -1;
+};
+
+circleSchema.methods.isInvitee = function (user) {
+  return this.invitees.findIndex(id => `${id}` === `${user}`) > -1;
 };
 
 circleSchema.methods.addInvitee = function (user) {
@@ -91,7 +96,15 @@ circleSchema.methods.removePoll = function (user) {
   return this.save();
 };
 
+circleSchema.statics.addFellow = function(circle_id, fellow_id, cb) {
+  this.findByIdAndUpdate(circle_id, { $addToSet: { fellows: fellow_id } }, cb)
+}
+
+circleSchema.statics.addAdmin = function(circle_id, admin_id, cb) {
+  this.findByIdAndUpdate(circle_id, { $addToSet: { fellows: admin_id, admins: admin_id } }, cb)
+}
 
 const Circle = mongoose.model('Circle', circleSchema);
 
 module.exports = Circle;
+
