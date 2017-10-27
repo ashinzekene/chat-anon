@@ -129,14 +129,14 @@ userSchema.methods.removeFromInvitee = function (circle) {
   return this.save();
 };
 
-userSchema.statics.addToAdmin = function(user_id, circle_id, cb) {
-  return this.findByIdAndUpdate(user_id, { $addToSet : { admins_circles: circle_id, circles: circle_id } }, cb)
-}
+userSchema.statics.addToAdmin = function (userID, circleID, cb) {
+  return this.findByIdAndUpdate(userID, { $addToSet: { admins_circles: circleID, circles: circleID } }, cb);
+};
 
-userSchema.statics.addToFellow = function(user_id, circle_id, cb) {
-  return this.findByIdAndUpdate(user_id, { $addToSet : { circles: circle_id } }, cb)
-}
+userSchema.statics.addToFellow = function (userID, circleID, cb) {
+  return this.findByIdAndUpdate(userID, { $addToSet: { circles: circleID } }, cb);
+};
 
-User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = User
+module.exports = User;
