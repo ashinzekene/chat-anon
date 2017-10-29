@@ -53,7 +53,7 @@ router
       .where('circle')
       .in(req.payload.circles)
       .exec()
-      .then(res.json)
+      .then(polls => res.json(polls))
       .catch(handleError(res));
   })
   .post((req, res) => {
@@ -61,7 +61,7 @@ router
     req.body.creator = req.payload._id;
     Polls.create(req.body)
       .then(poll => req.payload.createPoll(poll._id))
-      .then(res.json)
+      .then(poll => res.json(poll))
       .catch(handleError(res));
   });
 

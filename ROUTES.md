@@ -8,7 +8,6 @@
 - GET /:poll_id - GET A POLL - FELLOWS
 - POST /:poll_id - EDIT A POLL - ADMINS | CREATOR
 - DELETE /:poll_id - DELETE A POLL - ADMINS | `CREATOR`
-
 - POST /:poll_id/vote/:option\_id VOTE IN A POLL - FELLOWS
 
 ## CIRCLE ROUTES
@@ -38,5 +37,4 @@ POST / - CREATE A NEW USER
 GET /:user_id - GET A USER
 POST /:user_id - EDIT A USER | SAME USER
 
-STAR
-UNSTAR
+POST /:user/star/:poll - STAR OR UNSTAR A POLL

@@ -1,0 +1,15 @@
+/* eslint-disable */
+
+import {
+  CIRCLE_PAGE_LOADED,
+  CIRCLE_PAGE_UNLOADED,
+  CIRCLE_REQUEST_SENT,
+  CIRCLE_FELLOW_ADDED,
+  CIRCLE_FELLOW_REMOVED,
+  CIRCLE_ADMIN_ADDED,
+  CIRCLE_ADMIN_REMOVED,
+  CIRCLE_USERS_PAGE_LOADED,
+  CIRCLE_USERS_PAGE_UNLOADED
+} from '../actions/actionTypes';
+
+export default (state = [], action) => {}
