@@ -58,9 +58,8 @@ router
       Users.findByIdAndUpdate(req.payload._id, {
         $addToSet: { admin_circles: circle._id, circles: circle._id },
       })
-        .then(newCircle => res.json(newCircle))
-        .catch(handleError(res, 'This circle probably already exists'));
-    });
+        .then(user => res.json(circle));
+    }).catch(handleError(res, 'This circle probably already exists'));
   });
 
 router.get('/all', (req, res) => {
@@ -128,7 +127,7 @@ router.route('/:circle/fellows').get((req, res) => {
 });
 
 router
-  .route('/:circle/:fellow')
+  .route('/:circle/invitee/:fellow')
   .all(adminCircle)
   .post((req, res) => {
     // ADDING TO A CIRCLE INVITEE

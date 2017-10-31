@@ -1,6 +1,6 @@
 POST http://localhost:4300/circles/
 Content-Type: application/json
-AuthID: 59f375c40f8507376c6b63e3
+AuthID: 59f8b3c975a3750d1805f8e6
 
 {
   "name": "DEV circle",
@@ -19,18 +19,18 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4300/circles/all
-authid: 59f1782b568e4c18cc22a695
+GET http://localhost:4300/circles/59f37eb657ba4e1dec3e13c0
+authid: 59f8b3c975a3750d1805f8e6
 ###
 GET http://localhost:4300/polls/all
-authid: 59f375c40f8507376c6b63e3
+authid: 59f8b3c975a3750d1805f8e6
 ###
 GET http://localhost:4300/users/
 ###
 
 POST http://localhost:4300/polls/
 Content-Type: application/json
-AuthID: 59f375c40f8507376c6b63e3
+AuthID: 59f8b3c975a3750d1805f8e6
 
 {
   "question": "Who is the best JS framwork",
