@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_ROOT = 'localhost:3200/';
+const API_ROOT = 'http://localhost:3200/';
 
 let token = null;
 axios.defaults.baseURL = API_ROOT;

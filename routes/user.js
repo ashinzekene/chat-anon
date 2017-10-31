@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const Polls = require('../models/poll');
-const { fellowPoll } = require('./middlewares');
+const { fellowPoll, auth } = require('./middlewares');
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ function handleError(res, err = 'An error occurred') {
 }
 
 router.route('/')
-  .get((req, res) => res.json(req.payload))
+  .get(auth.required(), (req, res) => res.json(req.payload))
   .put((req, res) => {
     User.findByIdAndUpdate(req.params.user, { $set: req.body }, (err, user) => {
       if (err) {
@@ -22,7 +22,7 @@ router.route('/')
       }
       if (!user) {
         console.log(err);
-        return res.status(401).json('User not found');
+        return res.status(404).json('User not found');
       }
       return res.json(user);
     });

@@ -25,9 +25,7 @@ authid: 59f1782b568e4c18cc22a695
 GET http://localhost:4300/polls/all
 authid: 59f375c40f8507376c6b63e3
 ###
-GET http://localhost:4300/users/59f375c40f8507376c6b63e3
-AuthID: 59f375c40f8507376c6b63e3
-
+GET http://localhost:4300/users/
 ###
 
 POST http://localhost:4300/polls/

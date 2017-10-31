@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(port, (err) => {
+module.exports = app.listen(port, (err) => {
   if (err) {
     console.log(err);
   }
