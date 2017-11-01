@@ -3,8 +3,8 @@ Content-Type: application/json
 AuthID: 59f8b3c975a3750d1805f8e6
 
 {
-  "name": "DEV circle",
-  "handle": "dev",
+  "name": "Beulah Slaves",
+  "handle": "baefulah1",
   "description": "DEV 2018"
 }
 ###
@@ -12,20 +12,21 @@ POST http://localhost:4300/users
 Content-Type: application/json
 
 {
-  "email_address": "segebee@gmail.com",
-  "username": "segebee",
-  "first_name": "segebee",
-  "password": "segebee"
+  "email_address": "ekene@gmail.com",
+  "username": "ekene",
+  "first_name": "ekene",
+  "password": "ekene"
 }
 
 ###
-GET http://localhost:4300/circles/59f37eb657ba4e1dec3e13c0
+GET http://localhost:4300/circles/59f8baf87840c33464a1a109/fellows
 authid: 59f8b3c975a3750d1805f8e6
 ###
 GET http://localhost:4300/polls/all
 authid: 59f8b3c975a3750d1805f8e6
 ###
 GET http://localhost:4300/users/
+authid: 59f8b3c975a3750d1805f8e6
 ###
 
 POST http://localhost:4300/polls/
