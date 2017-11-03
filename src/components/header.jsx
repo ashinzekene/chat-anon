@@ -12,7 +12,7 @@ Header.propTypes = {
 }
 
 const style = {
-  "text-align": "center",
+  "textAlign": "center",
   "padding": "20px 10px",
 }
 
