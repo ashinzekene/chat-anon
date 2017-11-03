@@ -1,9 +1,9 @@
-import { 
+import {
   // POLL_FAVORITED,
   // POLL_UNFAVORITED,
   POLL_PAGE_LOADED,
   POLL_PAGE_UNLOADED,
-  POLL_VOTED
+  POLL_VOTED,
 } from '../actions/pollActions';
 
 export default (state = {}, action) => {
@@ -15,13 +15,13 @@ export default (state = {}, action) => {
       return {};
     }
     case POLL_VOTED: {
-      return Object.assign({}, state, state.options.map(option => {
-        option.name === action.payload.name ? option.votes++ : null;
+      return Object.assign({}, state, state.options.map((option) => {
+        option.votes += option.name === action.payload.name ? 1 : 0;
         return option;
-      }))
+      }));
     }
     default: {
-      return state
+      return state;
     }
   }
-}
+};
