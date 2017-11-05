@@ -63,7 +63,10 @@ router
   });
 
 router.get('/all', (req, res) => {
-  Circles.find((err, circles) => res.json(circles));
+  Circles.find()
+    .populate("creator", "username")
+    .exec()
+    .then(circles => res.json(circles))
 });
 
 /**

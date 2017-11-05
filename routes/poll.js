@@ -52,6 +52,8 @@ router
     Polls.find()
       .where('circle')
       .in(req.payload.circles)
+      .populate("circle", "name")
+      .populate("creator", "username")
       .exec()
       .then(polls => res.json(polls))
       .catch(handleError(res));
@@ -70,6 +72,8 @@ router
   // Get all poll TEMPORARY *******************
   .get((req, res) => {
     Polls.find({})
+      .populate("circle", "name")
+      .populate("creator", "username")
       .then(polls => res.json(polls))
       .catch(handleError(res, 'Could not fetch all polls'));
   });

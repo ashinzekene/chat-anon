@@ -25,7 +25,7 @@ const auth = {
       if (req.payload) {
         return next();
       }
-      return res.status(401).json({ err: 'You cannot access this route' });
+      return res.status(401).json({ err: 'You are not logged in' });
     };
   },
 };

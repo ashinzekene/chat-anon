@@ -7,6 +7,7 @@ import {
   CIRCLE_FELLOW_REMOVED,
   CIRCLE_ADMIN_ADDED,
   CIRCLE_ADMIN_REMOVED,
+  CIRCLE_SELECTED,
 } from '../actions/circleActions';
 
 function removeItem(arr, id) {
@@ -15,6 +16,9 @@ function removeItem(arr, id) {
 
 export default (state = {}, action) => {
   switch (action.type) {
+    case CIRCLE_SELECTED: {
+      return action.circle
+    }
     case CIRCLE_PAGE_LOADED: {
       return { state, ...action.payload };
     }

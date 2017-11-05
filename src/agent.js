@@ -2,20 +2,34 @@ import axios from 'axios';
 
 const API_ROOT = 'http://localhost:3200/';
 
-let token = null;
+let token = "59fd4ef94aaba52bec8c64a0";
 axios.defaults.baseURL = API_ROOT;
 
 if (token) {
   axios.defaults.headers.common.Authorization = token;
 }
+const headers = { "authid": token, "Content-Type": "application/json" } 
 
-const getResponseData = res => res.data;
+// const getResponseData = res => res.data;
+const getJsonResponse = res => res.json();
+
+// const request = {
+//   get: url => axios.get(url).then(getResponseData),
+//   post: (url, body) => axios.post(url, body).then(getResponseData),
+//   delete: (url, body) => axios.post(url, body).then(getResponseData),
+// };
 
 const request = {
-  get: url => axios.get(url).then(getResponseData),
-  post: (url, body) => axios.post(url, body).then(getResponseData),
-  delete: (url, body) => axios.post(url, body).then(getResponseData),
-};
+  get(url, body) {
+    return fetch(url, { headers }).then(getJsonResponse)
+  },
+  post(url, body) {
+    return fetch(url, { method: "POST", body: JSON.stringify(body), headers }).then(getJsonResponse)
+  },
+  delete(url) {
+    return fetch(url, { method: "DELETE", headers }).then(getJsonResponse)
+  }
+}
 
 const Poll = {
   _getAll: () => request.get('/polls/all'),

@@ -20,10 +20,10 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4300/circles/59f8baf87840c33464a1a109/fellows
-authid: 59f8b3c975a3750d1805f8e6
+authid: 59fd4ef94aaba52bec8c64a0
 ###
 GET http://localhost:4300/polls/all
-authid: 59f8b3c975a3750d1805f8e6
+authid: 59fd4ef94aaba52bec8c64a0
 ###
 GET http://localhost:4300/users/
 authid: 59f8b3c975a3750d1805f8e6

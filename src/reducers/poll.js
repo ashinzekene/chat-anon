@@ -4,10 +4,14 @@ import {
   POLL_PAGE_LOADED,
   POLL_PAGE_UNLOADED,
   POLL_VOTED,
+  POLL_SELECTED
 } from '../actions/pollActions';
 
 export default (state = {}, action) => {
   switch (action.type) {
+    case POLL_SELECTED: {
+      return action.poll
+    }
     case POLL_PAGE_LOADED: {
       return action.payload;
     }

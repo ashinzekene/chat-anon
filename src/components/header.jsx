@@ -14,6 +14,7 @@ Header.propTypes = {
 const style = {
   "textAlign": "center",
   "padding": "20px 10px",
+  "margin": "10px",
 }
 
 export default Header
