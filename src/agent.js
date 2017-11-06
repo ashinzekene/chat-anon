@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_ROOT = 'http://localhost:3200/';
 
-let token = "59fd4ef94aaba52bec8c64a0";
+let token = "59ffe53d507d1009b03447fa";
 axios.defaults.baseURL = API_ROOT;
 
 if (token) {

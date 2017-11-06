@@ -10,6 +10,7 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
     case POLL_SELECTED: {
+      console.log(action)
       return action.poll
     }
     case POLL_PAGE_LOADED: {

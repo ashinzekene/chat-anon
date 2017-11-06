@@ -1,58 +1,59 @@
 POST http://localhost:4300/circles/
 Content-Type: application/json
-AuthID: 59f8b3c975a3750d1805f8e6
+AuthID: 59ffe53d507d1009b03447fa
 
 {
   "name": "Beulah Slaves",
-  "handle": "baefulah1",
-  "description": "DEV 2018"
+  "handle": "beulah",
+  "description": "Beulah IT guys"
 }
 ###
 POST http://localhost:4300/users
 Content-Type: application/json
 
 {
-  "email_address": "ekene@gmail.com",
-  "username": "ekene",
-  "first_name": "ekene",
-  "password": "ekene"
+  "email_address": "segebee@gmail.com",
+  "username": "segebee",
+  "first_name": "segebee",
+  "password": "segebee"
 }
 
 ###
-GET http://localhost:4300/circles/59f8baf87840c33464a1a109/fellows
-authid: 59fd4ef94aaba52bec8c64a0
+GET http://localhost:4300/circles/all
+authid: 59ffe53d507d1009b03447fa
 ###
-GET http://localhost:4300/polls/all
-authid: 59fd4ef94aaba52bec8c64a0
+GET http://localhost:4300/polls/59ffe5e56e21d02124914b2c
+authid: 59ffe53d507d1009b03447fa
 ###
-GET http://localhost:4300/users/
-authid: 59f8b3c975a3750d1805f8e6
+GET http://localhost:4300/users/all
+authid: 59ffe53d507d1009b03447fa
 ###
 
 POST http://localhost:4300/polls/
 Content-Type: application/json
-AuthID: 59f8b3c975a3750d1805f8e6
+AuthID: 59ffe53d507d1009b03447fa
 
 {
-  "question": "Who is the best JS framwork",
-  "comment": "Let's know what it is",
-  "circle": "59f37eb657ba4e1dec3e13c0",
+  "question": "Who works more?",
+  "comment": "I think Angular",
+  "circle": "59ffe67187576d3b5023a845",
   "options": [
     {
-      "option": "Angular",
+      "option": "Ekene",
       "votes":0
     },
     {
-      "option": "React",
+      "option": "Alex",
       "votes":0
     },
     {
-      "option": "Vue",
+      "option": "Tolu",
       "votes":0
     },
     {
-      "option": "Ember",
+      "option": "Stephanie",
       "votes":0
     }
   ]
 }
+

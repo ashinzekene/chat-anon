@@ -1,20 +1,19 @@
 import React from 'react';
-// import { connect } from 'react-redux';
-// import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import Home from './Home.jsx';
-import Circle from './Circle.jsx'
-import Poll from './Poll.jsx'
-import Profile from './Profile.jsx';
+import Circle from './Circle'
+import Poll from './Poll'
+import Profile from './Profile';
 
-// import agent from '../agent';
-// import { APP_LOAD, REDIRECT } from '../actions/actionTypes';
-// import { store } from '../store';
+const mapStateToProps = state => ({
+  header: state.common.header
+})
 
 const App = props => (
   <div>
-    <Header title="Chat Anon" />
+    <Header title={ props.header } />
     <Switch>
       <Route path="/circle/:id" component={ Circle } />
       <Route path="/poll/:id" component={ Poll } />
@@ -24,4 +23,4 @@ const App = props => (
   </div>
 )
 
-export default App
+export default connect(mapStateToProps)(App);

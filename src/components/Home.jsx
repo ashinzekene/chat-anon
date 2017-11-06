@@ -1,9 +1,8 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 
-import PollList from './Poll/PollList.jsx';
-import CircleList from './Circle/CircleList.jsx';
-
+import PollList from './PollList.jsx';
+import CircleList from './CircleList.jsx';
 
 const panes = [
   { menuItem: 'Polls', render: () => (
@@ -11,7 +10,7 @@ const panes = [
     )
   },
   { menuItem: 'Circles', render: () => (
-     <CircleList /> 
+     <CircleList />
     )
   },
 ]

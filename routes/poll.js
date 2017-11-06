@@ -62,7 +62,10 @@ router
     // CREATING A NEW POLL
     req.body.creator = req.payload._id;
     Polls.create(req.body)
-      .then(poll => req.payload.createPoll(poll._id))
+      .then(poll => { 
+        req.payload.createPoll(poll._id)
+        return poll
+      })
       .then(poll => res.json(poll))
       .catch(handleError(res));
   });
