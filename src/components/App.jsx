@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 
 const App = props => (
   <div>
-    <Header title={ props.header } />
+    <Header header={ props.header } />
     <Switch>
       <Route path="/circle/:id" component={ Circle } />
       <Route path="/poll/:id" component={ Poll } />

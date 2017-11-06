@@ -1,7 +1,7 @@
 import { CHANGE_HEADER, RESET_HEADER, APP_NAME } from '../actions/actionTypes';
 
 const initialState = {
-  header: APP_NAME,
+  header: { title: APP_NAME, back: false },
 }
 
 export default (state = initialState, action) => {
@@ -9,8 +9,8 @@ export default (state = initialState, action) => {
     case CHANGE_HEADER: {
       return Object.assign({}, state, { header: action.header });
     }
-    case CHANGE_HEADER: {
-      return Object.assign({}, state, { header: APP_NAME });
+    case RESET_HEADER: {
+      return Object.assign({}, state, { header: initialState.header });
     }
     default:{
       return initialState;

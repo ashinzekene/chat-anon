@@ -22,8 +22,8 @@ class Poll extends Component {
   }
   componentWillReceiveProps(nextProp) {
     console.log("next prop", nextProp)
-    if (nextProp.poll.question)
-    nextProp.changeHeader(nextProp.poll.question)
+    if (nextProp.poll.question && nextProp.poll !== this.props.poll)
+    nextProp.changeHeader({title: nextProp.poll.question, back: true })
   }
 
   handleChange = (e, { value }) => this.setState({ value })

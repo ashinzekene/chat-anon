@@ -1,14 +1,16 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react';
 import propTypes from 'prop-types';
 
 const Header = props => (
   <h2 style={ style } >
-    { props.title }
+    { props.header.back && <Icon float="left" name="arrow left" /> }
+    { props.header.title }
   </h2>
 )
 
 Header.propTypes = {
-  title: propTypes.string.isRequired
+  header: propTypes.object.isRequired,
 }
 
 const style = {
