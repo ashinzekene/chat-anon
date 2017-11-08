@@ -2,7 +2,7 @@ export const APP_NAME = 'CHAT ANON';
 export const APP_LOAD = 'APP_LOAD';
 export const REDIRECT = 'REDIRECT';
 export const CHANGE_HEADER = 'CHANGE_HEADER'; 
-export const RESET_HEADER = 'RESET_HEADER'; 
+export const RESET_HEADER = 'RESET_HEADER';
 
 export const SETTINGS_SAVED = 'SETTINGS_SAVED';
 export const SETTINGS_PAGE_UNLOADED = 'SETTINGS_PAGE_UNLOADED';

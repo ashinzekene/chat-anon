@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:4300/circles/all
+GET http://localhost:4300/polls/59ffe5ba6e21d02124914b2b
 authid: 59ffe53d507d1009b03447fa
 ###
 GET http://localhost:4300/polls/59ffe5e56e21d02124914b2c

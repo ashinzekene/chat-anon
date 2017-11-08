@@ -2,12 +2,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
 }
-tab-pane {
-  height: 100%;
-}
-tab-bottom {
-  position: fixed;
-  bottom: 0px;
+
+.header-back-icon {
+  position: absolute;
+  left: 0;
+  top: 30%;
+  color: "black";
 }

@@ -15,8 +15,8 @@ const panes = [
   },
 ]
 
-const Home = () => (
-  <Tab menu={{ widths: 2, secondary: true, pointing: true }} panes={panes} />
+const Home = (props) => (
+  <Tab onTabChange={ props.handleTabChange } menu={{ widths: 2, secondary: true, pointing: true }} panes={panes} />
 )
 
 export default Home

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Item, Loader, Dimmer, Form, Checkbox } from "semantic-ui-react";
+import { Container, Loader, Dimmer, Checkbox } from "semantic-ui-react";
 import { POLL_PAGE_LOADED } from '../../actions/pollActions' 
 import { CHANGE_HEADER, RESET_HEADER } from '../../actions/actionTypes' 
 import { connect } from 'react-redux';
@@ -38,11 +38,9 @@ class Poll extends Component {
       )
     }
     return (
-      <Container textAlign="center" color="purple">
+      <Container style={ style } textAlign="center" color="purple">
         { JSON.stringify(this.props.poll) }
-        <Form>
         { poll.options.map((option, i) => (
-          <Form.Field key={ `field`+i }>
             <Checkbox 
               name="vote" 
               toggle 
@@ -51,12 +49,14 @@ class Poll extends Component {
               key={ i } 
               value={ option.option } 
               label={ option.option } />
-          </Form.Field>
         )) }
-        </Form>
       </Container>
     );
   }
+}
+
+const style = {
+  backgroundColor: "hsl(280, 100%, 50%)",
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Poll);
