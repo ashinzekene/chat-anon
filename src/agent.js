@@ -38,7 +38,7 @@ const Poll = {
   get: pollId => request.get(`/polls/${pollId}`),
   delete: pollId => request.delete(`/polls/${pollId}`),
   edit: (pollId, body) => request.post(`/polls/${pollId}`, body),
-  vote: (pollId, option) => request.post(`/polls/${pollId}/vote/${option}`),
+  vote: (pollId, optionId) => request.post(`/polls/${pollId}/vote/${optionId}`),
 };
 
 const Circle = {

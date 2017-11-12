@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Dimmer, Loader } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import agent from '../../agent';
-import { CIRCLE_PAGE_LOADED, CIRCLE_PAGE_UNLOADED } from '../../actions/circleActions';
+import { CIRCLE_PAGE_LOADED } from '../../actions/circleActions';
 import { CHANGE_HEADER, RESET_HEADER } from '../../actions/actionTypes';
 
 const mapStateToProps = state => ({
@@ -36,6 +36,7 @@ class Circle extends Component {
       <Container text= { true } textAlign="center" >
         Created: { (new Date(this.props.circle.createdAt)).toDateString() }
         Creator: { this.props.circle.creator.name }
+        this.props.circle
       </Container>
     )
   }

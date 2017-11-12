@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 
 const Header = props => (
   <h2 style={ style } >
-    { props.header.back && <Link style={{ color: "black" }} to="/"><Icon className="header-back-icon" float="left" name="arrow left" /></Link> }
+    { props.header.back && <Link style={{ color: "rgba(0,0,0,.87)" }} to="/"><Icon className="header-back-icon" float="left" name="arrow left" /></Link> }
     { props.header.title }
   </h2>
 )
