@@ -21,10 +21,10 @@ class Poll extends Component {
     selected: null,
     isSelected: false
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadPoll(agent.Poll.get(this.props.match.params.id))
   }
-  componentWillReceiveProps(nextProp) {
+  componentDidReceiveProps(nextProp) {
     console.log("next prop", nextProp)
     if (nextProp.poll.question && nextProp.poll !== this.props.poll)
     nextProp.changeHeader({title: nextProp.poll.question, back: true })
@@ -79,10 +79,10 @@ const segmentStyle = {
   margin: "20px",
   pointer: "cursor",
 }
-const circleSegment = {
-  height: "200px",
-  margin: "auto",
-  width: "200px",
-} 
+// const circleSegment = {
+//   height: "200px",
+//   margin: "auto",
+//   width: "200px",
+// } 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Poll);

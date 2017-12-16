@@ -1,6 +1,19 @@
+GET http://localhost:4300/circles/all
+Content-Type: application/json
+AuthID: 5a114ebf9622104e783f5635
+###
+GET http://localhost:4300/users/all
+Content-Type: application/json
+AuthID: 5a114ebf9622104e783f5635
+###
+GET http://localhost:4300/polls/all
+Content-Type: application/json
+AuthID: 5a114ebf9622104e783f5635
+###
+
 POST http://localhost:4300/circles/
 Content-Type: application/json
-AuthID: 59ffe53d507d1009b03447fa
+AuthID: 5a114ebf9622104e783f5635
 
 {
   "name": "Beulah Slaves",
@@ -20,18 +33,18 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4300/polls/59ffe5ba6e21d02124914b2b
-authid: 59ffe53d507d1009b03447fa
+authid: 5a114ebf9622104e783f5635
 ###
 GET http://localhost:4300/polls/59ffe5e56e21d02124914b2c
-authid: 59ffe53d507d1009b03447fa
+authid: 5a114ebf9622104e783f5635
 ###
 GET http://localhost:4300/users/all
-authid: 59ffe53d507d1009b03447fa
+authid: 5a114ebf9622104e783f5635
 ###
 
 POST http://localhost:4300/polls/
 Content-Type: application/json
-AuthID: 59ffe53d507d1009b03447fa
+AuthID: 5a114ebf9622104e783f5635
 
 {
   "question": "Who works more?",

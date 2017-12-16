@@ -190,4 +190,13 @@ router
     return res.json(req.circle);
   });
 
+  router.delete('/all', (req, res) => {
+    Circles.remove("*")
+    .then(res =>{
+      res.json({ res: "Everything deleted" })
+    })
+    .catch(err => {
+      res.json(err)
+    })
+  })
 module.exports = router;
