@@ -10,6 +10,8 @@ import Circle from './Circle'
 import Poll from './Poll'
 import Profile from './Profile';
 import Auth from './Auth';
+import PollList from './PollList';
+import CircleList from './CircleList';
 import { SIDEBAR_TOGGLE } from '../actions/actionTypes'
 
 
@@ -31,6 +33,9 @@ const App = props => (
         <Switch>
           <Route path="/circle/:id" component={ Circle } />
           <Route path="/poll/:id" component={ Poll } />
+          <Route path="/circles" component={ CircleList } />
+          <Route path="/polls" component={ PollList } />
+          <Route path="/circle" component={ Profile } />
           <Route path="/profile" component={ Profile } />
           <Route path="/login" component={ Auth } />
           <Route path="/signup" component={ Auth } />

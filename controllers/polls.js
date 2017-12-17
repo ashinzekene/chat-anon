@@ -2,7 +2,7 @@ const Polls = require('../models/poll');
 
 module.exports = {
   get(req, res) {
-    Polls.findById(req.params.id)
+    Polls.findById(req.params.poll)
       .then(poll => {
         res.json(poll)
       })
@@ -29,7 +29,7 @@ module.exports = {
       })
   },
   delete(req, res) {
-    Polls.findByIdAndRemove(req.body.id)
+    Polls.findByIdAndRemove(req.params.poll)
       .then(poll => {
         res.json(poll)
       })
@@ -38,7 +38,7 @@ module.exports = {
       })
   },
   appropriate(req, res) {
-    Polls.findByIdAndUpdate(req.body.id, { $addToSet: { appropriate: req.user.id }, $pop: { inappropriate: req.user.id } })
+    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.payload.id }, $pop: { inappropriate: req.payload.id } })
       .then(poll => {
         res.json(poll)
       })
@@ -47,7 +47,7 @@ module.exports = {
       })
   },
   inappropriate(req, res) {
-    Polls.findByIdAndUpdate(req.body.id, { $addToSet: { inappropriate: req.user.id }, $pop: { appropriate: req.user.id } })
+    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { inappropriate: req.payload.id }, $pop: { appropriate: req.payload.id } })
       .then(poll => {
         res.json(poll)
       })
@@ -56,7 +56,7 @@ module.exports = {
       })
   },
   edit(req, res) {
-    Polls.findByIdAndUpdate(req.body.id)
+    Polls.findByIdAndUpdate(req.params.poll, req.body)
       .then(poll => {
         res.json(poll)
       })
@@ -66,16 +66,16 @@ module.exports = {
   },
   vote(req, res) {
     Polls.findOneAndUpdate(
-      { _id: req.params.id,
+      { _id: req.params.poll,
         "options.id": req.body.option,
       },
-      { $addToSet: { "options.$.votes": req.user.id } })
+      { $addToSet: { "options.$.votes": req.payload.id } })
   },
   unVote(req, res) {
     Polls.findOneAndUpdate(
       { _id: req.params.id,
         "options.id": req.body.option,
        },
-      { $pop: { "options.$.votes": req.user.id } })
+      { $pop: { "options.$.votes": req.payload.id } })
   },
 }

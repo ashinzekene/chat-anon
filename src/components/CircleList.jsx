@@ -23,15 +23,23 @@ class CircleList extends Component {
   selectPoll = circle => () => this.props.onSelect(circle)
   
   render() {
-    return (
-      <Container text= { true } >
-        {
-          this.props.circles.map((circle, ind) => (
-            <CirclePreview onClick={ this.selectPoll(circle) } key={ind} { ...circle } />
-          ))
-        }
-      </Container>
-    )
+    if (this.props.circles && this.props.circles.length) {
+      return (
+        <Container text= { true } >
+          {
+            this.props.circles.map((circle, ind) => (
+              <CirclePreview onClick={ this.selectPoll(circle) } key={ind} { ...circle } />
+            ))
+          }
+        </Container>
+      )
+    } else {
+      return (
+        <div>
+          <h3>Here you will find your list of circles</h3>
+        </div>
+      )
+    }
   }
 }
 

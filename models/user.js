@@ -14,6 +14,10 @@ const userSchema = new Schema({
     type: String,
     unique: true,
   },
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   starred_polls: [{
     type: Schema.Types.ObjectId,
     ref: 'Poll',

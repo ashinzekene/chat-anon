@@ -14,10 +14,7 @@ router
   .get(poll._all)
   .post(poll.create);
 
-router
-  .route('/all')
-  // Get all poll TEMPORARY *******************
-  .get(poll._all)
+router.get('/all', poll._all)
   // .delete();
 
 router
@@ -26,21 +23,10 @@ router
   .post(poll.edit)
   .delete(poll.delete);
 
-router.post('/:poll/appropriate', fellowPoll(), (req, res) => {
-  Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.payload._id } })
-    .then(poll => res.json(poll))
-    .catch(handleError(res));
-});
+router.post('/:poll/appropriate', poll.appropriate);
 
-router.post('/:poll/inappropriate', fellowPoll(), (req, res) => {
-  Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { in_appropriate: req.payload._id } })
-    .then(poll => res.json(poll))
-    .catch(handleError(res));
-});
+router.post('/:poll/inappropriate', poll.inappropriate);
 
-router
-  .route('/:poll/vote/:option')
-  // VOTE IN A POLL
-  .post(poll.vote);
+router.post('/:poll/vote', poll.vote);
 
 module.exports = router;

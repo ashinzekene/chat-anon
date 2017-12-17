@@ -49,6 +49,8 @@ const Circle = {
   edit: (cirlceID, body) => request.post(`/circles/${cirlceID}`, body),
   delete: cirlceID => request.delete(`/circles/${cirlceID}`),
   join: cirlceID => request.post(`/circles/${cirlceID}/join`),
+  addAdmin: (circleId, adminId) => request.post(`/circles/${circleId}/admin/${adminId}`),
+  addfellow: (circleId, fellowId) => request.post(`/circles/${circleId}/fellow/${fellowId}`),
   removeAdmin: (circleId, adminId) => request.delete(`/circles/${circleId}/admin/${adminId}`),
   removefellow: (circleId, fellowId) => request.delete(`/circles/${circleId}/fellow/${fellowId}`),
 };

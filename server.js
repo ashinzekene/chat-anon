@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const routes = require('./routes');
+const routes = require('./newroutes');
 const { isProduction } = require('./utils');
 require('./utils/mongoose');
 

@@ -5,7 +5,7 @@ const { adminCircle, fellowCircle, auth } = require('./middlewares');
 const router = express.Router();
 
 // Ensure anyone accessing these routes is authenticated
-router.use(auth.required());
+// router.use(auth.required());
 
 router
   .route('/')
@@ -33,12 +33,12 @@ router.route('/:circle/fellows').get((req, res) => {
 });
 
 router
-  .route('/:circle/fellow')
+  .route('/:circle/fellow/:fellow')
   .post(circle.addFellow)
   .delete(circle.removeFellow);
 
 router
-  .route('/:circle/admin')
+  .route('/:circle/admin/:fellow')
   .post(circle.addAdmin)
   .delete(circle.removeAdmin);
 

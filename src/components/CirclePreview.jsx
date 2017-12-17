@@ -10,7 +10,7 @@ const CirclePreview = props => (
       <Icon name="group" />
       { props.fellows.length } Fellows
       <Icon name="spy" />
-      { props.creator.username }  
+      { props.creator && props.creator.username }  
     </Card.Content>
   </Card>
 );

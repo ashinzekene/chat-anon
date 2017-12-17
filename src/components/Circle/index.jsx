@@ -35,7 +35,7 @@ class Circle extends Component {
     return (
       <Container text= { true } textAlign="center" >
         Created: { (new Date(this.props.circle.createdAt)).toDateString() }
-        Creator: { this.props.circle.creator.name }
+        Creator: { this.props.creator && this.props.circle.creator.name }
         this.props.circle
       </Container>
     )

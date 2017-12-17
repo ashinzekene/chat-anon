@@ -19,15 +19,23 @@ class PollList extends Component {
   }
   selectPoll = poll => () => this.props.selectPoll(poll)
   render() {
-    return (
-      <Container text= { true }>
-        {
-          this.props.polls.map((poll, ind) => (
-            <PollPreview onClick={ this.selectPoll(poll) } key={ind} { ...poll } />
-          ))
-        }
-      </Container>
-    )
+    if (this.props.polls && this.props.polls.length) {
+      return (
+        <Container text= { true }>
+          {
+            this.props.polls.map((poll, ind) => (
+              <PollPreview onClick={ this.selectPoll(poll) } key={ind} { ...poll } />
+            ))
+          }
+        </Container>
+      )
+    } else {
+      return (
+        <div>
+          <h3>Here you will find your list of polls</h3>
+        </div>
+      )
+    }
   }
 }
 
