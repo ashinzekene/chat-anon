@@ -22,22 +22,6 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Poll',
   }],
-  created_polls: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Poll',
-  }],
-  invitee_circles: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Circle',
-  }],
-  admin_circles: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Circle',
-  }],
-  circles: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Circle',
-  }],
 }, { timestamps: true });
 
 

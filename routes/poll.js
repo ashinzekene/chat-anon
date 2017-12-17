@@ -79,6 +79,15 @@ router
       .populate("creator", "username")
       .then(polls => res.json(polls))
       .catch(handleError(res, 'Could not fetch all polls'));
+  })
+  .delete((req, res) => {
+    Polls.remove({})
+    .then(res =>{
+      res.json({ res: "Everything deleted" })
+    })
+    .catch(err => {
+      res.json(err)
+    })
   });
 
 router
@@ -127,13 +136,4 @@ router
     res.json(req.poll);
   });
 
-router.delete('/all', (req, res) => {
-  Polls.remove("*")
-  .then(res =>{
-    res.json({ res: "Everything deleted" })
-  })
-  .catch(err => {
-    res.json(err)
-  })
-})
 module.exports = router;

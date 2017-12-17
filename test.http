@@ -10,7 +10,9 @@ GET http://localhost:4300/polls/all
 Content-Type: application/json
 AuthID: 5a114ebf9622104e783f5635
 ###
-
+DELETE http://localhost:4300/users/all
+AuthID: 5a114ebf9622104e783f5635
+###
 POST http://localhost:4300/circles/
 Content-Type: application/json
 AuthID: 5a114ebf9622104e783f5635

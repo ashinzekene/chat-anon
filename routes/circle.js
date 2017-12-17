@@ -62,12 +62,22 @@ router
     }).catch(handleError(res, 'This circle probably already exists'));
   });
 
-router.get('/all', (req, res) => {
+router.route('/all')
+  .get((req, res) => {
   Circles.find()
     .populate("creator", "username")
     .exec()
     .then(circles => res.json(circles))
-});
+  })
+  .delete((req, res) => {
+    Circles.remove({})
+    .then(res =>{
+      res.json({ res: "Everything deleted" })
+    })
+    .catch(err => {
+      res.json(err)
+    })
+  })
 
 /**
  * WOULD OPEN THIS ROUTE FOR ANY LOGGED IN USER, DATA RETURNED WOULD DIFFER ON TYPEOF USER
@@ -190,13 +200,4 @@ router
     return res.json(req.circle);
   });
 
-  router.delete('/all', (req, res) => {
-    Circles.remove("*")
-    .then(res =>{
-      res.json({ res: "Everything deleted" })
-    })
-    .catch(err => {
-      res.json(err)
-    })
-  })
 module.exports = router;
