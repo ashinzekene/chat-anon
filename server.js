@@ -15,6 +15,10 @@ if (!isProduction) {
   app.use(morgan('dev'));
 }
 
+app.use((req, res, next) => {
+  res.setHeader("x-powered-by", "Chat-anon")
+  next()
+})
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

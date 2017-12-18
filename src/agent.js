@@ -1,14 +1,26 @@
 import axios from 'axios';
 
+let token;
 const API_ROOT = 'http://localhost:3200/';
 
-let token = "5a114ebf9622104e783f5635";
+const setToken = (_token) => { 
+  console.log("saving token", _token)
+  token = _token; 
+  console.log("Token saved", token)
+}
+
 axios.defaults.baseURL = API_ROOT;
 
 if (token) {
   axios.defaults.headers.common.Authorization = token;
 }
-const headers = { "authid": token, "Content-Type": "application/json" } 
+
+const getHeaders = () => {
+  return token ?
+   { "authid": token, "Content-Type": "application/json" } :
+   { "Content-Type": "application/json" }
+
+}
 
 // const getResponseData = res => res.data;
 const getJsonResponse = res => res.json();
@@ -20,14 +32,17 @@ const getJsonResponse = res => res.json();
 // };
 
 const request = {
-  get(url, body) {
-    return fetch(url, { headers }).then(getJsonResponse)
+  get(url) {
+    return fetch(url, { headers: getHeaders() }).then(getJsonResponse)
   },
   post(url, body) {
-    return fetch(url, { method: "POST", body: JSON.stringify(body), headers }).then(getJsonResponse)
+    return fetch(url, { method: "POST", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
+  },
+  put(url, body) {
+    return fetch(url, { method: "PUT", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   },
   delete(url) {
-    return fetch(url, { method: "DELETE", headers }).then(getJsonResponse)
+    return fetch(url, { method: "DELETE", headers: getHeaders() }).then(getJsonResponse)
   }
 }
 
@@ -57,15 +72,19 @@ const Circle = {
 
 const User = {
   _getAll: () => request.get('/users/all'),
+  signup: body => request.post('/users', body),
+  login: body => request.post('/users/login', body),
   getSelf: () => request.get('/users'),
-  getAuser: userId => request.get(`/users/${userId}`),
+  getUser: username => request.get(`/users/${username}`),
   editProfile: () => request.put('/users/'),
+  verifyMail: body => request.post('/users/verify_mail', body),
+  verifyUsername: body => request.post('/users/verify_username', body),
   favouritePoll: pollId => request.post(`/users/star/${pollId}`),
   unfavouritePoll: pollId => request.post(`/users/star/${pollId}`),
 };
 
 export default {
-  setToken: (_token) => { token = _token; },
+  setToken,
   Poll,
   Circle,
   User,

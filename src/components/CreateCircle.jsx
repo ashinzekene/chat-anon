@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Form, Checkbox, Button, Dropdown, Label } from "semantic-ui-react";
+import { APP_NAME } from "../constants";
 
 class CreateCircle extends Component {
+  componentDidMount() {
+    this.props.changeHeader({ title: APP_NAME, back: true })
+  }
   render() {
     return (
-      <Form style={ formStyle }>
+      <Form size="big" style={ formStyle }>
         <div style={{ width: "100%", maxWidth: "500px" }}>
-          <h3>Create a Circle</h3>
+          <h1 style={{ textAlign: "center" }}>Create a Circle</h1>
           <Form.Field>
             <label>Name  of Circle</label>
             <input placeholder='username' />
@@ -34,7 +38,7 @@ class CreateCircle extends Component {
             </Label>
           ))
           }
-          <Button type='submit'>Create Circle</Button>
+          <Button fluid size="big" type='submit'>Create Circle</Button>
         </div>
       </Form>
     )

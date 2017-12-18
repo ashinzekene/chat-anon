@@ -10,8 +10,11 @@ router.route('/')
   .post(user.create)
   .delete(user.delete);
 
-router.route('/all')
-  .get(user.all)
+router.get('/all', user.all)
+router.post('/login', user.login)
+
+router.post('/verify_mail', user.verifyEmail)
+router.post('/verify_username', user.verifyUsername)
 
 router.post('/:poll/star', fellowPoll(), user.starPoll);
 

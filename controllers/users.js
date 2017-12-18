@@ -2,13 +2,27 @@ const Users = require('../models/user')
 
 module.exports = {
   get(req, res) {
-    Users.findById(req.payload.id)
+    Users.findById(req.payload.id, { password: 0 })
       .then(user => {
         res.json(user)
       })
       .catch(err => {
         console.log(err)
         res.status(403).json({ err: 'Could not get yourself' })
+      })
+  },
+  login(req, res) {
+    let {username, password } = req.body
+    Users.findOne({ username, password }, { password: 0 })
+      .then(user => {
+        if (!user) {
+          return res.status(403).json({ err: 'Username and password not found' })
+        }
+        res.json(user)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not log you in' })
       })
   },
   search(req, res) {
@@ -26,8 +40,34 @@ module.exports = {
         res.atatus(403).json({ err: "could not search for users" })
       })
   },
+  verifyEmail(req, res) {
+    Users.find({ email_address : req.body.email }, {
+      _id: 0,
+      email_address: 1,
+    })
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not get the requested user' })
+      })
+  },
+  verifyUsername(req, res) {
+    Users.find({ username : req.body.username }, {
+      _id: 0,
+      username: 1,
+    })
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not get the requested user' })
+      })
+  },
   getUser(req, res) {
-    Users.findById(req.params.user, {
+    Users.find({ username : req.params.user }, {
       username: 1,
       first_name: 1,
       last_name: 1,
@@ -42,7 +82,7 @@ module.exports = {
       })
   },
   all(req, res) {
-    Users.find()
+    Users.find({}, { password: 0 })
       .then(users => {
         res.json(users)
       })
@@ -62,7 +102,7 @@ module.exports = {
       })
   },
   create(req, res) {
-    Users.create(req.body)
+    Users.create(req.body, { password: 0 })
       .then(user => {
         res.json(user)
       })

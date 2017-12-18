@@ -3,25 +3,25 @@ import { Container, Dimmer, Loader } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import agent from '../../agent';
 import { CIRCLE_PAGE_LOADED } from '../../actions/circleActions';
-import { CHANGE_HEADER, RESET_HEADER } from '../../actions/actionTypes';
+import { RESET_HEADER } from '../../actions/actionTypes';
 
 const mapStateToProps = state => ({
   circle: state.circle
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeHeader: header => dispatch({ type: CHANGE_HEADER, header }),  
   loadCircle: (payload) => dispatch({ type: CIRCLE_PAGE_LOADED, payload }),
   unload: () => dispatch({ type: RESET_HEADER })
 })
 
 class Circle extends Component {
   componentWillMount() {
+    console.log(this.props)
     this.props.loadCircle(agent.Circle.get(this.props.match.params.id))
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.circle.name && nextProps.circle !== this.props.circle) {
-      nextProps.changeHeader({ title: nextProps.circle.name, back: true })     
+      nextProps.changeHeader({ title: nextProps.circle.name, back: true })
     }
   }
   render() {

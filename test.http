@@ -2,9 +2,15 @@ GET http://localhost:4300/circles/all
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 ###
-GET http://localhost:4300/users/
+POST http://localhost:4300/users/login
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
+
+{
+  "username": "ekene",
+  "password": "ekene"
+}
+
 ###
 GET http://localhost:4300/polls/all
 Content-Type: application/json

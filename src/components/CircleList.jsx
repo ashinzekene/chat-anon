@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container } from 'semantic-ui-react';
-import agent from '../agent';
-import { CIRCLE_LIST_LOADED, CIRCLE_SELECTED } from '../actions/circleActions';
+import { CIRCLE_SELECTED } from '../actions/circleActions';
 import  CirclePreview from "./CirclePreview";
+import CardGroup from 'semantic-ui-react/dist/commonjs/views/Card/CardGroup';
 
 const mapStateToProps = state => ({
   circles: state.circleList
 })
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({ type: CIRCLE_LIST_LOADED, payload }),
   onSelect: (circle) => dispatch({ type: CIRCLE_SELECTED, circle }),
 })
 
 class CircleList extends Component {
   componentDidMount() {
-    agent.Circle._getAll().then(res => {
-      this.props.onLoad(res)
-    });
+    this.props.onLoad()
   }
 
   selectPoll = circle => () => this.props.onSelect(circle)
@@ -25,13 +21,13 @@ class CircleList extends Component {
   render() {
     if (this.props.circles && this.props.circles.length) {
       return (
-        <Container text= { true } >
+        <CardGroup style={{ padding: "10px" }} stackable itemsPerRow={2}>
           {
             this.props.circles.map((circle, ind) => (
               <CirclePreview onClick={ this.selectPoll(circle) } key={ind} { ...circle } />
             ))
           }
-        </Container>
+        </CardGroup>
       )
     } else {
       return (

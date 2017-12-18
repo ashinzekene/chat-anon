@@ -2,7 +2,7 @@ const Circles = require('../models/circle')
 
 module.exports = {
   get(req, res) {
-    Circles.findById(req.params.circle)
+    Circles.findOne({ handle: req.params.circle })
       .then(circle => {
         res.json(circle)
       })

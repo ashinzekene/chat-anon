@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Container, Loader, Dimmer, Segment, Grid } from "semantic-ui-react";
 import { POLL_PAGE_LOADED, POLL_VOTED } from '../../actions/pollActions' 
-import { CHANGE_HEADER, RESET_HEADER } from '../../actions/actionTypes' 
+import { RESET_HEADER } from '../../actions/actionTypes' 
 import { connect } from 'react-redux';
 import agent from '../../agent'
+import { APP_NAME } from "../../constants";
 
 const mapStateToProps = state => ({
   poll: state.poll
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeHeader: header => dispatch({ type: CHANGE_HEADER, header }),
   loadPoll: (payload) => dispatch({ type: POLL_PAGE_LOADED, payload }),
   unload : (payload) => dispatch({ type: RESET_HEADER }),
   vote: (pollId, optionId) => dispatch({ type: POLL_VOTED, payload: agent.Poll.vote(pollId, optionId) })
@@ -23,9 +23,9 @@ class Poll extends Component {
   }
   componentDidMount() {
     this.props.loadPoll(agent.Poll.get(this.props.match.params.id))
+    this.props.changeHeader({ title: APP_NAME, back: true })
   }
   componentDidReceiveProps(nextProp) {
-    console.log("next prop", nextProp)
     if (nextProp.poll.question && nextProp.poll !== this.props.poll)
     nextProp.changeHeader({title: nextProp.poll.question, back: true })
   }

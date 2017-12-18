@@ -1,8 +1,8 @@
-import { LOGIN, REGISTER, LOGOUT, ASYNC_START, ASYNC_END } from "./actions/actionTypes";
+import { LOGIN, SIGNUP, LOGOUT, ASYNC_START, ASYNC_END, APP_LOAD } from "./actions/actionTypes";
 import agent from "./agent";
 
 export const localStorageMiddleware = store => next => action => {
-  if (action.type === LOGIN || action.type === REGISTER) {
+  if (action.type === LOGIN || action.type === SIGNUP) {
     // Would change this later to JWT
     localStorage.setItem('jwt', action.payload._id);
     agent.setToken(action.payload._id);
@@ -10,6 +10,10 @@ export const localStorageMiddleware = store => next => action => {
   if (action.type === LOGOUT) {
     localStorage.setItem('jwt', '');
     agent.setToken(null);
+  }
+  if (action.type === APP_LOAD) {
+    console.log("ANANANN")
+    agent.setToken(localStorage.getItem('jwt'));
   }
   return next(action);
 }

@@ -14,7 +14,7 @@ export const SET_PAGE = 'SET_PAGE';
 export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
 
 export const LOGIN = 'LOGIN';
-export const REGISTER = 'REGISTER';
+export const SIGNUP = 'SIGNUP';
 export const LOGOUT = 'LOGOUT';
 
 export const PROFILE_PAGE_LOADED = 'PROFILE_PAGE_LOADED';

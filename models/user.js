@@ -6,13 +6,18 @@ const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
+    minlength: 5
   },
   first_name: String,
   last_name: String,
-  password: String,
+  password: {
+    type: String,
+    required: true
+  },
   email_address: {
     type: String,
     unique: true,
+    required: true
   },
   following: [{
     type: Schema.Types.ObjectId,
