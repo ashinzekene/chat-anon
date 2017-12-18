@@ -1,4 +1,5 @@
 const express = require('express');
+const Circles = require('../models/circle')
 const circle = require('../controllers/circles') 
 const { adminCircle, fellowCircle, auth } = require('./middlewares');
 
@@ -29,7 +30,7 @@ router.route('/:circle/fellows').get((req, res) => {
     .select('fellows')
     .exec()
     .then(fellows => res.json(fellows))
-    .catch(handleError(res));
+    .catch(err => res.json({ err }));
 });
 
 router

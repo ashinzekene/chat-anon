@@ -7,24 +7,30 @@ module.exports = {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not get poll' })
       })
   },
   _all(req, res) {
-    Polls.find()
+    Polls.find({}, { circle: 1, question: 1, comment: 1, creator: 1 })
+      .populate("circle", "name")
+      .populate("creator", "username")
       .then(poll => {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not get all polls:::' })
       })
   },
   create(req, res) {
-    Polls.create(req.body)
+    let newPoll = Object.assign({}, req.body, { creator: req.payload.id })
+    Polls.create(newPoll)
       .then(poll => {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not create poll" })
       })
   },
@@ -34,6 +40,7 @@ module.exports = {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not delete poll" })
       })
   },
@@ -43,8 +50,19 @@ module.exports = {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not delete poll" })
       })
+  },
+  search(req, res) {
+    Polls.find({ handle: req.query.q })
+    .then(circles =>{
+      res.json(circles)
+    })
+    .catch(err => {
+      console.log(err)
+      res.atatus(403).json({ err: "could not search for circles" })
+    })
   },
   inappropriate(req, res) {
     Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { inappropriate: req.payload.id }, $pop: { appropriate: req.payload.id } })
@@ -52,6 +70,7 @@ module.exports = {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not delete poll" })
       })
   },
@@ -61,6 +80,7 @@ module.exports = {
         res.json(poll)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not update poll" })
       })
   },
@@ -70,6 +90,13 @@ module.exports = {
         "options.id": req.body.option,
       },
       { $addToSet: { "options.$.votes": req.payload.id } })
+      .then(poll => {
+        res.json(poll)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "could not vote in poll" })
+      })
   },
   unVote(req, res) {
     Polls.findOneAndUpdate(
@@ -77,5 +104,12 @@ module.exports = {
         "options.id": req.body.option,
        },
       { $pop: { "options.$.votes": req.payload.id } })
+      .then(poll => {
+        res.json(poll)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "could not vote in poll" })
+      })
   },
 }

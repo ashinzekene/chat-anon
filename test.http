@@ -52,25 +52,25 @@ Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 
 {
-  "question": "Who works more?",
-  "comment": "I think Angular",
-  "circle": "59ffe67187576d3b5023a845",
+  "question": "Who worked more at Beulah?",
+  "comment": "A quick poll to know who did more work during IT at Beulah",
+  "circle": "5a3618e89662a518502932c1",
   "options": [
     {
       "option": "Ekene",
-      "votes":0
+      "votes":[]
     },
     {
       "option": "Alex",
-      "votes":0
+      "votes":[]
     },
     {
       "option": "Tolu",
-      "votes":0
+      "votes":[]
     },
     {
       "option": "Stephanie",
-      "votes":0
+      "votes":[]
     }
   ]
 }

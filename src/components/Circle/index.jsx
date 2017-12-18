@@ -16,7 +16,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Circle extends Component {
-  state = {}
   componentWillMount() {
     this.props.loadCircle(agent.Circle.get(this.props.match.params.id))
   }
@@ -29,7 +28,7 @@ class Circle extends Component {
     if (!this.props.circle.name) 
     return (
       <Dimmer active page>
-        <Loader content="Circle is coming..." indeterminate size="huge" />
+        <Loader content="This Circle is coming..." indeterminate size="huge" />
       </Dimmer>
     )
     return (

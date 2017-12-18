@@ -10,6 +10,8 @@ import Circle from './Circle'
 import Poll from './Poll'
 import Profile from './Profile';
 import Auth from './Auth';
+import CreateCircle from './CreateCircle';
+import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
 import { SIDEBAR_TOGGLE } from '../actions/actionTypes'
@@ -28,7 +30,7 @@ const App = props => (
   <div>
     <Sidebar.Pushable style={{ minHeight: "100vh" }} as={Segment}>
       <MySidebar visible={ props.sidebarVisible } />
-      <Sidebar.Pusher>
+      <Sidebar.Pusher style={{ height: "-webkit-fill-available" }}>
         <Header history={ props.history } toggleSidebar= { props.toggleSidebar } header={ props.header } />
         <Switch>
           <Route path="/circle/:id" component={ Circle } />
@@ -39,6 +41,8 @@ const App = props => (
           <Route path="/profile" component={ Profile } />
           <Route path="/login" component={ Auth } />
           <Route path="/signup" component={ Auth } />
+          <Route path="/create/circles" component={ CreateCircle } />
+          <Route path="/create/polls" component={ CreatePoll } />
           <Route path="/" render={() => <Home /> } />
         </Switch>
       </Sidebar.Pusher>

@@ -31,7 +31,7 @@ class Poll extends Component {
   }
   selectOption = (option) => () =>  {
     this.setState({ selected: option.option, isSelected: true })
-    this.props.vote(this.props.poll._id, option._id)
+    // this.props.vote(this.props.poll._id, option._id)
     console.log("You selected", option._id)
   }
 
@@ -56,7 +56,7 @@ class Poll extends Component {
       <Container textAlign="center" color="purple">
         <h4>{ this.props.poll.comment }</h4>
         <Grid>
-        { poll.options.map((option, i) => (
+        { poll.options && poll.options.map((option, i) => (
           <Grid.Column key={ "col"+i } width={ 8 } mobile={ 16 }>
             <Segment
               color="purple"
@@ -76,8 +76,7 @@ class Poll extends Component {
 }
 
 const segmentStyle = {
-  margin: "20px",
-  pointer: "cursor",
+  cursor: "pointer",
 }
 // const circleSegment = {
 //   height: "200px",

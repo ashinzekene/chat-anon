@@ -7,7 +7,7 @@ const {
 const router = express.Router();
 
 // ensure anyone accessing these routes is authenticated
-router.use(auth.required());
+// router.use(auth.required());
 
 router
   .route('/')

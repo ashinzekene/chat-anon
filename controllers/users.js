@@ -7,21 +7,38 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
-        res.status(403),json({ err: 'Could not get yourself' })
+        console.log(err)
+        res.status(403).json({ err: 'Could not get yourself' })
       })
   },
-  getUser(req, res) {
-    Users.findById(req.params.user, { 
+  search(req, res) {
+    Users.find({ handle: req.query.q }, {
       username: 1,
       first_name: 1,
       last_name: 1,
-      email_address: 1,
+      following: 1
+    })
+      .then(users => {
+        res.json(users)
+      })
+      .catch(err => {
+        console.log(err)
+        res.atatus(403).json({ err: "could not search for users" })
+      })
+  },
+  getUser(req, res) {
+    Users.findById(req.params.user, {
+      username: 1,
+      first_name: 1,
+      last_name: 1,
+      following: 1
     })
       .then(user => {
         res.json(user)
       })
       .catch(err => {
-        res.status(403).json({ err: 'Could not get the requested user' })        
+        console.log(err)
+        res.status(403).json({ err: 'Could not get the requested user' })
       })
   },
   all(req, res) {
@@ -29,7 +46,8 @@ module.exports = {
       .then(users => {
         res.json(users)
       })
-      .catch(err=> {
+      .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not get all users' })
       })
   },
@@ -39,6 +57,7 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not delete your account' })
       })
   },
@@ -48,6 +67,7 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not create account' })
       })
   },
@@ -58,24 +78,27 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         res.json({ err: 'Could not update your account' })
       })
   },
   starPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $addToSet: { starred_polls: req.body.poll }})
-      .then(user=> {
+    Users.findByIdAndUpdate(req.payload.id, { $addToSet: { starred_polls: req.body.poll } })
+      .then(user => {
         res.json(user)
       })
-      .catch(err=> {
+      .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not star poll" })
       })
   },
   unstarPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $pop: { starred_polls: req.body.poll }})
-      .then(user=> {
+    Users.findByIdAndUpdate(req.payload.id, { $pop: { starred_polls: req.body.poll } })
+      .then(user => {
         res.json(user)
       })
-      .catch(err=> {
+      .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not unstar poll" })
       })
   },
@@ -85,6 +108,7 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not follow user" })
       })
   },
@@ -94,6 +118,7 @@ module.exports = {
         res.json(user)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: "Could not unfollow user" })
       })
   },

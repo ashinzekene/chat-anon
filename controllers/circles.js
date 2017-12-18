@@ -7,8 +7,19 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not get circle'})
       })
+  },
+  search(req, res) {
+    Circles.find({ handle: req.query.q })
+    .then(circles => {
+      res.json(circles)
+    })
+    .catch(err => {
+      console.log(err)
+      res.atatus(403).json({ err: "could not search for circles" })
+    })
   },
   update(req, res) {
     Circles.findByIdAndUpdate(req.params.circle, req.body)
@@ -16,6 +27,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not update")
       })
   },
@@ -25,6 +37,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not update")
       })
   },
@@ -34,25 +47,35 @@ module.exports = {
         res.json(circles)
       })
       .catch(err => {
+        console.log(err)
         res.ststus(403).jso({ err: 'Could not get all your cirlces' })
       })
   },
   _all(req, res) {
-    Circles.find()
-      .then(circle => {
-        res.json(circle)
+    Circles.find({}, {
+      name:1,
+      handle:1,
+      description:1,
+      creator: 1,
+      fellows:1
+    })
+      .populate("creator", "username")
+      .then(circles => {
+        res.json(circles)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not get circle' })
       })
   },
   create(req, res) {
     const newCircle = Object.assign({}, req.body, { creator: req.payload.id, admin: req.payload.id })
-    Circles.create(req.body)   
+    Circles.create(newCircle)   
       .then(circle => {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json({ err: 'Could not create circle' })
       })
   },
@@ -62,6 +85,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not add Fellow")
       })
   },
@@ -71,6 +95,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not add Admin")
       })
   },
@@ -80,6 +105,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not remove Fellow")
       })
   },
@@ -89,6 +115,7 @@ module.exports = {
         res.json(circle)
       })
       .catch(err => {
+        console.log(err)
         res.status(403).json("could not remove Admin")
       })
   },
