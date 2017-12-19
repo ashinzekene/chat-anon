@@ -4,15 +4,13 @@ import { CIRCLE_SELECTED } from '../actions/circleActions';
 import  CirclePreview from "./CirclePreview";
 import CardGroup from 'semantic-ui-react/dist/commonjs/views/Card/CardGroup';
 
-const mapStateToProps = state => ({
-  circles: state.circleList
-})
 const mapDispatchToProps = dispatch => ({
   onSelect: (circle) => dispatch({ type: CIRCLE_SELECTED, circle }),
 })
 
 class CircleList extends Component {
   componentDidMount() {
+    console.log("Circle list", this.props)
     this.props.onLoad()
   }
 
@@ -39,4 +37,4 @@ class CircleList extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CircleList);
+export default connect(null, mapDispatchToProps)(CircleList);

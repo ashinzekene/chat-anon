@@ -4,9 +4,6 @@ import { POLL_SELECTED } from '../actions/pollActions';
 import  PollPreview from "./PollPreview";
 import CardGroup from 'semantic-ui-react/dist/commonjs/views/Card/CardGroup';
 
-const mapStateToProps = state => ({
-  polls: state.pollList
-})
 const mapDispatchToProps = dispatch => ({
   selectPoll: (poll) => dispatch({ type: POLL_SELECTED, poll }),
 })
@@ -37,4 +34,4 @@ class PollList extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PollList);
+export default connect(null, mapDispatchToProps)(PollList);

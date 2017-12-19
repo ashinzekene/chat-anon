@@ -4,7 +4,6 @@ import { POLL_PAGE_LOADED, POLL_VOTED } from '../../actions/pollActions'
 import { RESET_HEADER } from '../../actions/actionTypes' 
 import { connect } from 'react-redux';
 import agent from '../../agent'
-import { APP_NAME } from "../../constants";
 
 const mapStateToProps = state => ({
   poll: state.poll
@@ -23,11 +22,12 @@ class Poll extends Component {
   }
   componentDidMount() {
     this.props.loadPoll(agent.Poll.get(this.props.match.params.id))
-    this.props.changeHeader({ title: APP_NAME, back: true })
   }
-  componentDidReceiveProps(nextProp) {
-    if (nextProp.poll.question && nextProp.poll !== this.props.poll)
-    nextProp.changeHeader({title: nextProp.poll.question, back: true })
+  componentWillReceiveProps(nextProp) {
+    // this.props.changeHeader({ title: "APP_NAME", back: true })
+    if (nextProp.poll.question && nextProp.poll !== this.props.poll) {
+      nextProp.changeHeader({title: nextProp.poll.question, back: true })
+    }
   }
   selectOption = (option) => () =>  {
     this.setState({ selected: option.option, isSelected: true })

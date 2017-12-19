@@ -12,7 +12,7 @@ class Profile extends Component {
    return (
       <Container>
         <Image 
-          centered
+          centered                                                                             xxxxxxxx
           size="huge"
           alt="user image"
           shape="circular"

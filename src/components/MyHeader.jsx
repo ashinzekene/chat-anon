@@ -28,18 +28,22 @@ class Header extends Component {
     let menu
     let { path } = this.state
     if (this.props.header.back) {
-      menu = <Icon size="large" onClick={ this.goBack } className="header-back-icon" name="arrow left" />
+      menu = <Icon size="large" onClick={ this.goBack } name="arrow left" />
     } else {
       menu =
-        <Icon size="large" onClick={ this.toggleSidebar } className="header-back-icon" name="sidebar" />
+        <Icon size="large" onClick={ this.toggleSidebar } name="sidebar" />
     }
     return (
       <h2 style={ style } >
         { menu }
-        { this.props.header.title }
+        <div style={{ padding: "5px 30px" }}>
+          { this.props.header.title }
+        </div>
+        <div>
         { path && <Link style={{ color: "rgba(0,0,0,.87)" }} to={ path }>
-          <Icon size="large" style={{ float: "right" }} name="add" />
+          <Icon size="large" name="add" />
         </Link> }
+        </div>
       </h2>
     )
   }
@@ -54,6 +58,8 @@ const style = {
   "textAlign": "center",
   "padding": "20px 10px",
   "margin": "10px",
+  "display": "flex",
+  "justifyContent": "space-between",
   "position": "relative",
 }
 
