@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  createCircle: payload => dispatch({ CIRCLE_CREATED, payload }),
+  createCircle: payload => dispatch({ type: CIRCLE_CREATED, payload }),
   onProfileLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
   onAppLoad: () => dispatch({ type: APP_LOAD }),
   onLogin: payload => dispatch({ type: LOGIN, payload }),
@@ -44,15 +44,19 @@ class App extends Component {
   componentWillMount() {
     this.props.onAppLoad()
   }
-  onLogin = (body) => {
+  onLogin = body => {
     this.props.onLogin(agent.User.login(body))
   }
-  onSignup = (body) => {
+  onSignup = body => {
     this.props.onSignup(agent.User.signup(body))
   }
   onProfileLoad = () => {
     this.props.onProfileLoad(agent.User.getSelf())
   }
+  createCircle = circle => {
+    this.props.createCircle(agent.Circle.create(circle))
+  }
+  
   render() {
     return (
       <div>
@@ -63,7 +67,7 @@ class App extends Component {
             <Switch>
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
-              <Route path="/create/circles" render={ props => <CreateCircle { ...props } changeHeader={ this.props.changeHeader }/> } />
+              <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/circles" render={ props => <CircleList {...props} circles={ this.props.circles } onLoad={ this.props.onCircleLoad(agent.Circle._getAll()) } /> } />
               <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />

@@ -27,7 +27,8 @@ module.exports = {
   },
   search(req, res) {
     Users.find({ username: RegExp(req.query.q) }, "username first_name")
-      .then(users => {
+    .limit(5)
+    .then(users => {
         res.json(users)
       })
       .catch(err => {

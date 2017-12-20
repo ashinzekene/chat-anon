@@ -33,7 +33,7 @@ class Login extends Component {
     }
     console.log("Logging...")
     this.props.onLogin({ username, password })
-    this.setState({ redirect: <Redirect  to={{
+    this.setState({ redirect: <Redirect push  to={{
       pathname: '/',
       state: { from: this.props.location }
     }} /> })

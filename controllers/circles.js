@@ -14,6 +14,7 @@ module.exports = {
   search(req, res) {
     console.log("Searching", req.query.q)
     Circles.find({ handle: RegExp(req.query.q, "i") }, "name handle")
+    .limit(5)
     .then(circles => {
       res.json(circles)
     })

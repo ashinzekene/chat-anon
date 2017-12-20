@@ -66,6 +66,7 @@ module.exports = {
   },
   search(req, res) {
     Polls.find({ handle: req.query.q })
+    .limit(5)
     .then(polls =>{
       res.json(polls)
     })
