@@ -52,7 +52,7 @@ const Poll = {
   create: body => request.post('/polls', body),
   get: pollId => request.get(`/polls/${pollId}`),
   delete: pollId => request.delete(`/polls/${pollId}`),
-  edit: (pollId, body) => request.post(`/polls/${pollId}`, body),
+  search: query => request.get(`/polls/search?q=${query}`),
   vote: (pollId, optionId) => request.post(`/polls/${pollId}/vote/${optionId}`),
 };
 
@@ -63,6 +63,7 @@ const Circle = {
   get: circleId => request.get(`/circles/${circleId}`),
   edit: (cirlceID, body) => request.post(`/circles/${cirlceID}`, body),
   delete: cirlceID => request.delete(`/circles/${cirlceID}`),
+  search: query => request.get(`/circles/search?q=${query}`),
   join: cirlceID => request.post(`/circles/${cirlceID}/join`),
   addAdmin: (circleId, adminId) => request.post(`/circles/${circleId}/admin/${adminId}`),
   addfellow: (circleId, fellowId) => request.post(`/circles/${circleId}/fellow/${fellowId}`),
@@ -75,6 +76,7 @@ const User = {
   signup: body => request.post('/users', body),
   login: body => request.post('/users/login', body),
   getSelf: () => request.get('/users'),
+  search: query => request.get(`/users/search?q=${query}`),
   getUser: username => request.get(`/users/${username}`),
   editProfile: () => request.put('/users/'),
   verifyMail: body => request.post('/users/verify_mail', body),

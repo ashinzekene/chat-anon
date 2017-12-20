@@ -13,9 +13,9 @@ router
   .get(circle.all)
   .post(circle.create);
 
-router.route('/all')
-  .get(circle._all)
-  // .delete()
+router.get('/all', circle._all)
+
+router.get('/search', circle.search)
 
 router
   .route('/:circle')

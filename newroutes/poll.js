@@ -15,12 +15,12 @@ router
   .post(poll.create);
 
 router.get('/all', poll._all)
-  // .delete();
+
+router.get('/search', poll.search)
 
 router
   .route('/:poll')
   .get(poll.get)
-  .post(poll.edit)
   .delete(poll.delete);
 
 router.post('/:poll/appropriate', poll.appropriate);

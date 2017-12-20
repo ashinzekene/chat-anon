@@ -13,6 +13,8 @@ router.route('/')
 router.get('/all', user.all)
 router.post('/login', user.login)
 
+router.get('/search', user.search)
+
 router.post('/verify_mail', user.verifyEmail)
 router.post('/verify_username', user.verifyUsername)
 

@@ -12,7 +12,8 @@ module.exports = {
       })
   },
   search(req, res) {
-    Circles.find({ handle: req.query.q })
+    console.log("Searching", req.query.q)
+    Circles.find({ handle: RegExp(req.query.q, "i") }, "name handle")
     .then(circles => {
       res.json(circles)
     })
@@ -52,13 +53,7 @@ module.exports = {
       })
   },
   _all(req, res) {
-    Circles.find({}, {
-      name:1,
-      handle:1,
-      description:1,
-      creator: 1,
-      fellows:1
-    })
+    Circles.find({}, "name handle description creator fellows")
       .populate("creator", "username")
       .then(circles => {
         res.json(circles)

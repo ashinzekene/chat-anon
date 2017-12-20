@@ -15,6 +15,10 @@ AuthID: 5a3618879662a518502932c0
 GET http://localhost:4300/polls/all
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
+###
+GET http://localhost:4300/circles/search?q=BEU
+Content-Type: application/json
+AuthID: 5a3618879662a518502932c0
 
 
 

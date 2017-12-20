@@ -12,7 +12,7 @@ class Profile extends Component {
    return (
       <Container>
         <Image 
-          centered                                                                             xxxxxxxx
+          centered
           size="huge"
           alt="user image"
           shape="circular"
@@ -20,7 +20,7 @@ class Profile extends Component {
         />
         <Header size="huge" style={{ textTransform: "capitalize" }} dividing textAlign="center">{ user.username } </Header>
         Welcome to my profile page
-        { JSON.stringify(this.props.user) }
+        {/* { JSON.stringify(this.props.user) } */}
       </Container>
     );
   }

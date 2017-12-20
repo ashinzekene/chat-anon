@@ -26,12 +26,7 @@ module.exports = {
       })
   },
   search(req, res) {
-    Users.find({ handle: req.query.q }, {
-      username: 1,
-      first_name: 1,
-      last_name: 1,
-      following: 1
-    })
+    Users.find({ username: RegExp(req.query.q) }, "username first_name")
       .then(users => {
         res.json(users)
       })
@@ -67,12 +62,7 @@ module.exports = {
       })
   },
   getUser(req, res) {
-    Users.find({ username : req.params.user }, {
-      username: 1,
-      first_name: 1,
-      last_name: 1,
-      following: 1
-    })
+    Users.find({ username : req.params.user }, "username first_name last_name following")
       .then(user => {
         res.json(user)
       })

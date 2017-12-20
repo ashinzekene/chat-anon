@@ -23,6 +23,16 @@ module.exports = {
         res.status(403).json({ err: 'Could not get all polls:::' })
       })
   },
+  search(req, res) {
+    Polls.find({ question: RegExp(req.query.q, "i") }, "question")
+    .then(polls => {
+      res.json(polls)
+    })
+    .catch(err => {
+      console.log(err)
+      res.atatus(403).json({ err: "could not search for polls" })
+    })
+  },
   create(req, res) {
     let newPoll = Object.assign({}, req.body, { creator: req.payload.id })
     Polls.create(newPoll)
@@ -56,12 +66,12 @@ module.exports = {
   },
   search(req, res) {
     Polls.find({ handle: req.query.q })
-    .then(circles =>{
-      res.json(circles)
+    .then(polls =>{
+      res.json(polls)
     })
     .catch(err => {
       console.log(err)
-      res.atatus(403).json({ err: "could not search for circles" })
+      res.atatus(403).json({ err: "could not search for polls" })
     })
   },
   inappropriate(req, res) {
