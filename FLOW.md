@@ -29,7 +29,7 @@
 
 ### USER
 - username
-- email_address
+- email
 - avatar
 - first_name
 - last_name

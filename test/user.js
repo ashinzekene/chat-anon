@@ -39,7 +39,7 @@ describe('Users', () => {
     it('Should create a new user', (done) => {
       chaiReq
         .post('/users')
-        .send({'username': 'Ekonash', 'email_address': 'ashinzekene@gmail.com', 'password': 'ekonash' })
+        .send({'username': 'Ekonash', 'email': 'ashinzekene@gmail.com', 'password': 'ekonash' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object').with.property('username');
@@ -50,7 +50,7 @@ describe('Users', () => {
       let id;
       chaiReq
         .post('/users')
-        .send({'username': 'Ekonash', 'email_address': 'ashinzekene@gmail.com', 'password': 'ekonash' })
+        .send({'username': 'Ekonash', 'email': 'ashinzekene@gmail.com', 'password': 'ekonash' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object').with.property('username');

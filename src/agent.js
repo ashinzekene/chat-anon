@@ -79,6 +79,7 @@ const User = {
   search: query => request.get(`/users/search?q=${query}`),
   getUser: username => request.get(`/users/${username}`),
   editProfile: () => request.put('/users/'),
+  verify: body => request.post('/users/verify', body),
   verifyMail: body => request.post('/users/verify_mail', body),
   verifyUsername: body => request.post('/users/verify_username', body),
   favouritePoll: pollId => request.post(`/users/star/${pollId}`),

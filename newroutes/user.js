@@ -15,6 +15,7 @@ router.post('/login', user.login)
 
 router.get('/search', user.search)
 
+router.post('/verify', user.verify)
 router.post('/verify_mail', user.verifyEmail)
 router.post('/verify_username', user.verifyUsername)
 

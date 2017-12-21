@@ -36,10 +36,23 @@ module.exports = {
         res.atatus(403).json({ err: "could not search for users" })
       })
   },
-  verifyEmail(req, res) {
-    Users.find({ email_address : req.body.email }, {
+  verify(req, res) {
+    Users.find(req.body, {
       _id: 0,
-      email_address: 1,
+      email: 1,
+    })
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not get the requested user' })
+      })
+  },
+  verifyEmail(req, res) {
+    Users.find({ email : req.body.email }, {
+      _id: 0,
+      email: 1,
     })
       .then(user => {
         res.json(user)
@@ -93,6 +106,7 @@ module.exports = {
       })
   },
   create(req, res) {
+    console.log(req.body)
     Users.create(req.body, { password: 0 })
       .then(user => {
         res.json(user)

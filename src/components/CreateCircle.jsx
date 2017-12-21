@@ -62,10 +62,9 @@ class CreateCircle extends Component {
         fellows: fellows.value,
         handle: handle.value
       }
-      console.log(result)
       this.setState({ loading: true })
       this.props.createCircle(result)
-      this.setState({ redirect: <Redirect push  to={{
+      this.setState({ redirect: <Redirect push to={{
         pathname: '/circles',
         state: { from: this.props.location }
       }} /> })
