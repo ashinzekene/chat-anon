@@ -8,7 +8,7 @@ import {
   CIRCLE_ADMIN_ADDED,
   CIRCLE_ADMIN_REMOVED,
   CIRCLE_SELECTED,
-} from '../actions/circleActions';
+} from '../actions';
 
 function removeItem(arr, id) {
   return arr.splice(arr.findIndex(prop => prop._id === id), 1);

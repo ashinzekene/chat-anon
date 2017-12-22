@@ -9,6 +9,7 @@ const circleSchema = new Schema({
     required: true,
     unique: true
   },
+  avatar_url:String,
   description: String,
   creator: {
     type: Schema.Types.ObjectId,

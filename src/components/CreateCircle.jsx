@@ -53,9 +53,10 @@ class CreateCircle extends Component {
   }
   
   onSubmit(e) {
+    let { name, description, fellows, handle  } = this.state
     console.log(e.target.checkValidity())
-    if (e.target.checkValidity()) {
-      let { name, description, fellows, handle  } = this.state
+    console.log(this.state)
+    if (e.target.checkValidity() && fellows.value) {
       let result = {
         name: name.value,
         description: description.value,
@@ -78,15 +79,15 @@ class CreateCircle extends Component {
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }}>Create a Circle</h1>
           <Form.Input required onChange={ this.handleChange } minLength="5" label="Name  of Circle" error={ name.invalid } name="name" placeholder='Circle Name' />
-          <Message negative size="tiny" style={{ padding: "5px" }} hidden={ !name.invalid } content="Name must be more than 5 characters" />
-          <Form.Input required onChange={ this.handleChange } minLength="5" label="Handle" error={ handle.invalid } name="handle" pattern="^[\w\d-]+$" placeholder='handle' />
-          <Message negative size="tiny" style={{ padding: "5px" }} hidden={ !handle.invalid } content="Handle must be more than 5 characters and can only contain a-z, A-Z and -" />
-          <Form.TextArea required onChange={ this.handleChange } minLength="5" label="Description" error={ description.invalid } name="description" placeholder='description'/>
-          <Message negative size="tiny" style={{ padding: "5px" }} hidden={ !description.invalid } content="Description must be more than 5 characters" />
+          <Message className="form-message" negative size="tiny" hidden={ !name.invalid } content="Name must be more than 5 characters" />
+          <Form.Input required onChange={ this.handleChange } minLength="5" label="Handle" error={ handle.invalid } name="handle" pattern="^[a-z\d-]+$" placeholder='Handle' />
+          <Message className="form-message" negative size="tiny" hidden={ !handle.invalid } content="Handle must be more than 5 characters and can only contain a-z, and -" />
+          <Form.TextArea required onChange={ this.handleChange } minLength="5" label="Description" error={ description.invalid } name="description" placeholder='Description'/>
+          <Message className="form-message" negative size="tiny" hidden={ !description.invalid } content="Description must be more than 5 characters" />
           <Form.Dropdown
             noResultsMessage="Type in a username to add"
             onChange={ this.handleChange }
-            fluid multiple
+            fluid multiple required
             onSearchChange={ this.handleSearchChange }
             label="Fellows" name="fellows"
             placeholder="Add Fellows"
@@ -101,7 +102,6 @@ class CreateCircle extends Component {
               ))
             }
             </div>
-          <Form.Checkbox label="I agree to the Terms and Conditions" />
           <Form.Button fluid size="big" type='submit'>Create Circle</Form.Button>
         </div>
         { redirect }

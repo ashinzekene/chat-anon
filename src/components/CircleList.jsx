@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CIRCLE_SELECTED } from '../actions/circleActions';
+import { CIRCLE_SELECTED } from '../actions';
 import  CirclePreview from "./CirclePreview";
 import CardGroup from 'semantic-ui-react/dist/commonjs/views/Card/CardGroup';
 
@@ -19,7 +19,7 @@ class CircleList extends Component {
   render() {
     if (this.props.circles && this.props.circles.length) {
       return (
-        <CardGroup style={{ padding: "10px" }} stackable itemsPerRow={2}>
+        <CardGroup className="card-list" style={{ padding: "10px" }} stackable itemsPerRow={2}>
           {
             this.props.circles.map((circle, ind) => (
               <CirclePreview onClick={ this.selectPoll(circle) } key={ind} { ...circle } />

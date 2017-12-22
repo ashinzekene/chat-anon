@@ -23,14 +23,15 @@ class Signup extends Component {
   
   createAccount(e) {
     console.log(e.target.checkValidity())
-    let { username, password, email } = this.state
-    if(e.target.checkValidity() && !username.invalid && !email.invalid && !password.invalid) {
+    let { username, password, email, terms } = this.state
+    if(e.target.checkValidity() && !username.invalid && !email.invalid && !password.invalid && terms) {
       this.setState({ formLoading: true })
       let credentials = {
         username: username.value,
         email: email.value,
         password: password.value,
       }
+      setTimeout(() => this.setState({ formLoading: true }), 1000)
       this.props.signUp(credentials)
       this.setState({ redirect: <Redirect push to={{
         pathname: '/profile',
@@ -54,7 +55,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { username, password, email, formLoading, redirect } = this.state
+    const { username, password, email, formLoading, redirect, terms } = this.state
     return (
       <Form loading={ formLoading } onSubmit={ this.createAccount } size="big" style={ formStyle }>
         <div style={{ width: "100%", maxWidth: "500px" }}>
@@ -65,14 +66,14 @@ class Signup extends Component {
             error={ username.invalid }
             label="Username" name="username"
             placeholder='username'/>
-          <Message size="tiny" hidden={ !username.invalid } style={ messageStyle } content={ username.message } />
+          <Message className="form-message" size="tiny" hidden={ !username.invalid } content={ username.message } />
           <Form.Input
             onChange={ this.handleChange }
             required minLength={5}
             error={ email.invalid }
             label="Email" name="email"
             placeholder='email' type="email" />
-          <Message size="tiny" hidden={ !email.invalid } style={ messageStyle } content={ email.message } />
+          <Message className="form-message" size="tiny" hidden={ !email.invalid } content={ email.message } />
           <Form.Input
             onChange={ this.handleChange }
             error={ password.invalid }
@@ -80,8 +81,9 @@ class Signup extends Component {
             label="Password" name="password"
             placeholder='password'
             type="password"/>
-          <Message size="tiny" hidden={ !password.invalid } style={ messageStyle } content={ password.message } />
-          <Form.Checkbox required label='I agree to the Terms and Conditions' />
+          <Message className="form-message" size="tiny" hidden={ !password.invalid } content={ password.message } />
+          <Form.Checkbox required name="terms" onChange={ (e, { checked }) => this.setState({ terms: checked }) } label='I agree to the Terms and Conditions' />
+          <Message className="form-message" size="tiny" hidden={ terms || !(!email.invalid && !username.invalid && !password.invalid) } content="Hey, accept our terms and conditions" />
           <Form.Button fluid size="big" type='submit' content="Let's Go"/>
           <Segment basic style={{ textAlign: "center" }}>
             <Icon name="sign in" />
@@ -100,10 +102,6 @@ const formStyle = {
   justifyContent: "center",
   alignItems: "center",
   justifyItems:"center",
-}
-
-const messageStyle = {
-  padding: "5px"
 }
 
 export default Signup

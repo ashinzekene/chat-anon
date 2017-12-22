@@ -1,12 +1,16 @@
-
 body {
   margin: 0;
   padding: 0;
 }
-
 .header-back-icon {
   position: absolute;
   left: 0;
   top: 30%;
   color: "black";
+}
+.form-message {
+  padding: 5px;
+}
+.card-list {
+  margin: 0px;
 }

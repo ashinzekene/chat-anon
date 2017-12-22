@@ -3,6 +3,7 @@ const Circles = require('../models/circle')
 module.exports = {
   get(req, res) {
     Circles.findOne({ handle: req.params.circle })
+      .populate("creator", "username")
       .then(circle => {
         res.json(circle)
       })

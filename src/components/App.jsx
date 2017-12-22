@@ -15,9 +15,9 @@ import CreateCircle from './CreateCircle';
 import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
-import { SIDEBAR_TOGGLE, CHANGE_HEADER, LOGIN, SIGNUP, APP_LOAD, PROFILE_PAGE_LOADED } from '../actions/actionTypes'
-import { POLL_LIST_LOADED } from '../actions/pollActions'
-import { CIRCLE_LIST_LOADED, CIRCLE_CREATED } from '../actions/circleActions'
+import { SIDEBAR_TOGGLE, CHANGE_HEADER, LOGIN, SIGNUP, APP_LOAD, PROFILE_PAGE_LOADED } from '../actions'
+import { POLL_LIST_LOADED } from '../actions'
+import { CIRCLE_LIST_LOADED, CIRCLE_CREATED } from '../actions'
 import agent from '../agent';
 
 const mapStateToProps = state => ({

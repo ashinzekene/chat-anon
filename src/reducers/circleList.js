@@ -3,7 +3,7 @@ import {
   CIRCLE_LIST_UNLOADED,
   CIRCLE_DELETED,
   CIRCLE_CREATED
-} from '../actions/circleActions';
+} from '../actions';
 
 export default (state = [], action) => {
   switch (action.type) {

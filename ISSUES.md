@@ -1,0 +1,3 @@
+- make all forms inputs controlled
+- dropdowns required does not work (validate yourself)
+- remove fellow when creating

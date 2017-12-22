@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { POLL_SELECTED } from '../actions/pollActions';
+import { POLL_SELECTED } from '../actions';
 import  PollPreview from "./PollPreview";
 import CardGroup from 'semantic-ui-react/dist/commonjs/views/Card/CardGroup';
 
@@ -16,7 +16,7 @@ class PollList extends Component {
   render() {
     if (this.props.polls && this.props.polls.length) {
       return (
-        <CardGroup style={{ padding: "10px" }} stackable itemsPerRow={2}>
+        <CardGroup className="card-list" style={{ padding: "10px" }} stackable itemsPerRow={2}>
           {
             this.props.polls.map((poll, ind) => (
               <PollPreview onClick={ this.selectPoll(poll) } key={ind} { ...poll } />

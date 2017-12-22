@@ -1,4 +1,4 @@
-import { CHANGE_HEADER, RESET_HEADER, APP_NAME, SIDEBAR_TOGGLE } from '../actions/actionTypes';
+import { CHANGE_HEADER, RESET_HEADER, APP_NAME, SIDEBAR_TOGGLE } from '../actions';
 
 const initialState = {
   header: { title: APP_NAME, back: false },

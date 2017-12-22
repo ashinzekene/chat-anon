@@ -5,7 +5,7 @@ import {
   POLL_PAGE_UNLOADED,
   POLL_VOTED,
   POLL_SELECTED
-} from '../actions/pollActions';
+} from '../actions';
 
 export default (state = {}, action) => {
   switch (action.type) {

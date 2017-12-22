@@ -1,4 +1,4 @@
-import { LOGIN, SIGNUP, LOGOUT, ASYNC_START, ASYNC_END, APP_LOAD } from "./actions/actionTypes";
+import { LOGIN, SIGNUP, LOGOUT, ASYNC_START, ASYNC_END, APP_LOAD } from "./actions";
 import agent from "./agent";
 
 export const localStorageMiddleware = store => next => action => {

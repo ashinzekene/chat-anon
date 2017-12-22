@@ -3,7 +3,7 @@ import {
   POLL_DELETED,
   POLL_LIST_LOADED,
   POLL_LIST_UNLOADED
-} from "../actions/pollActions";
+} from "../actions";
 
 export default (state = [], action) => {
   switch (action.type) {

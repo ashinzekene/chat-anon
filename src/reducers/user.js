@@ -7,7 +7,7 @@ import {
   // UNFOLLOW_USER,
   PROFILE_PAGE_LOADED,
   // FROFILE_PAGE_UNLOADED,
-} from '../actions/actionTypes'
+} from '../actions'
 
 export default (state = {}, action) => {
   switch (action.type) {

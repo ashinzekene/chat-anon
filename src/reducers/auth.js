@@ -1,0 +1,13 @@
+
+POLLS []
+CIRCLES []
+
+SELECTED_USER {}
+CIRCLE  {}
+POLL {}
+USER  {
+  FOLLOWERS: [],
+  FOLLOWING: [],
+  CIRCLES: [],
+  POLLS: []
+}

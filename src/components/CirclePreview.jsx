@@ -8,7 +8,7 @@ const CirclePreview = props => (
     <Card.Content meta={ props.description } />
     <Card.Content extra>
       <Icon name="group" />
-      { props.fellows.length } Fellows
+      { props.fellows && props.fellows.length } Fellows
       <div style={{ float: "right" }} >
         <Icon name="spy" />
         { props.creator && props.creator.username }  

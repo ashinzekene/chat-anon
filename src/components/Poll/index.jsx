@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Loader, Dimmer, Segment, Grid } from "semantic-ui-react";
-import { POLL_PAGE_LOADED, POLL_VOTED } from '../../actions/pollActions' 
-import { RESET_HEADER } from '../../actions/actionTypes' 
+import { POLL_PAGE_LOADED, POLL_VOTED } from '../../actions' 
+import { RESET_HEADER } from '../../actions' 
 import { connect } from 'react-redux';
 import agent from '../../agent'
 
