@@ -66,24 +66,7 @@ AuthID: 5a3618879662a518502932c0
 {
   "question": "Who worked more at Beulah?",
   "comment": "A quick poll to know who did more work during IT at Beulah",
-  "circle": "5a3618e89662a518502932c1",
-  "options": [
-    {
-      "option": "Ekene",
-      "votes":[]
-    },
-    {
-      "option": "Alex",
-      "votes":[]
-    },
-    {
-      "option": "Tolu",
-      "votes":[]
-    },
-    {
-      "option": "Stephanie",
-      "votes":[]
-    }
-  ]
+  "circle": "5a3618e022289662a518502932c1",
+  "options": ["Ekene","Alex","Tolu","Stephanie"]
 }
 

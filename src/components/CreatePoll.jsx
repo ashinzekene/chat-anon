@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { MY_CIRCLES_REQUESTED } from "../actions";
 import agent from "../agent";
 import { POLL_CREATED } from "../actions";
+import Select from "semantic-ui-react/dist/commonjs/addons/Select/Select";
 
 const mapStateToProps = state => ({
   circles: state.circles
@@ -22,12 +23,19 @@ class CreatePoll extends Component {
     this.state = {
       question: { value: "" },
       comment: { value: "" },
-      option : { value: "" },
-      circle : { value: "" },
-      circles : [],
+      option: { value: "" },
+      circle: { value: "" },
+      options: [
+        { value: "" },
+        { value: "" }
+      ],
+      circles: [],
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleOptionChange = this.handleOptionChange.bind(this)
+    this.removeOption = this.removeOption.bind(this)
+    this.addOption = this.addOption.bind(this)
   }
 
   componentDidMount() {
@@ -35,70 +43,90 @@ class CreatePoll extends Component {
     this.props.changeHeader({ title: APP_NAME, back: true })
   }
 
-  componentWillReceiveProps(nextProp) {
-    if (nextProp.circles.length !== this.props.circles.length) {
-      let circles = nextProp.circles.map(circle => ({
-        name: circle.handle,
-        text: circle.name,
-        value: circle._id,
-      }))
-      this.setState({ circles })
-    }
-  }
-  
   handleChange(e, { name, value }) {
-    name === "circle" ?
-    this.setState({ [name]: { value } }) :
     this.setState({ [name]: { value, invalid: !e.target.checkValidity() } })
   }
 
+  handleOptionChange(e, { index, value }) {
+    let invalid =  !e.target.checkValidity()
+    this.setState((prevState) => ({ options: prevState.options.map((val, i) => i === index ? { value, invalid } : val )}))
+  }
+
+  removeOption(e, { index }) {
+    e.preventDefault()
+    if (this.state.options.length > 2)
+    this.setState(prevState => ({ options: prevState.options.filter((val, i) => i !== index) }))
+  }
+  
+  addOption(e) {
+    e.preventDefault()
+    if (this.state.options.length < 4)
+    this.setState(prevState => ({ options: [ ...prevState.options, { value: "" }] }))
+  }
+
   handleSubmit(e) {
-    let { question, comment, option, circle } = this.state
+    let { question, comment, options, circle } = this.state
     if (e.target.checkValidity()) {
       this.setState({ formLoading: true })
       let poll = {
         question: question.value,
         comment: comment.value,
-        option: option.value,
         circle: circle.value,
+        options: options.map(option => option.value)
       }
       console.log(poll)
-      setTimeout(() => this.setState({ formLoading: true }), 1000)
+      setTimeout(() => this.setState({ formLoading: false }), 1000)
       // this.props.createPoll(agent.Poll.create(poll))
     }
   }
 
   render() {
-    let { question, comment, option, circle, circles } = this.state
+    let { question, comment, options, circle } = this.state
+    let { circles } = this.props
     return (
-      <Form onSubmit={ this.handleSubmit } size="big" style={ formStyle }>
+      <Form onSubmit={this.handleSubmit} size="big" style={formStyle}>
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }}>Create a Poll</h1>
           <Form.Input
-            label="Question" value={ question.value }
-            required onChange={ this.handleChange }
-            minLength={ 5 } error={ question.invalid }
+            label="Question" value={question.value}
+            required onChange={this.handleChange}
+            minLength={5} error={question.invalid}
             name="question" placeholder='Question' />
-          <Message className="form-message" hidden={ !question.invalid } content="Question should have more than 5 characters" negative size="tiny" />
+          <Message className="form-message" hidden={!question.invalid} content="Question should have more than 5 characters" negative size="tiny" />
           <Form.TextArea
-            label="Comments" value={ comment.value }
-            required onChange={ this.handleChange }
-            minLength={ 5 } error={ comment.invalid }
+            label="Comments" value={comment.value}
+            required onChange={this.handleChange}
+            minLength={5} error={comment.invalid}
             name="comment" placeholder='Tell us more' />
-          <Message className="form-message" hidden={ !comment.invalid } content="Comment should have more than 5 characters" negative size="tiny" />
-          <Form.Dropdown
-            label="Circle" value={ circle.value }
-            onChange={ this.handleChange }
-            selection search
-            noResultsMessage="you are not in any circle"
-            options={ circles || [] } name="circle"
-            placeholder='Which of your circles' />
-          <Form.Input
-            label="Option" value={ option.value }
-            required onChange={ this.handleChange }
-            minLength={ 5 } error={ option.invalid }
-            name="option" placeholder='Which of your circles' />
-          <Message className="form-message" hidden={ !option.invalid } content="Option should have more than 5 characters" negative size="tiny" />
+          <Message className="form-message" hidden={!comment.invalid} content="Comment should have more than 5 characters" negative size="tiny" />
+          <Form.Field
+            control="select"
+            required name="circle"
+            label="Circle"
+            onChange={ (e) => this.setState({ circle : { value: e.target.value, invalid: !e.target.checkValidity() } })}
+            error={ circle.invalid }
+            placeholder='Which of your circles' >
+              <option value="">Pick a Circle</option>
+            { 
+              circles && circles.map((circle, i) => (
+                <option key={`circle-${i}`} value={ circle._id }>{ circle.name }</option>
+              ))
+            }
+          </Form.Field>
+          <Button floated="right" onClick={ this.addOption } content="Add Option" />
+          { options.map((option, i) => (
+            <div key={`div-${i}`}>
+              <Form.Input
+                action={{ index: i, onClick: this.removeOption, icon: 'cancel'}}
+                key={ `option ${i}` }
+                index={ i }
+                label={`Option ${i+1}`} value={option.value}
+                required onChange={this.handleOptionChange}
+                minLength={3} error={option.invalid}
+                name="option" placeholder='Enter your options' />
+              < Message className="form-message" hidden={!option.invalid} content="more than 3 characters please" negative size="tiny" />
+            </div>
+          ))}
           <Button fluid size="big" animated='fade'>
             <Button.Content visible>
               Create Poll
@@ -118,7 +146,7 @@ const formStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  justifyItems:"center",
+  justifyItems: "center",
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePoll)

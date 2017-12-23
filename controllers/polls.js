@@ -34,7 +34,12 @@ module.exports = {
     })
   },
   create(req, res) {
-    let newPoll = Object.assign({}, req.body, { creator: req.payload.id })
+    let newPoll = Object.assign(
+      {},
+      req.body,
+      { options: req.body.options.map(option => { votes: [], option })},
+      { creator: req.payload.id }
+    )
     Polls.create(newPoll)
       .then(poll => {
         res.json(poll)
