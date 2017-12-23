@@ -21,8 +21,8 @@ import { CIRCLE_LIST_LOADED, CIRCLE_CREATED } from '../actions'
 import agent from '../agent';
 
 const mapStateToProps = state => ({
-  polls: state.pollList,
-  circles: state.circleList,
+  polls: state.polls,
+  circles: state.circles,
   user: state.user,
   header: state.common.header,
   sidebarVisible: state.common.sidebarVisible

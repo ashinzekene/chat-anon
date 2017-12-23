@@ -32,7 +32,8 @@ const style = {
   justifyContent: "center",
 }
 const menuItemStyle = {
-  borderRadius: "50%"
+  borderRadius: "50%",
+  width: "100%"
 }
 
 export default MySidebar

@@ -1,45 +1,18 @@
-import circle from './circle';
-import circleList from './circleList';
-import poll from './poll';
-import pollList from './pollList';
-import user from './user'
-import circles from './circles'
-import common from './common'
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { combineReducers } from "redux";
+import { routerReducer } from "react-router-redux";
+import circle from "./circle";
+import circles from "./circles";
+import common from "./common";
+import poll from "./poll";
+import polls from "./polls";
+import user from "./user";
 
 export default combineReducers({
   router: routerReducer,
-  pollList,
-  circleList,
   circle,
   circles,
-  poll,
-  user,
   common,
+  poll,
+  polls,
+  user,
 })
-
-
-/*
-*
-*
-POLLS []
-CIRCLES []
-
-SELECTED_USER {}
-CIRCLE  {
-  FELLOWS: []
-  ADMINS: []
-  INVITES: []
-  POLLS: []
-}
-POLL {
-  OPTIONS
-}
-USER  {
-  FOLLOWERS: [],
-  FOLLOWING: [],
-  CIRCLES: [],
-  POLLS: []
-}
-*/

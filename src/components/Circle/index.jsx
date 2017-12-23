@@ -18,7 +18,7 @@ import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label";
 
 const mapStateToProps = state => ({
-  polls: state.pollList,
+  polls: state.polls,
   circle: state.circle
 })
 

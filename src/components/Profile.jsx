@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
-import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 
 class Profile extends Component {
@@ -11,11 +10,9 @@ class Profile extends Component {
     let { user } = this.props
    return (
       <Container>
-        <Image 
-          centered
-          size="huge"
+        <image
+          style={{ borderRadius: "50%", width: "200px", height: "200px" }}
           alt="user image"
-          shape="circular"
           src="/images/user.jpg"
         />
         <Header size="huge" style={{ textTransform: "capitalize" }} dividing textAlign="center">{ user.username } </Header>

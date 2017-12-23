@@ -1,4 +1,15 @@
-import { CHANGE_HEADER, RESET_HEADER, APP_NAME, SIDEBAR_TOGGLE } from '../actions';
+import { 
+  CHANGE_HEADER,
+  RESET_HEADER,
+  APP_NAME,
+  SIDEBAR_TOGGLE,
+  REDIRECT,
+  LOGIN,
+  SIGNUP,
+  POLL_CREATED,
+  CIRCLE_CREATED,
+  EDIT_PROFILE
+} from '../actions';
 
 const initialState = {
   header: { title: APP_NAME, back: false },
@@ -16,7 +27,18 @@ export default (state = initialState, action) => {
     case SIDEBAR_TOGGLE: {
       return Object.assign({}, state, { sidebarVisible: !state.sidebarVisible })
     }
+    case REDIRECT: {
+      return { ...state, redirect: null}
+    }
+    case POLL_CREATED:
+    case CIRCLE_CREATED:
+    case EDIT_PROFILE:
+    case LOGIN:
+    case SIGNUP: {
+      return { ...state, redirectTo: action.redirectTo }
+    }
     default:{
+      // This resets this state. For things like the name and sidebar
       return initialState;
     }
   }

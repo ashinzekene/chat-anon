@@ -2,7 +2,6 @@ import React from "react";
 import Item from "semantic-ui-react/dist/commonjs/views/Item/Item";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
-
 const MiniPollList = props => (
   <div style={{ textAlign: "left" }}>
     <Item.Group divided unstackable>

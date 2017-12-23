@@ -1,18 +1,30 @@
-import { CIRCLE_CREATED, CIRCLE_DELETED, MY_CIRCLES_REQUESTED } from "../actions";
+import { 
+  CIRCLE_LIST_LOADED,
+  CIRCLE_LIST_UNLOADED,
+  CIRCLE_DELETED,
+  CIRCLE_CREATED,
+  MY_CIRCLES_REQUESTED
+} from '../actions';
 
-export default (state= [], action) => {
+export default (state = [], action) => {
   switch (action.type) {
-    case CIRCLE_CREATED: {
-      return [ ...state, action.payload]
+    case CIRCLE_LIST_LOADED: {
+      return action.error ? state :action.payload;
     }
-    case CIRCLE_DELETED: {
-      return Object.assign({}, state.filter(circle => circle._id === action.id ) ) 
+    case CIRCLE_LIST_UNLOADED: {
+      return [];
     }
     case MY_CIRCLES_REQUESTED: {
-      return action.error ? state: action.payload
+      return action.error? state: action.payload;
+    }
+    case CIRCLE_CREATED: {
+      return [...state, action.payload];
+    }
+    case CIRCLE_DELETED: {
+      return state.filter(circle => circle._id === action.id);
     }
     default: {
-      return state
+      return state;
     }
   }
-}
+};
