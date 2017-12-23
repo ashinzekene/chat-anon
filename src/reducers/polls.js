@@ -8,7 +8,7 @@ import {
 export default (state = [], action) => {
   switch (action.type) {
     case POLL_LIST_LOADED: {
-      return action.payload;
+      return action.error ? state: action.payload;
     }
     case POLL_LIST_UNLOADED: {
       return [];

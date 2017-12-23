@@ -8,7 +8,7 @@ export default (state = {}, action) => {
       return { state, ...action.payload }
     }
     case CIRCLE_PAGE_LOADED: {
-      return { state, ...action.payload }
+      return action.error? state : { state, ...action.payload }
     }
     case CIRCLE_PAGE_UNLOADED: {
       return {}

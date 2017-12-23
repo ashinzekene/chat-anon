@@ -14,7 +14,7 @@ export default (state = {}, action) => {
     case PROFILE_PAGE_LOADED:
     case SIGNUP :
     case LOGIN: {
-      return action.payload;
+      return action.error? state : action.payload;
     }
     case LOGOUT: {
       return {};
