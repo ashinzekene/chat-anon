@@ -8,7 +8,8 @@ import {
   SIGNUP,
   POLL_CREATED,
   CIRCLE_CREATED,
-  EDIT_PROFILE
+  EDIT_PROFILE,
+  POLL_PAGE_LOADED
 } from '../actions';
 
 const initialState = {
@@ -27,18 +28,29 @@ export default (state = initialState, action) => {
     case SIDEBAR_TOGGLE: {
       return Object.assign({}, state, { sidebarVisible: !state.sidebarVisible })
     }
-    case REDIRECT: {
-      return { ...state, redirect: null}
+    case POLL_PAGE_LOADED: {
+      return { ...state, redirectTo: "/" }
     }
-    case POLL_CREATED:
-    case CIRCLE_CREATED:
-    case EDIT_PROFILE:
-    case LOGIN:
+    case REDIRECT: {
+      return { ...state, redirectTo: null }
+    }
+    case POLL_CREATED: {
+      return { ...state, redirectTo: "/polls" }
+    }
+    case CIRCLE_CREATED: {
+      return { ...state, redirectTo: "/circles" }
+    }
+    case EDIT_PROFILE: {
+      return { ...state, redirectTo: "/profile" }
+    }
+    case LOGIN: {
+      return { ...state, redirectTo: "/" }
+    }
     case SIGNUP: {
-      return { ...state, redirectTo: action.redirectTo }
+      return { ...state, redirectTo: "/" }
     }
     default:{
-      // This resets this state. For things like the name and sidebar
+      // This resets this state. For things like the name and sidebar INSTEAD OF: return state
       return initialState;
     }
   }

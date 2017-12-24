@@ -6,7 +6,6 @@ const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
-    required: true,
     minlength: 5
   },
   avatar_url:String,
@@ -14,12 +13,10 @@ const userSchema = new Schema({
   last_name: String,
   password: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
     unique: true,
-    required: true
   },
   following: [{
     type: Schema.Types.ObjectId,

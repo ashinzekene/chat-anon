@@ -1,22 +1,16 @@
 import { 
-  LOGIN,
-  LOGOUT,
-  SIGNUP,
-  // REGISTER,
   // FOLLOW_USER,
   // UNFOLLOW_USER,
   PROFILE_PAGE_LOADED,
-  // FROFILE_PAGE_UNLOADED,
+  PROFILE_PAGE_UNLOADED,
 } from '../actions'
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case PROFILE_PAGE_LOADED:
-    case SIGNUP :
-    case LOGIN: {
-      return action.error? state : action.payload;
+    case PROFILE_PAGE_LOADED: {
+      return action.error ? state: action.payload;
     }
-    case LOGOUT: {
+    case PROFILE_PAGE_UNLOADED: {
       return {};
     }
     default: {

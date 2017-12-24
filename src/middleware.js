@@ -12,7 +12,6 @@ export const localStorageMiddleware = store => next => action => {
     agent.setToken(null);
   }
   if (action.type === APP_LOAD) {
-    console.log("ANANANN")
     agent.setToken(localStorage.getItem('jwt'));
   }
   return next(action);
@@ -33,6 +32,7 @@ export const promiseMiddleware = store => next => action => {
         }
         console.log('RESULT', res);
         action.payload = res;
+        console.log('action', action);
         store.dispatch({ type: ASYNC_END, promise: action.payload });
         store.dispatch(action);
       },

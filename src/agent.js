@@ -4,7 +4,6 @@ let token;
 const API_ROOT = 'http://localhost:3200/';
 
 const setToken = (_token) => { 
-  console.log("saving token", _token)
   token = _token; 
   console.log("Token saved", token)
 }

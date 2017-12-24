@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Form, Message } from "semantic-ui-react";
 import Link from "react-router-dom/Link";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import Redirect from "react-router-dom/Redirect";
 
 class Login extends Component {
   constructor(props) {
@@ -33,10 +32,6 @@ class Login extends Component {
     }
     console.log("Logging...")
     this.props.onLogin({ username, password })
-    this.setState({ redirect: <Redirect push  to={{
-      pathname: '/',
-      state: { from: this.props.location }
-    }} /> })
   }
 
   render() {

@@ -4,7 +4,6 @@ import Link from "react-router-dom/Link";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import agent from "../agent";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
-import Redirect from "react-router-dom/Redirect";
 
 class Signup extends Component {
   constructor(props) {
@@ -31,12 +30,8 @@ class Signup extends Component {
         email: email.value,
         password: password.value,
       }
-      setTimeout(() => this.setState({ formLoading: true }), 1000)
+      this.setState({ formLoading: true })
       this.props.signUp(credentials)
-      this.setState({ redirect: <Redirect push to={{
-        pathname: '/profile',
-        state: { from: this.props.location }
-      }} /> })
     }
   }
 

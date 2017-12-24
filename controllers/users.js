@@ -107,14 +107,25 @@ module.exports = {
   },
   create(req, res) {
     console.log(req.body)
-    Users.create(req.body, { password: 0 })
-      .then(user => {
-        res.json(user)
-      })
-      .catch(err => {
-        console.log(err)
+    let user = {}
+    let { username, email, password } = req.body
+    user.username = username
+    user.email = email
+    user.password = password
+    let newUser= new Users(user)
+    newUser.save((err, user) => {
+      if (user) {
+        return res.json(user)
+      } else {
         res.status(403).json({ err: 'Could not create account' })
-      })
+      }
+    })
+    // Users.create(user, { password: 0 })
+    //   .then(user => {
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   },
   update(req, res) {
     console.log(req.body)

@@ -15,7 +15,7 @@ import CreateCircle from './CreateCircle';
 import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
-import { SIDEBAR_TOGGLE, CHANGE_HEADER, LOGIN, SIGNUP, APP_LOAD, PROFILE_PAGE_LOADED } from '../actions'
+import { SIDEBAR_TOGGLE, CHANGE_HEADER, LOGIN, SIGNUP, APP_LOAD, PROFILE_PAGE_LOADED, REDIRECT } from '../actions'
 import { POLL_LIST_LOADED } from '../actions'
 import { CIRCLE_LIST_LOADED, CIRCLE_CREATED } from '../actions'
 import agent from '../agent';
@@ -23,7 +23,9 @@ import agent from '../agent';
 const mapStateToProps = state => ({
   polls: state.polls,
   circles: state.circles,
+  currentUser: state.currentUser,
   user: state.user,
+  redirectTo: state.common.redirectTo,
   header: state.common.header,
   sidebarVisible: state.common.sidebarVisible
 })
@@ -37,12 +39,19 @@ const mapDispatchToProps = dispatch => ({
   onCircleLoad: payload => () => dispatch({ type: CIRCLE_LIST_LOADED, payload }),
   onPollLoad: payload => () => dispatch({ type: POLL_LIST_LOADED, payload }),
   changeHeader: header => dispatch({ type: CHANGE_HEADER, header }),  
-  toggleSidebar: () => dispatch({ type: SIDEBAR_TOGGLE })
+  toggleSidebar: () => dispatch({ type: SIDEBAR_TOGGLE }),
+  onRedirect: () => dispatch({ type: REDIRECT })
 })
 
 class App extends Component {
   componentWillMount() {
     this.props.onAppLoad()
+  }
+  componentWillReceiveProps(nextProp) {
+    if (nextProp.redirectTo) {
+      this.props.history.push(nextProp.redirectTo)
+      this.props.onRedirect()
+    }
   }
   onLogin = body => {
     this.props.onLogin(agent.User.login(body))
@@ -62,7 +71,7 @@ class App extends Component {
       <div>
         <Sidebar.Pushable style={{ minHeight: "100vh" }} as={Segment}>
           <MySidebar visible={ this.props.sidebarVisible } />
-          <Sidebar.Pusher style={{ height: "-webkit-fill-available", overflow: "auto" }}>
+          <Sidebar.Pusher className="full-height">
             <MyHeader history={ this.props.history } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
             <Switch>
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
@@ -73,7 +82,7 @@ class App extends Component {
               <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
-              <Route path="/profile" render={ props => <Profile {...props} onLoad={ this.onProfileLoad } user={ this.props.user } /> } />
+              <Route path="/profile" render={ props => <Profile {...props} onLoad={ this.onProfileLoad } user={ this.props.currentUser } /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
           </Sidebar.Pusher>

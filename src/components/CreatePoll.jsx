@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Form, Button } from "semantic-ui-react";
-import { APP_NAME } from "../constants";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message/Message";
 import { connect } from "react-redux";
-import { MY_CIRCLES_REQUESTED } from "../actions";
+import { MY_CIRCLES_REQUESTED, POLL_CREATED, APP_NAME } from "../actions";
 import agent from "../agent";
-import { POLL_CREATED } from "../actions";
-import Select from "semantic-ui-react/dist/commonjs/addons/Select/Select";
 
 const mapStateToProps = state => ({
   circles: state.circles

@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 import Rating from "semantic-ui-react/dist/commonjs/modules/Rating/Rating";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
+
+import MiniCircleList from './MiniCircleList'
+import UserList from './UserList'
 
 class Profile extends Component {
   constructor(props) {
@@ -23,6 +27,9 @@ class Profile extends Component {
   render() {
     let { user } = this.props
     let { menu } = this.state
+   if(!user) {
+     return <Loader />
+   }
    return (
       <Container>
         <Image
@@ -31,11 +38,11 @@ class Profile extends Component {
           alt="user image"
           src="/images/user.jpg"
         />
-        <Header size="huge" style={{ textTransform: "capitalize" }} dividing>
+        <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           { user.username }
           <Header.Subheader>
-            40 polls voted
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
+            <div>40 polls voted</div>
           </Header.Subheader>
         </Header>
         <Menu secondary pointing widths={3}>
@@ -55,9 +62,70 @@ class Profile extends Component {
             <Label circular content={ "30" } />
           </Menu.Item>
         </Menu>
+        { menu === "following" && <UserList users={ followers } /> }
+        { menu === "circles" && <MiniCircleList circles={ circles } /> }
+        { menu === "followers" && <UserList users={ followers } /> }
       </Container>
     );
   }
 }
 
 export default Profile;
+
+
+
+const circles = [
+  {
+    name: "The People of Calibre",
+    description: "Let's know so we tell the lecturer",
+    canVote: true
+  },
+  {
+    name: "The Geneticists",
+    description: "Let's know so we submit on time",
+    canVote: false
+  },
+  {
+    name: "Classy Babes",
+    description: "The girls that have mouth",
+    canVote: true
+  },
+]
+
+const followers = [
+  {
+    image: "/images/user.jpg",
+    username: "chinonso",
+    first_name: "Nonso",
+    last_name: "Ashinze",
+    isFollowing: true
+  },
+  {
+    image: "/images/user.jpg",
+    username: "ekonash",
+    first_name: "Ekene",
+    last_name: "Ashinze",
+    isFollowing: true
+  },
+  {
+    image: "/images/user.jpg",
+    username: "ekonash",
+    first_name: "Ekene",
+    last_name: "Ashinze",
+    isFollowing: false
+  },
+  {
+    image: "/images/user.jpg",
+    username: "storme",
+    first_name: "Terry",
+    last_name: "Storm",
+    isFollowing: true
+  },
+  {
+    image: "/images/user.jpg",
+    username: "flash",
+    first_name: "Agrand",
+    last_name: "Verge",
+    isFollowing: false
+  },
+]

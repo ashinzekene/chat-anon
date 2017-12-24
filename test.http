@@ -11,35 +11,34 @@ AuthID: 5a3618879662a518502932c0
 }
 
 ###
-DELETE http://localhost:4300/users
+DELETE http://localhost:4300/circles/5a3618e89662a518502932c1
 Content-Type: application/json
-AuthID: 5a3c7c4a667de810b8337122
+AuthID: 5a3f812dbdb0421f3c6f7243
 ###
 GET http://localhost:4300/circles/search?q=BEU
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 
-
-
+###
+5a3f80602baa73173860d4d2
 ###
 POST http://localhost:4300/circles/
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 
 {
-  "name": "Beulah Slaves",
-  "handle": "beulah",
-  "description": "Beulah IT guys"
+  "name": "DEV GUYS",
+  "handle": "dev-clan",
+  "description": "It's all about the code"
 }
 ###
 POST http://localhost:4300/users
 Content-Type: application/json
 
 {
-  "email": "alex@gmail.com",
-  "username": "stormterry",
-  "first_name": "storme",
-  "password": "stormterry"
+  "email": "segebee@gmail.com",
+  "username": "segebee",
+  "password": "segebee"
 }
 
 ###

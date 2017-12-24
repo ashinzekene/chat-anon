@@ -14,3 +14,8 @@ body {
 .card-list {
   margin: 0px;
 }
+.full-height {
+  min-height: 100vh;
+  height: max-content;
+  overflow: auto;
+}
