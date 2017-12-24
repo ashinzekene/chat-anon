@@ -82,7 +82,7 @@ class App extends Component {
               <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
-              <Route path="/profile" render={ props => <Profile {...props} onLoad={ this.onProfileLoad } user={ this.props.currentUser } /> } />
+              <Route path="/profile" render={ props => <Profile {...props} onLoad={ this.onProfileLoad } user={ this.props.user } /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
           </Sidebar.Pusher>
