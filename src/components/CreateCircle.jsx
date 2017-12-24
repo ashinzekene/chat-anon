@@ -3,7 +3,6 @@ import { Form, Label, Icon } from "semantic-ui-react";
 import { APP_NAME } from "../constants";
 import agent from "../agent"
 import Message from "semantic-ui-react/dist/commonjs/collections/Message/Message";
-import Redirect from "react-router-dom/Redirect";
 
 class CreateCircle extends Component {
   constructor(props) {
@@ -21,6 +20,7 @@ class CreateCircle extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.handleSearchChange = this.handleSearchChange.bind(this)
+    this.removeFellow = this.removeFellow.bind(this)
   }
   componentDidMount() {
     this.props.changeHeader({ title: APP_NAME, back: true })
@@ -51,11 +51,19 @@ class CreateCircle extends Component {
     })
     return
   }
+
+  removeFellow(i) {
+    return () => {
+      console.log("Removing", i)
+      this.setState(prevState => ({
+        users: prevState.users.filter((user, ind) => ind !== i)
+      }))
+    }
+  }
   
   onSubmit(e) {
     let { name, description, fellows, handle  } = this.state
     console.log(e.target.checkValidity())
-    console.log(this.state)
     if (e.target.checkValidity() && fellows.value) {
       let result = {
         name: name.value,
@@ -63,12 +71,9 @@ class CreateCircle extends Component {
         fellows: fellows.value,
         handle: handle.value
       }
+      console.log(result)
       this.setState({ loading: true })
       this.props.createCircle(result)
-      this.setState({ redirect: <Redirect push to={{
-        pathname: '/circles',
-        state: { from: this.props.location }
-      }} /> })
     }
   }
 
@@ -95,9 +100,8 @@ class CreateCircle extends Component {
             <div style={{ padding: "10px 0px"}}>
             { users.map((user, i) => (
               <Label key={i} as='a' color='blue' image>
-                <img key={"img"+i } alt="" src='/assets/images/avatar/small/veronika.jpg' />
-                { `@${user}` }
-                <Label.Detail key={"det"+i }>fellow <Icon name='delete' /></Label.Detail>
+                { user }
+                <Label.Detail onClick={ this.removeFellow(i) } key={"det"+i }>fellow <Icon name='delete' /></Label.Detail>
               </Label>
               ))
             }
