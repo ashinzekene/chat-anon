@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createCircle: payload => dispatch({ type: CIRCLE_CREATED, payload }),
   onProfileLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
-  onAppLoad: () => dispatch({ type: APP_LOAD }),
+  onAppLoad: payload => dispatch({ type: APP_LOAD, payload }),
   onLogin: payload => dispatch({ type: LOGIN, payload }),
   onSignup: payload => dispatch({ type: SIGNUP, payload }),
   onCircleLoad: payload => () => dispatch({ type: CIRCLE_LIST_LOADED, payload }),
@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends Component {
   componentWillMount() {
-    this.props.onAppLoad()
+    this.props.onAppLoad(agent.User.get())
   }
   componentWillReceiveProps(nextProp) {
     if (nextProp.redirectTo) {
@@ -69,8 +69,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Sidebar.Pushable style={{ minHeight: "100vh" }} as={Segment}>
-          <MySidebar visible={ this.props.sidebarVisible } />
+        <Sidebar.Pushable style={{ height: "100vh" }} as={Segment}>
+          <MySidebar currentUser={ this.props.currentUser } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height">
             <MyHeader history={ this.props.history } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
             <Switch>

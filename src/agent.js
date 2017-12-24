@@ -4,7 +4,7 @@ let token;
 const API_ROOT = 'http://localhost:3200/';
 
 const setToken = (_token) => { 
-  token = _token; 
+  token = _token;
   console.log("Token saved", token)
 }
 
@@ -72,6 +72,7 @@ const Circle = {
 
 const User = {
   _getAll: () => request.get('/users/all'),
+  get: () => request.get('/users/'),
   signup: body => request.post('/users', body),
   login: body => request.post('/users/login', body),
   getSelf: () => request.get('/users'),

@@ -2,7 +2,7 @@ const Users = require('../models/user')
 
 module.exports = {
   get(req, res) {
-    Users.findById(req.payload.id, { password: 0 })
+    Users.findById(req.payload._id, { password: 0 })
       .then(user => {
         res.json(user)
       })
@@ -96,7 +96,7 @@ module.exports = {
       })
   },
   delete(req, res) {
-    Users.findByIdAndRemove(req.payload.id)
+    Users.findByIdAndRemove(req.payload._id)
       .then(user => {
         res.json(user)
       })
@@ -129,7 +129,7 @@ module.exports = {
   },
   update(req, res) {
     console.log(req.body)
-    Users.findByIdAndUpdate(req.payload.id, req.body)
+    Users.findByIdAndUpdate(req.payload._id, req.body)
       .then(user => {
         res.json(user)
       })
@@ -139,7 +139,7 @@ module.exports = {
       })
   },
   starPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $addToSet: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(req.payload._id, { $addToSet: { starred_polls: req.body.poll } })
       .then(user => {
         res.json(user)
       })
@@ -149,7 +149,7 @@ module.exports = {
       })
   },
   unstarPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $pop: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(req.payload._id, { $pop: { starred_polls: req.body.poll } })
       .then(user => {
         res.json(user)
       })
@@ -159,7 +159,7 @@ module.exports = {
       })
   },
   follow(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $addToSet: { following: req.params.user } })
+    Users.findByIdAndUpdate(req.payload._id, { $addToSet: { following: req.params.user } })
       .then(user => {
         res.json(user)
       })
@@ -169,7 +169,7 @@ module.exports = {
       })
   },
   unfollow(req, res) {
-    Users.findByIdAndUpdate(req.payload.id, { $pop: { following: req.params.user } })
+    Users.findByIdAndUpdate(req.payload._id, { $pop: { following: req.params.user } })
       .then(user => {
         res.json(user)
       })

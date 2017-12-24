@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { routerReducer } from "react-router-redux";
 import circle from "./circle";
 import circles from "./circles";
+import currentUser from "./currentUser";
 import common from "./common";
 import poll from "./poll";
 import polls from "./polls";
@@ -13,6 +14,7 @@ export default combineReducers({
   circle,
   circles,
   common,
+  currentUser,
   poll,
   polls,
   user,

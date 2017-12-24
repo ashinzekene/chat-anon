@@ -24,9 +24,16 @@ const MySidebar = props => (
       <Icon name='announcement' />
       Explore
     </Menu.Item>
-    <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
-      <Button icon="signup" content="Sign Up" />
-    </Menu.Item>
+    {
+      props.currentUser.hasOwnProperty("username") ?
+      <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
+        <Button icon="log out" content="Log Out" />
+      </Menu.Item>
+      :
+      <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
+        <Button icon="signup" content="Sign Up" />
+      </Menu.Item>
+    }
   </Sidebar>
 )
 
