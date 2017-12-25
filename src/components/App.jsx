@@ -15,9 +15,18 @@ import CreateCircle from './CreateCircle';
 import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
-import { SIDEBAR_TOGGLE, CHANGE_HEADER, LOGIN, SIGNUP, APP_LOAD, PROFILE_PAGE_LOADED, REDIRECT } from '../actions'
-import { POLL_LIST_LOADED } from '../actions'
-import { CIRCLE_LIST_LOADED, CIRCLE_CREATED } from '../actions'
+import {
+  CIRCLE_LIST_LOADED,
+  CIRCLE_CREATED,
+  POLL_LIST_LOADED,
+  SIDEBAR_TOGGLE,
+  CHANGE_HEADER,
+  LOGIN,
+  SIGNUP,
+  APP_LOAD,
+  REDIRECT, 
+  POLL_SELECTED,
+  CIRCLE_SELECTED} from '../actions'
 import agent from '../agent';
 
 const mapStateToProps = state => ({
@@ -32,7 +41,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createCircle: payload => dispatch({ type: CIRCLE_CREATED, payload }),
-  onProfileLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
+  selectPoll: poll => dispatch({ type: POLL_SELECTED, poll }),
+  onSelect: circle => dispatch({ type: CIRCLE_SELECTED, circle }),
   onAppLoad: payload => dispatch({ type: APP_LOAD, payload }),
   onLogin: payload => dispatch({ type: LOGIN, payload }),
   onSignup: payload => dispatch({ type: SIGNUP, payload }),
@@ -45,6 +55,8 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends Component {
   componentWillMount() {
+    const token = localStorage.getItem('jwt')
+    if (token) agent.setToken(token)
     this.props.onAppLoad(agent.User.get())
   }
   componentWillReceiveProps(nextProp) {
@@ -65,6 +77,14 @@ class App extends Component {
   createCircle = circle => {
     this.props.createCircle(agent.Circle.create(circle))
   }
+
+  selectPoll = poll => {
+    this.props.selectPoll(poll)
+  }
+  
+  selectCircle = circle => {
+    this.props.selectCircle(circle)
+  }
   
   render() {
     return (
@@ -78,11 +98,11 @@ class App extends Component {
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
-              <Route path="/circles" render={ props => <CircleList {...props} circles={ this.props.circles } onLoad={ this.props.onCircleLoad(agent.Circle._getAll()) } /> } />
-              <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />
+              <Route path="/circles" render={ props => <CircleList {...props} circles={ this.props.circles } selectCircle={ this.selectCircle } onLoad={ this.props.onCircleLoad(agent.Circle._getAll()) } /> } />
+              <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
-              <Route path="/profile" render={ props => <Profile {...props} onLoad={ this.onProfileLoad } user={ this.props.user } /> } />
+              <Route path="/profile" render={ props => <Profile {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
           </Sidebar.Pusher>

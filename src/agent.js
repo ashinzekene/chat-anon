@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let token;
+let token
 const API_ROOT = 'http://localhost:3200/';
 
 const setToken = (_token) => { 
@@ -49,6 +49,7 @@ const Poll = {
   _getAll: () => request.get('/polls/all'),
   getAll: () => request.get('/polls'),
   create: body => request.post('/polls', body),
+  circle: circleId => request.get(`/polls/circle/${circleId}`),
   get: pollId => request.get(`/polls/${pollId}`),
   delete: pollId => request.delete(`/polls/${pollId}`),
   search: query => request.get(`/polls/search?q=${query}`),
@@ -60,24 +61,27 @@ const Circle = {
   getAll: () => request.get('/circles'),
   create: body => request.post('/circles', body),
   get: circleId => request.get(`/circles/${circleId}`),
-  edit: (cirlceID, body) => request.post(`/circles/${cirlceID}`, body),
-  delete: cirlceID => request.delete(`/circles/${cirlceID}`),
+  edit: (cirlceId, body) => request.post(`/circles/${cirlceId}`, body),
+  delete: cirlceId => request.delete(`/circles/${cirlceId}`),
   search: query => request.get(`/circles/search?q=${query}`),
-  join: cirlceID => request.post(`/circles/${cirlceID}/join`),
-  addAdmin: (circleId, adminId) => request.post(`/circles/${circleId}/admin/${adminId}`),
-  addfellow: (circleId, fellowId) => request.post(`/circles/${circleId}/fellow/${fellowId}`),
-  removeAdmin: (circleId, adminId) => request.delete(`/circles/${circleId}/admin/${adminId}`),
-  removefellow: (circleId, fellowId) => request.delete(`/circles/${circleId}/fellow/${fellowId}`),
+  join: cirlceId => request.post(`/circles/${cirlceId}/join`),
+  fellows: cirlceId => request.get(`/circles/${cirlceId}/fellows`),
+  addAdmin: (payload, circleId) => request.post(`/circles/${circleId}/admins`, payload),
+  addfellow: (payload, circleId) => request.post(`/circles/${circleId}/fellows`, payload),
+  removeAdmin: (payload, circleId) => request.delete(`/circles/${circleId}/admins`, payload),
+  removefellow: (payload, circleId) => request.delete(`/circles/${circleId}/fellows`, payload),
 };
 
 const User = {
   _getAll: () => request.get('/users/all'),
-  get: () => request.get('/users/'),
+  getAll: () => request.get('/users/'),
+  get: username => request.get(`/users/${username}`),
+  getMe: () => request.get('/users/me'),
   signup: body => request.post('/users', body),
   login: body => request.post('/users/login', body),
-  getSelf: () => request.get('/users'),
   search: query => request.get(`/users/search?q=${query}`),
-  getUser: username => request.get(`/users/${username}`),
+  followers: () => request.get('/users/followers'),
+  following: () => request.get('/users/following'),
   editProfile: () => request.put('/users/'),
   verify: body => request.post('/users/verify', body),
   verifyMail: body => request.post('/users/verify_mail', body),
