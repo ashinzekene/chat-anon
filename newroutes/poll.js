@@ -18,10 +18,13 @@ router.get('/all', poll._all)
 
 router.get('/search', poll.search)
 
+router.get('/circle/:circle', poll.circle);
+
 router
   .route('/:poll')
   .get(poll.get)
   .delete(poll.delete);
+
 
 router.post('/:poll/appropriate', poll.appropriate);
 

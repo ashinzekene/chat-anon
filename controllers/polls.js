@@ -59,6 +59,17 @@ module.exports = {
         res.status(403).json({ err: "Could not delete poll" })
       })
   },
+  circle(req, res) {
+    Polls.find({ circle: req.params.circle }, "question comment creator stars")
+      .populate("creator", "username first_name last_name")
+      .then(polls => {
+        res.json(polls)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "Could not fetch polls for the given circle" })  
+      })
+  },
   appropriate(req, res) {
     Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.payload.id }, $pop: { inappropriate: req.payload.id } })
       .then(poll => {

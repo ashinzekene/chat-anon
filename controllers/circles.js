@@ -75,6 +75,17 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: 'Could not create circle' })
       })
+    },
+  fellows(req, res) {
+    Circles.findById(req.params.circle, "fellows")
+      .populate("fellows", "username first_name last_name")
+      .then(circle => {
+        res.json(circle.fellows)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not fetch user for the circle' })
+      })
   },
   addFellow(req, res) {
     Circles.findByIdAndUpdate(req.body.circle, { $addToSet: { fellows: req.params.fellow } })

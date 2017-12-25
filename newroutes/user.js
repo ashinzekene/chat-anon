@@ -5,13 +5,18 @@ const { fellowPoll, auth } = require('./middlewares');
 const router = express.Router();
 
 router.route('/')
-  .get(user.get)
+  .get(user.all)
   .put(user.update)
   .post(user.create)
   .delete(user.delete);
 
+router.get('/me', user.get)
+
 router.get('/all', user.all)
 router.post('/login', user.login)
+
+router.get('/followers', user.followers)
+router.get('/following', user.following)
 
 router.get('/search', user.search)
 

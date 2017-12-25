@@ -23,23 +23,14 @@ router
   .post(circle.update)
   .delete(circle.delete);
 
-
-router.route('/:circle/fellows').get((req, res) => {
-  Circles.find({ _id: req.params.circle })
-    .populate('fellows')
-    .select('fellows')
-    .exec()
-    .then(fellows => res.json(fellows))
-    .catch(err => res.json({ err }));
-});
-
 router
-  .route('/:circle/fellow/:fellow')
+  .route('/:circle/fellows')
+  .get(circle.fellows)
   .post(circle.addFellow)
   .delete(circle.removeFellow);
 
 router
-  .route('/:circle/admin/:fellow')
+  .route('/:circle/admins')
   .post(circle.addAdmin)
   .delete(circle.removeAdmin);
 

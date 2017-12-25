@@ -177,5 +177,26 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: "Could not unfollow user" })
       })
-  },
+    },
+    following(req, res) {
+      Users.findOne(req.payload._id, "following")
+      .populate("following", "username first_name last_name")
+      .then(user => {
+        res.json(user.following)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "Could not get following" })
+      })
+    },
+    followers(req, res) {
+      Users.find({ following: req.payload._id}, "username first_name last_name")
+      .then(users => {
+        res.json(users)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "Could not get following" })
+      })
+  }
 }
