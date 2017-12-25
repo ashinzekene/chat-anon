@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-import { Container, Dimmer, Loader } from "semantic-ui-react";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider/Divider";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
+import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label";
+import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer/Dimmer";
+import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
+import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 import agent from '../../agent';
-import { CIRCLE_PAGE_LOADED } from '../../actions';
+import { CIRCLE_PAGE_LOADED, CIRCLE_FELLOWS_REQUEST, CIRCLE_POLLS_REQUEST } from '../../actions';
 import { RESET_HEADER } from '../../actions';
 import UserList from "../UserList";
 import MiniPollList from '../MiniPollList'
-import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
-import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label";
 
 const mapStateToProps = state => ({
   polls: state.polls,
@@ -23,15 +25,19 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCircle: (payload) => dispatch({ type: CIRCLE_PAGE_LOADED, payload }),
-  unload: () => dispatch({ type: RESET_HEADER })
+  loadCircle: payload => dispatch({ type: CIRCLE_PAGE_LOADED, payload }),
+  unload: () => dispatch({ type: RESET_HEADER }),
+  getPolls: payload => dispatch({ type: CIRCLE_POLLS_REQUEST, payload }),
+  getFellows: payload => dispatch({ type: CIRCLE_FELLOWS_REQUEST, payload })
 })
 
 class Circle extends Component {
   constructor(props) {
     super(props)
-    this.switchMenu = this.switchMenu.bind(this)
     this.state = { menu: "fellows" }
+    this.switchMenu = this.switchMenu.bind(this)
+    this.getFellows = this.getFellows.bind(this)
+    this.getPolls = this.getPolls.bind(this)
   }
   componentWillMount() {
     this.props.loadCircle(agent.Circle.get(this.props.match.params.id))
@@ -41,7 +47,12 @@ class Circle extends Component {
       nextProps.changeHeader({ title: nextProps.circle.name, back: true })
     }
   }
-
+  getFellows() {
+    this.props.getFellows(agent.Circle.fellows(this.props.circle._id))
+  }
+  getPolls() {
+    this.props.getPolls(agent.Poll.circle(this.props.circle._id))
+  }
   switchMenu(e, { name }) {
     this.setState({ menu: name })
   }
@@ -74,15 +85,17 @@ class Circle extends Component {
         <Menu secondary pointing widths={2}>
           <Menu.Item name="fellows" active={ menu === "fellows" } onClick={ this.switchMenu }>
             Fellows 
-            <Label circular content={ users.length } />
+            { this.props.circle.fellows && <Label circular content={ this.props.circle.fellows.length } /> }
           </Menu.Item>
           <Menu.Item name="polls" active={ menu === "polls" } onClick={ this.switchMenu }>
             Polls 
-            <Label circular content={ polls.length } />
+            { this.props.circle.polls && <Label circular content={ this.props.circle.polls.length } /> }
           </Menu.Item>
         </Menu>
         { menu === "fellows" ? 
-        <FellowList users={ users } /> : <GroupPollList polls={ polls } /> 
+        <FellowList onLoad={ this.getFellows } fellows={ this.props.circle.fellows } /> 
+        :
+        <GroupPollList onLoad={ this.getPolls } polls={ this.props.circle.polls } /> 
         }
       </Container>
     )
@@ -95,7 +108,7 @@ const FellowList = props => (
     <Header content="Fellows"/>
     <Button content="Add Admin" icon='add' labelPosition='left' color="blue" />
     <Button style={{ marginBottom: "20px" }} content="Add Fellow" icon='add' labelPosition='right' color="blue" />
-    <UserList users={ props.users } />
+    <UserList onLoad={ props.onLoad } users={ props.fellows } />
   </Segment> 
 )
 
@@ -104,63 +117,63 @@ const GroupPollList = props => (
     <Header content="Polls"/>
     <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' color="blue" />
     <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/poll` } content="Create Poll" icon='add' labelPosition='right' color="blue" />
-    <MiniPollList polls={ props.polls } />
+    <MiniPollList onLoad={ props.onLoad } polls={ props.polls } />
   </Segment>
 )
 export default connect(mapStateToProps, mapDispatchToProps)(Circle);
 
-const polls = [
-  {
-    question: "When should we hold tomorrow's class",
-    comment: "Let's know so we tell the lecturer",
-    canVote: true
-  },
-  {
-    question: "Are you through with the assignment",
-    comment: "Let's know so we submit on time",
-    canVote: false
-  },
-  {
-    question: "Who is the finest girl in this circle",
-    comment: "Some girls have been making mouth since",
-    canVote: true
-  },
-]
+// const polls = [
+//   {
+//     question: "When should we hold tomorrow's class",
+//     comment: "Let's know so we tell the lecturer",
+//     canVote: true
+//   },
+//   {
+//     question: "Are you through with the assignment",
+//     comment: "Let's know so we submit on time",
+//     canVote: false
+//   },
+//   {
+//     question: "Who is the finest girl in this circle",
+//     comment: "Some girls have been making mouth since",
+//     canVote: true
+//   },
+// ]
 
-const users = [
-  {
-    image: "/images/user.jpg",
-    username: "chinonso",
-    first_name: "Nonso",
-    last_name: "Ashinze",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "ekonash",
-    first_name: "Ekene",
-    last_name: "Ashinze",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "ekonash",
-    first_name: "Ekene",
-    last_name: "Ashinze",
-    isFollowing: false
-  },
-  {
-    image: "/images/user.jpg",
-    username: "storme",
-    first_name: "Terry",
-    last_name: "Storm",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "flash",
-    first_name: "Agrand",
-    last_name: "Verge",
-    isFollowing: false
-  },
-]
+// const users = [
+//   {
+//     image: "/images/user.jpg",
+//     username: "chinonso",
+//     first_name: "Nonso",
+//     last_name: "Ashinze",
+//     isFollowing: true
+//   },
+//   {
+//     image: "/images/user.jpg",
+//     username: "ekonash",
+//     first_name: "Ekene",
+//     last_name: "Ashinze",
+//     isFollowing: true
+//   },
+//   {
+//     image: "/images/user.jpg",
+//     username: "ekonash",
+//     first_name: "Ekene",
+//     last_name: "Ashinze",
+//     isFollowing: false
+//   },
+//   {
+//     image: "/images/user.jpg",
+//     username: "storme",
+//     first_name: "Terry",
+//     last_name: "Storm",
+//     isFollowing: true
+//   },
+//   {
+//     image: "/images/user.jpg",
+//     username: "flash",
+//     first_name: "Agrand",
+//     last_name: "Verge",
+//     isFollowing: false
+//   },
+// ]
