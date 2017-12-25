@@ -51,7 +51,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err)
-        res.ststus(403).jso({ err: 'Could not get all your cirlces' })
+        res.ststus(403).json({ err: 'Could not get all your cirlces' })
       })
   },
   _all(req, res) {
@@ -127,4 +127,14 @@ module.exports = {
         res.status(403).json("could not remove Admin")
       })
   },
+  user(req, res) {
+    Circles.find({ fellows: { $in: [req.params.user] } })
+    .then(circles => {
+      res.json(circles)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(403).json({ err: 'Could not get user cirlces' })
+    })
+  }
 }

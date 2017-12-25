@@ -23,6 +23,8 @@ router
   .post(circle.update)
   .delete(circle.delete);
 
+router.get('/user/:user', circle.user)
+
 router
   .route('/:circle/fellows')
   .get(circle.fellows)

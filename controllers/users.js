@@ -76,7 +76,7 @@ module.exports = {
       })
   },
   getUser(req, res) {
-    Users.find({ username : req.params.user }, "username first_name last_name following")
+    Users.findOne({ username : req.params.user }, "username first_name last_name following")
       .then(user => {
         res.json(user)
       })
@@ -179,7 +179,7 @@ module.exports = {
       })
     },
     following(req, res) {
-      Users.findOne(req.payload._id, "following")
+      Users.findById(req.params.user, "following")
       .populate("following", "username first_name last_name")
       .then(user => {
         res.json(user.following)
@@ -190,7 +190,7 @@ module.exports = {
       })
     },
     followers(req, res) {
-      Users.find({ following: req.payload._id}, "username first_name last_name")
+      Users.find({ following: req.params.user}, "username first_name last_name")
       .then(users => {
         res.json(users)
       })

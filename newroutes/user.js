@@ -15,8 +15,8 @@ router.get('/me', user.get)
 router.get('/all', user.all)
 router.post('/login', user.login)
 
-router.get('/followers', user.followers)
-router.get('/following', user.following)
+router.get('/:user/followers', user.followers)
+router.get('/:user/following', user.following)
 
 router.get('/search', user.search)
 
