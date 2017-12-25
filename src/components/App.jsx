@@ -28,6 +28,7 @@ import {
   POLL_SELECTED,
   CIRCLE_SELECTED} from '../actions'
 import agent from '../agent';
+import User from './User';
 
 const mapStateToProps = state => ({
   polls: state.polls,
@@ -42,7 +43,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createCircle: payload => dispatch({ type: CIRCLE_CREATED, payload }),
   selectPoll: poll => dispatch({ type: POLL_SELECTED, poll }),
-  onSelect: circle => dispatch({ type: CIRCLE_SELECTED, circle }),
+  selectCircle: circle => dispatch({ type: CIRCLE_SELECTED, circle }),
   onAppLoad: payload => dispatch({ type: APP_LOAD, payload }),
   onLogin: payload => dispatch({ type: LOGIN, payload }),
   onSignup: payload => dispatch({ type: SIGNUP, payload }),
@@ -103,6 +104,7 @@ class App extends Component {
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
               <Route path="/profile" render={ props => <Profile {...props} /> } />
+              <Route path="/@:id" render={ props => <User {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
           </Sidebar.Pusher>

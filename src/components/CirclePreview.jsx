@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 import { Card, Icon } from 'semantic-ui-react';
+import { CIRCLE_SELECTED } from '../actions/index';
+
+const mapDispatchToProps = dispatch => ({
+  onSelect: circle => () => dispatch({ type: CIRCLE_SELECTED, circle }) 
+}) 
+
 
 const CirclePreview = props => (
-  <Card onClick={ props.onClick } as={ Link } to={`/circle/${props.handle}`} >
+  <Card onClick={ props.onSelect(props) } as={ Link } to={`/circle/${props.handle}`} >
     <Card.Content header={ props.name } />
     <Card.Content meta={ props.description } />
     <Card.Content extra>
@@ -17,4 +24,4 @@ const CirclePreview = props => (
   </Card>
 );
 
-export default CirclePreview;
+export default connect(null, mapDispatchToProps)(CirclePreview);

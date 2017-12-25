@@ -11,7 +11,7 @@ const PollPreview = props => (
         { props.creator && props.creator.username }
         <div style={{ float: "right" }} >
           <Icon name="group" />
-          { props.circle.name }
+          { props.circle && props.circle.name }
         </div>
       </Card.Content>
   </Card>

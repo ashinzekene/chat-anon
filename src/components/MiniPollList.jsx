@@ -1,6 +1,7 @@
 import React from "react";
 import Item from "semantic-ui-react/dist/commonjs/views/Item/Item";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import Async from "../HOCs/Async";
 
 const MiniPollList = props => (
   <div style={{ textAlign: "left" }}>
@@ -19,4 +20,4 @@ const MiniPollList = props => (
   </div>
 )
 
-export default MiniPollList
+export default Async('polls')(MiniPollList)

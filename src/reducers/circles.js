@@ -3,7 +3,7 @@ import {
   CIRCLE_LIST_UNLOADED,
   CIRCLE_DELETED,
   CIRCLE_CREATED,
-  MY_CIRCLES_REQUESTED
+  CIRCLES_REQUESTED
 } from '../actions';
 
 export default (state = [], action) => {
@@ -14,7 +14,7 @@ export default (state = [], action) => {
     case CIRCLE_LIST_UNLOADED: {
       return [];
     }
-    case MY_CIRCLES_REQUESTED: {
+    case CIRCLES_REQUESTED: {
       return action.error? state: action.payload;
     }
     case CIRCLE_CREATED: {

@@ -1,5 +1,13 @@
-import { CIRCLE_PAGE_LOADED, CIRCLE_PAGE_UNLOADED, CIRCLE_FELLOW_ADDED, CIRCLE_FELLOW_REMOVED, CIRCLE_ADMIN_ADDED, CIRCLE_ADMIN_REMOVED, CIRCLE_SELECTED } from "../actions/index";
-
+import { 
+  CIRCLE_PAGE_LOADED,
+  CIRCLE_PAGE_UNLOADED,
+  CIRCLE_FELLOW_ADDED,
+  CIRCLE_FELLOW_REMOVED,
+  CIRCLE_ADMIN_ADDED,
+  CIRCLE_ADMIN_REMOVED,
+  CIRCLE_SELECTED,
+  CIRCLE_POLLS_REQUEST,
+  CIRCLE_FELLOWS_REQUEST } from "../actions/index";
 
 
 export default (state = {}, action) => {
@@ -12,6 +20,12 @@ export default (state = {}, action) => {
     }
     case CIRCLE_PAGE_UNLOADED: {
       return {}
+    }
+    case CIRCLE_POLLS_REQUEST: {
+      return { ...state, polls: action.payload}
+    }
+    case CIRCLE_FELLOWS_REQUEST: {
+      return { ...state, fellows: action.payload}
     }
     case CIRCLE_FELLOW_ADDED: {
       return Object.assign({}, state, {

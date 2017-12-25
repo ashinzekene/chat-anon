@@ -26,11 +26,7 @@ const circleSchema = new Schema({
   admins: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
-  }],
-  polls: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Poll',
-  }],
+  }]
 }, { timestamps: true });
 
 

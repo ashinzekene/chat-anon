@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button } from "semantic-ui-react";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message/Message";
 import { connect } from "react-redux";
-import { MY_CIRCLES_REQUESTED, POLL_CREATED, APP_NAME } from "../actions";
+import { CIRCLES_REQUESTED, POLL_CREATED, APP_NAME } from "../actions";
 import agent from "../agent";
 
 const mapStateToProps = state => ({
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCircles: payload => dispatch({ type: MY_CIRCLES_REQUESTED, payload }),
+  getCircles: payload => dispatch({ type: CIRCLES_REQUESTED, payload }),
   createPoll: payload => dispatch({ type: POLL_CREATED, payload })
 })
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Item from "semantic-ui-react/dist/commonjs/views/Item/Item";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
+import Async from "../HOCs/Async";
 
 const MiniCircleList = props => (
   <div style={{ textAlign: "left" }}>
@@ -19,4 +20,4 @@ const MiniCircleList = props => (
   </div>
 )
 
-export default MiniCircleList
+export default Async('circles')(MiniCircleList)

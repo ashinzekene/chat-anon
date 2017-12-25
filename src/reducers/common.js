@@ -9,7 +9,6 @@ import {
   POLL_CREATED,
   CIRCLE_CREATED,
   EDIT_PROFILE,
-  POLL_PAGE_LOADED
 } from '../actions';
 
 const initialState = {
@@ -27,9 +26,6 @@ export default (state = initialState, action) => {
     }
     case SIDEBAR_TOGGLE: {
       return Object.assign({}, state, { sidebarVisible: !state.sidebarVisible })
-    }
-    case POLL_PAGE_LOADED: {
-      return { ...state, redirectTo: "/" }
     }
     case REDIRECT: {
       return { ...state, redirectTo: null }

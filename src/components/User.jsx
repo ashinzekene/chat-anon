@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
@@ -7,20 +8,36 @@ import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 import Rating from "semantic-ui-react/dist/commonjs/modules/Rating/Rating";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
+import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
 import MiniCircleList from './MiniCircleList'
 import UserList from './UserList'
+import agent from "../agent";
+import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED } from "../actions/index";
 
-class Profile extends Component {
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+const mapDispatchToProps = dispatch => ({
+  getFollowers: userId => () => dispatch({ type: FOLLOWERS_REQUESTED, payload: agent.User.followers(userId) }),
+  getFollowing: userId => () => dispatch({ type: FOLLOWING_REQUESTED, payload: agent.User.following(userId) }),
+  getCircles: userId => () => dispatch({ type: USER_CIRCLES_REQUESTED, payload: agent.Circle.user(userId) }),
+  onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
+})
+
+class User extends Component {
   constructor(props) {
     super(props)
     this.state = { menu: "followers" }
+    this.switchMenu = this.switchMenu.bind(this)
   }
   componentDidMount() {
-    this.props.onLoad()
+    console.log(this.props)
+    this.props.onLoad(agent.User.get(this.props.match.params.id))
   }
 
-  switchMenu = (e, { name }) => {
+  switchMenu(e, { name }) {
     this.setState({ menu: name })
   }
   
@@ -36,10 +53,11 @@ class Profile extends Component {
           size="big"
           shape="circular"
           alt="user image"
-          src="/images/user.jpg"
+          src={ user.avatar_url || PROFILE_IMG_URL }
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           { user.username }
+          <Button floated="right" size="large" content="Edit Profile"/>
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
             <div>40 polls voted</div>
@@ -62,70 +80,12 @@ class Profile extends Component {
             <Label circular content={ "30" } />
           </Menu.Item>
         </Menu>
-        { menu === "following" && <UserList users={ followers } /> }
-        { menu === "circles" && <MiniCircleList circles={ circles } /> }
-        { menu === "followers" && <UserList users={ followers } /> }
+        { menu === "following" && <UserList onLoad={ this.props.getFollowing(user._id) } users={ user.following } /> }
+        { menu === "circles" && <MiniCircleList onLoad={ this.props.getCircles(user._id) } circles={ user.circles } /> }
+        { menu === "followers" && <UserList onLoad={ this.props.getFollowers(user._id) } users={ user.followers } /> }
       </Container>
     );
   }
 }
 
-export default Profile;
-
-
-
-const circles = [
-  {
-    name: "The People of Calibre",
-    description: "Let's know so we tell the lecturer",
-    canVote: true
-  },
-  {
-    name: "The Geneticists",
-    description: "Let's know so we submit on time",
-    canVote: false
-  },
-  {
-    name: "Classy Babes",
-    description: "The girls that have mouth",
-    canVote: true
-  },
-]
-
-const followers = [
-  {
-    image: "/images/user.jpg",
-    username: "chinonso",
-    first_name: "Nonso",
-    last_name: "Ashinze",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "ekonash",
-    first_name: "Ekene",
-    last_name: "Ashinze",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "ekonash",
-    first_name: "Ekene",
-    last_name: "Ashinze",
-    isFollowing: false
-  },
-  {
-    image: "/images/user.jpg",
-    username: "storme",
-    first_name: "Terry",
-    last_name: "Storm",
-    isFollowing: true
-  },
-  {
-    image: "/images/user.jpg",
-    username: "flash",
-    first_name: "Agrand",
-    last_name: "Verge",
-    isFollowing: false
-  },
-]
+export default connect(mapStateToProps, mapDispatchToProps)(User)
