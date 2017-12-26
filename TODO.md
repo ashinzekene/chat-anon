@@ -1,2 +1,28 @@
-- Remove the schema methods and do them on the routers
-  - use $addToSet **OR** a query (reusable) helper function
+## TRACK TASKS TO DO AND PROGRESS
+
+### REACT
+- EDIT PROFILE
+- ADD A FELLOW TO A CIRCLE
+- MAKE A CIRCLE FELLOW AN ADMIN
+- VOTING A POLL
+- RESTRICT DATA TO BE DISPLAYED DEPENDING ON STATE
+  - LOGGED IN ( CIRCLE ADMIN )
+  - LOGGED IN ( CIRCLE FELLOW )
+  - LOGGED IN
+  - NOT LOGGED IN
+
+
+### BACKEND (NODE)
+
+- FETCH USER SPECIFIC DATA
+  - CIRCLE -
+    - isAdmin
+    - isFellow
+  - USER -
+    - isFollowing
+    - isFollower
+    - isMe
+  - POLL -
+    - hasVoted
+    - isEligible
+- RESTRICT ROUTES

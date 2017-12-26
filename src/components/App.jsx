@@ -25,7 +25,8 @@ import {
   APP_LOAD,
   REDIRECT, 
   POLL_SELECTED,
-  CIRCLE_SELECTED} from '../actions'
+  CIRCLE_SELECTED
+} from '../actions'
 import agent from '../agent';
 import User from './User';
 
