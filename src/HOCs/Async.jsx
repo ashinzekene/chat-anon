@@ -8,13 +8,13 @@ const Async = propName => WrappedComponent => {
     }
     isEmpty(prop) {
       return prop == null ||
-      (prop.hasOwnProperty("length") && prop.length === 0) ||
+      (!prop.hasOwnProperty("length")) ||
       (prop.constructor === "object" && Object.keys(prop).length) === 0
     }
     render() {
       return this.isEmpty(this.props[propName]) ?
        (
-        <Loader active content={ `Loading ${propName}` } />
+        <Loader active inline="centered" content={ `Loading ${propName}` } />
       ) : (
         <WrappedComponent { ...this.props} />
       )

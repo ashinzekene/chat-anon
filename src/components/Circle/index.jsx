@@ -106,8 +106,8 @@ class Circle extends Component {
 const FellowList = props => (
   <Segment style={{ marginBottom: "20px" }}>
     <Header content="Fellows"/>
-    <Button content="Add Admin" icon='add' labelPosition='left' color="blue" />
-    <Button style={{ marginBottom: "20px" }} content="Add Fellow" icon='add' labelPosition='right' color="blue" />
+    <Button content="Add Admin" icon='add' labelPosition='left' />
+    <Button style={{ marginBottom: "20px" }} content="Add Fellow" icon='add' labelPosition='right' />
     <UserList onLoad={ props.onLoad } users={ props.fellows } />
   </Segment> 
 )
@@ -115,8 +115,8 @@ const FellowList = props => (
 const GroupPollList = props => (
   <Segment style={{ marginBottom: "20px" }}>
     <Header content="Polls"/>
-    <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' color="blue" />
-    <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/poll` } content="Create Poll" icon='add' labelPosition='right' color="blue" />
+    <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' />
+    <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/poll` } content="Create Poll" icon='add' labelPosition='right' />
     <MiniPollList onLoad={ props.onLoad } polls={ props.polls } />
   </Segment>
 )

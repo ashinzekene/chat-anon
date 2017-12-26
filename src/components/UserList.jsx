@@ -16,7 +16,7 @@ const UserList = props => {
   return (
     <div style={{ textAlign: "left" }}>
       <Item.Group divided unstackable>
-        { props.users.length && props.users.map((user, i) => (
+        { props.users.map((user, i) => (
           <Item as={Link} onClick={onSelect(user)} to={`/@${user.username}`} key={`item${i}`}>
             <img alt={user.username} height="50px" width="50px" style={userImg} src={user.avatar_url || AVATAR_URL} />
             <Item.Content>
