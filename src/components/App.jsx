@@ -8,7 +8,6 @@ import MySidebar from './MySidebar';
 import Home from './Home.jsx';
 import Circle from './Circle'
 import Poll from './Poll'
-import Profile from './Profile';
 import Signup from './Signup';
 import Login from './Login';
 import CreateCircle from './CreateCircle';
@@ -58,7 +57,7 @@ class App extends Component {
   componentWillMount() {
     const token = localStorage.getItem('jwt')
     if (token) agent.setToken(token)
-    this.props.onAppLoad(agent.User.get())
+    this.props.onAppLoad(agent.User.getMe())
   }
   componentWillReceiveProps(nextProp) {
     if (nextProp.redirectTo) {
@@ -103,7 +102,6 @@ class App extends Component {
               <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll._getAll()) } /> } />
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
-              <Route path="/profile" render={ props => <Profile {...props} /> } />
               <Route path="/@:id" render={ props => <User {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>

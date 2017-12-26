@@ -16,7 +16,7 @@ const MySidebar = props => (
       <Icon name='users' />
       Cirlces
     </Menu.Item>
-    <Menu.Item style={ menuItemStyle } as={ NavLink } to="/profile" name='profile'>
+    <Menu.Item style={ menuItemStyle } as={ NavLink } to={ `@${props.currentUser.username}` } name='profile'>
       <Icon name='user' />
       Profile
     </Menu.Item>
@@ -31,7 +31,7 @@ const MySidebar = props => (
       </Menu.Item>
       :
       <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
-        <Button icon="signup" content="Sign Up" />
+        <Button icon="signup" content="Sign Up/In" />
       </Menu.Item>
     }
   </Sidebar>

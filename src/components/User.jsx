@@ -16,7 +16,8 @@ import agent from "../agent";
 import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED } from "../actions/index";
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  currentUser: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -29,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
 class User extends Component {
   constructor(props) {
     super(props)
-    this.state = { menu: "followers" }
+    this.state = { menu: "followers", isCurrentUser: false }
     this.switchMenu = this.switchMenu.bind(this)
   }
   componentDidMount() {
@@ -38,8 +39,9 @@ class User extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { user, match } = this.props
+    let { user, match, currentUser } = this.props
     if (nextProps.user && nextProps.user._id !== user._id) {
+      this.setState({ isCurrentUser: currentUser && currentUser._id === nextProps.user._id })
       console.error("WILL NOW FETCH CURRENT MENU", this.state.menu)
       switch (this.state.menu) {
         case "followers" : {
@@ -65,7 +67,7 @@ class User extends Component {
   
   render() {
     let { match, user } = this.props
-    let { menu } = this.state
+    let { menu, isCurrentUser } = this.state
    if(!user) {
      return <Loader />
    }
@@ -79,32 +81,40 @@ class User extends Component {
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           { user.username }
-          <Button floated="right" size="large" content="Edit Profile"/>
+          { isCurrentUser && <Button floated="right" size="large" content="Edit Profile"/> }
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
-            <div>40 polls voted</div>
+          { isCurrentUser && <div>40 polls voted</div> }
           </Header.Subheader>
         </Header>
-        <Menu secondary pointing widths={3}>
-          <Menu.Item name="followers" active={ menu === "followers" } onClick={ this.switchMenu }>
-          <Icon name="user" />
-            Followers
-            { user.followers && <Label circular content={ user.followers.length } /> }
-          </Menu.Item>
-          <Menu.Item name="circles" active={ menu === "circles" } onClick={ this.switchMenu }>
-          <Icon name="users" />
-            Circles
-            { user.circles && <Label circular content={ user.circles.length } /> }
-          </Menu.Item>
-          <Menu.Item name="following" active={ menu === "following" } onClick={ this.switchMenu }>
-          <Icon name="user" />
-            Following
-            { user.following && <Label circular content={ user.following.length } /> }
-          </Menu.Item>
-        </Menu>
-        { menu === "following" && <UserList onLoad={ this.props.getFollowing(match.params.id) } users={ user.following } /> }
-        { menu === "circles" && <MiniCircleList onLoad={ this.props.getCircles(match.params.id) } circles={ user.circles } /> }
-        { menu === "followers" && <UserList onLoad={ this.props.getFollowers(match.params.id) } users={ user.followers } /> }
+        { user._id && 
+          ( 
+          <div>
+            <Menu secondary pointing widths={3}>
+              <Menu.Item name="followers" active={ menu === "followers" } onClick={ this.switchMenu }>
+              <Icon name="user" />
+                Followers
+                { user.followers && <Label circular content={ user.followers.length } /> }
+              </Menu.Item>
+              <Menu.Item name="circles" active={ menu === "circles" } onClick={ this.switchMenu }>
+              <Icon name="users" />
+                Circles
+                { user.circles && <Label circular content={ user.circles.length } /> }
+              </Menu.Item>
+              <Menu.Item name="following" active={ menu === "following" } onClick={ this.switchMenu }>
+              <Icon name="user" />
+                Following
+                { user.following && <Label circular content={ user.following.length } /> }
+              </Menu.Item>
+            </Menu>
+            <div>
+              { menu === "following" && <UserList onLoad={ this.props.getFollowing(match.params.id) } users={ user.following } /> }
+              { menu === "circles" && <MiniCircleList onLoad={ this.props.getCircles(match.params.id) } circles={ user.circles } /> }
+              { menu === "followers" && <UserList onLoad={ this.props.getFollowers(match.params.id) } users={ user.followers } /> }
+            </div>
+          </div>
+          ) 
+        }
       </Container>
     );
   }
