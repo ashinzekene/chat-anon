@@ -1,8 +1,6 @@
 const express = require('express');
 const poll = require('../controllers/polls');
-const {
-  adminPoll, fellowPoll, hasNotVoted, auth,
-} = require('./middlewares');
+const { auth, extractUser } = require('./middlewares');
 
 const router = express.Router();
 
@@ -11,7 +9,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(poll._all)
+  .all(extractUser, auth.required)
+  .get(poll._all) // NOT CORRECT O !!!!!!!!
   .post(poll.create);
 
 router.get('/all', poll._all)

@@ -1,7 +1,6 @@
 const express = require('express');
-const Circles = require('../models/circle')
 const circle = require('../controllers/circles') 
-const { adminCircle, fellowCircle, auth } = require('./middlewares');
+const { extractUser, auth } = require('./middlewares');
 
 const router = express.Router();
 
@@ -10,18 +9,21 @@ const router = express.Router();
 
 router
   .route('/')
+  .all(extractUser, auth.required)
   .get(circle.all)
   .post(circle.create);
 
+// NOBODY SHOULD BE ABLE TO ACCESS THIS EXCEPT ME :smiling_imp
 router.get('/all', circle._all)
 
 router.get('/search', circle.search)
 
 router
   .route('/:circle')
+  .all(extractUser, auth.required)
   .get(circle.get)
-  .post(circle.update)
-  .delete(circle.delete);
+  .post(circle.update) // Has to be an admin
+  .delete(circle.delete); // Has to be an admin || Maybe shouldnot delete the group but exit it
 
 router.get('/user/:user', circle.user)
 
