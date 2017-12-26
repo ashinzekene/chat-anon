@@ -179,7 +179,7 @@ module.exports = {
       })
     },
     following(req, res) {
-      Users.findById(req.params.user, "following")
+      Users.findOne({ username: req.params.user}, "following")
       .populate("following", "username first_name last_name")
       .then(user => {
         res.json(user.following)
@@ -190,10 +190,13 @@ module.exports = {
       })
     },
     followers(req, res) {
-      Users.find({ following: req.params.user}, "username first_name last_name")
-      .then(users => {
-        res.json(users)
-      })
+      Users.findOne({ username: req.params.user}, "_id username")
+        .then(user => {
+          Users.find({ following: user._id }, "username first_name last_name")
+            .then(users => {
+              res.json(users)
+            })
+        })
       .catch(err => {
         console.log(err)
         res.status(403).json({ err: "Could not get following" })

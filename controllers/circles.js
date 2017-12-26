@@ -1,4 +1,5 @@
 const Circles = require('../models/circle')
+const User = require('../models/user')
 
 module.exports = {
   get(req, res) {
@@ -128,10 +129,13 @@ module.exports = {
       })
   },
   user(req, res) {
-    Circles.find({ fellows: { $in: [req.params.user] } })
-    .then(circles => {
-      res.json(circles)
-    })
+    User.findOne({ username: req.params.user}, "_id username")
+      .then(user => {
+        Circles.find({ fellows: { $in: [user._id] } })
+        .then(circles => {
+          res.json(circles)
+        })
+      })
     .catch(err => {
       console.log(err)
       res.status(403).json({ err: 'Could not get user cirlces' })
