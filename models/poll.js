@@ -4,10 +4,7 @@ const { Schema } = mongoose;
 
 const optionSchema = new Schema({
   option: String,
-  votes: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  }],
+  votes: Number
 });
 
 const pollSchema = new Schema({
@@ -39,24 +36,6 @@ pollSchema.virtual('isAppropriate').get(function () {
   return this.appropriate.length > this.in_appropriate.length;
 });
 
-pollSchema.query.forCircle = function (circle) {
-  return this.find({ circle });
-};
-
-pollSchema.methods.markAppropriate = function (user) {
-  if (this.appropriate.some(id => id === user)) {
-    this.appropriate.push(user);
-  }
-  return this.save();
-};
-
-pollSchema.methods.markInAppropriate = function (user) {
-  if (!this.appropriate.some(id => id === user)) {
-    this.appropriate.push(user);
-  }
-  return this.save();
-};
-
 pollSchema.methods.vote = function (option) {
   this.options.map((options) => {
     if (`${options._id}` === `${option}`) {
@@ -67,8 +46,26 @@ pollSchema.methods.vote = function (option) {
   return this.save();
 };
 
-pollSchema.methods.forUser = function (user) {
-  return Object.assign({}, this, { hasVoted: user.hasVoted() }, { starred: user.hasStarred() }, { created: user.createdByMe() });
+pollSchema.methods.toJSONFor = function (user) {
+  if (!user.hasVoted(this._id)) {
+    return {
+      question: this.question,
+      comment: this.comment,
+      creator: this.creator,
+      circle: this.circle,
+      createdAt: this.createdAt, 
+      updatedAt: this.updatedAt, 
+      otions: this.options,
+      hasVoted: user.hasVoted(this._id)
+    }
+  }
+  return {
+    creator: this.creator, 
+    circle: this.circle, 
+    comment: this.comment, 
+    question: this.question, 
+    hasVoted: user.hasVoted(this._id),
+  } 
 };
 
 const Poll = mongoose.model('Poll', pollSchema);

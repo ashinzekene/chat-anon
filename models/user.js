@@ -8,13 +8,14 @@ const userSchema = new Schema({
     unique: true,
     minlength: 5
   },
-  avatar_url:String,
+  avatar_url: String,
   first_name: String,
   last_name: String,
   password: {
     type: String,
   },
   gender: {
+    type: String,
     enum: ['male', 'female', 'others']
   },
   email: {
@@ -40,14 +41,6 @@ userSchema.methods.createdByMe = function (poll) {
   return this.created_polls.some(id => `${id}` === `${poll}`);
 };
 
-userSchema.methods.isAdmin = function (circle) {
-  return this.admin_circles.some(id => `${id}` === `${circle}`);
-};
-
-userSchema.methods.isFellow = function (circle) {
-  return this.circles.some(id => `${id}` === `${circle}`);
-};
-
 userSchema.methods.hasStarred = function (poll) {
   return this.voted_polls.some(id => `${id}` === `${poll}`);
 };
@@ -56,80 +49,40 @@ userSchema.methods.hasVoted = function (poll) {
   return this.voted_polls.some(id => `${id}` === `${poll}`);
 };
 
-userSchema.methods.vote = function (poll) {
-  if (!this.voted_polls.some(id => `${id}` === `${poll}`)) {
-    this.voted_polls.push(poll);
+userSchema.methods.isFollowing = function (userId) {
+  return this.following.some(id => `${id}` === `${userId}`);
+};
+
+userSchema.static('findByUsername', function (username, cb) {
+  return this.find({ username }, cb);
+});
+
+userSchema.static('findByEmail', function (email, cb) {
+  return this.find({ email }, cb);
+});
+
+userSchema.methods.toJSONFor = function (user) {
+  if (!user) {
+    return {
+      username: this.username,
+      avatar_url: this.avatar_url,
+      first_name: this.first_name,
+      gender: this.gender,
+      updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
+    }
   }
-  return this.save();
-};
-
-userSchema.methods.createPoll = function (poll) {
-  if (!this.created_polls.some(id => `${id}` === `${poll}`)) {
-    this.created_polls.push(poll);
-  }
-  return this.save();
-};
-
-userSchema.methods.uncreatePoll = function (poll) {
-  this.created_polls.remove(poll);
-  return this.save();
-};
-
-userSchema.methods.starPoll = function (poll) {
-  if (!this.starred_polls.some(id => `${id}` === `${poll}`)) {
-    this.starred_polls.push(poll);
-  }
-  return this.save();
-};
-
-userSchema.methods.unStarPoll = function (poll) {
-  this.starred_polls.remove(poll);
-  return this.save();
-};
-
-userSchema.methods.addToFellow = function (circle) {
-  if (!this.circles.some(id => `${id}` === `${circle}`)) {
-    this.circles.push(circle);
-  }
-  return this.save();
-};
-
-userSchema.methods.removeFromFellow = function (circle) {
-  this.circles.remove(circle);
-  this.admin_circles.remove(circle);
-  return this.save();
-};
-
-userSchema.methods.addToAdmin = function (circle) {
-  if (!this.admin_circles.some(id => `${id}` === `${circle}`)) {
-    this.admin_circles.push(circle);
-  }
-  return this.save();
-};
-
-userSchema.methods.removeFromAdmin = function (circle) {
-  this.admin_circles.remove(circle);
-  return this.save();
-};
-
-userSchema.methods.addToInvitee = function (circle) {
-  if (!this.invitee_circles.some(id => `${id}` === `${circle}`)) {
-    this.invitee_circles.push(circle);
-  }
-  return this.save();
-};
-
-userSchema.methods.removeFromInvitee = function (circle) {
-  this.invitee_circles.remove(circle);
-  return this.save();
-};
-
-userSchema.statics.addToAdmin = function (userID, circleID, cb) {
-  return this.findByIdAndUpdate(userID, { $addToSet: { admins_circles: circleID, circles: circleID } }, cb);
-};
-
-userSchema.statics.addToFellow = function (userID, circleID, cb) {
-  return this.findByIdAndUpdate(userID, { $addToSet: { circles: circleID } }, cb);
+  return {
+      username: this.username,
+      avatar_url: this.avatar_url,
+      first_name: this.first_name,
+      gender: this.gender,
+      myFollower: user.isFollowing(this._id),
+      followingMe: this.following.some(id => `${id}` === `${user._id}`),
+      updatedAt: this.updatedAt,
+      createdAt: this.createdAt,
+    };
+    // following: this.following.toProfileJSONFor(user)
 };
 
 const User = mongoose.model('User', userSchema);

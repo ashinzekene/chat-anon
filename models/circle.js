@@ -42,65 +42,23 @@ circleSchema.methods.isInvitee = function (user) {
   return this.invitees.findIndex(id => `${id}` === `${user}`) > -1;
 };
 
-circleSchema.methods.addInvitee = function (user) {
-  if (this.invitees.findIndex(id => `${id}` === `${user}`) === -1) {
-    this.invitees.push(user);
+circleSchema.methods.toJSONFor = function(user) {
+  return {
+    _id: this._id,
+    handle: this.handle,
+    name: this.name,
+    creator: this.creator,
+    fellows: this.fellows,
+    invitees: this.invitees,
+    admins: this.admins,
+    description: this.description,
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
+    isAdmin: this.isAdmin(user._id),
+    isFellow: this.isFellow(user._id),
+    isCreator: `${this.creator._id}` === `${user._id}`
   }
-  return this.save();
-};
-
-circleSchema.methods.removeInvitee = function (user) {
-  this.invitees.remove(user);
-  return this.save();
-};
-
-
-circleSchema.methods.addAdmin = function (user) {
-  if (this.admins.findIndex(id => `${id}` === `${user}`) === -1) {
-    this.admins.push(user);
-  }
-  return this.save();
-};
-
-circleSchema.methods.removeAdmin = function (user) {
-  this.admins.remove(user);
-  return this.save();
-};
-
-
-circleSchema.methods.addFellow = function (user) {
-  if (this.fellows.findIndex(id => `${id}` === `${user}`) === -1) {
-    this.fellows.push(user);
-  }
-  return this.save();
-};
-
-circleSchema.methods.removeFellow = function (user) {
-  this.fellows.remove(user);
-  return this.save();
-};
-
-
-circleSchema.methods.addPoll = function (user) {
-  if (this.polls.findIndex(id => `${id}` === `${user}`) === -1) {
-    this.polls.push(user);
-  }
-  return this.save();
-};
-
-circleSchema.methods.removePoll = function (user) {
-  this.polls.remove(user);
-  return this.save();
-};
-
-circleSchema.statics.addFellow = function(circle_id, fellow_id, cb) {
-  this.findByIdAndUpdate(circle_id, { $addToSet: { fellows: fellow_id } }, cb)
 }
-
-circleSchema.statics.addAdmin = function(circle_id, admin_id, cb) {
-  this.findByIdAndUpdate(circle_id, { $addToSet: { fellows: admin_id, admins: admin_id } }, cb)
-}
-
 const Circle = mongoose.model('Circle', circleSchema);
 
 module.exports = Circle;
