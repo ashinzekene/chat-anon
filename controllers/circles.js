@@ -6,7 +6,7 @@ module.exports = {
     Circles.findOne({ handle: req.params.circle })
       .populate("creator", "username")
       .then(circle => {
-        res.json(circle)
+        res.json(circle.toJSONFor(req.user))
       })
       .catch(err => {
         console.log(err)
@@ -46,7 +46,7 @@ module.exports = {
       })
   },
   all(req, res) {
-    Circles.find({ fellows: { $in: [req.payload.id] } })
+    Circles.find({ fellows: { $in: [req.user.id] } })
       .then(circles => {
         res.json(circles)
       })
@@ -67,7 +67,7 @@ module.exports = {
       })
   },
   create(req, res) {
-    const newCircle = Object.assign({}, req.body, { creator: req.payload.id, admins: [req.payload.id], fellows: [ ...req.body.fellows, req.payload.id] })
+    const newCircle = Object.assign({}, req.body, { creator: req.user.id, admins: [req.user.id], fellows: [ ...req.body.fellows, req.user.id] })
     Circles.create(newCircle)   
       .then(circle => {
         res.json(circle)

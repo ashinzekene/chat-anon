@@ -2,7 +2,7 @@ const Users = require('../models/user')
 
 module.exports = {
   get(req, res) {
-    Users.findById(req.payload._id, { password: 0 })
+    Users.findById(req.user._id, { password: 0 })
       .then(user => {
         res.json(user)
       })
@@ -76,9 +76,9 @@ module.exports = {
       })
   },
   getUser(req, res) {
-    Users.findOne({ username : req.params.user }, "username first_name last_name following")
+    Users.findOne({ username: req.params.user}, "username first_name last_name following")
       .then(user => {
-        res.json(user)
+        res.json(user.toJSONFor(req.user))
       })
       .catch(err => {
         console.log(err)
@@ -96,7 +96,7 @@ module.exports = {
       })
   },
   delete(req, res) {
-    Users.findByIdAndRemove(req.payload._id)
+    Users.findByIdAndRemove(req.user._id)
       .then(user => {
         res.json(user)
       })
@@ -129,7 +129,7 @@ module.exports = {
   },
   update(req, res) {
     console.log(req.body)
-    Users.findByIdAndUpdate(req.payload._id, req.body)
+    Users.findByIdAndUpdate(req.user._id, req.body)
       .then(user => {
         res.json(user)
       })
@@ -139,7 +139,7 @@ module.exports = {
       })
   },
   starPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload._id, { $addToSet: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(req.user._id, { $addToSet: { starred_polls: req.body.poll } })
       .then(user => {
         res.json(user)
       })
@@ -149,7 +149,7 @@ module.exports = {
       })
   },
   unstarPoll(req, res) {
-    Users.findByIdAndUpdate(req.payload._id, { $pop: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(req.user._id, { $pop: { starred_polls: req.body.poll } })
       .then(user => {
         res.json(user)
       })
@@ -159,7 +159,7 @@ module.exports = {
       })
   },
   follow(req, res) {
-    Users.findByIdAndUpdate(req.payload._id, { $addToSet: { following: req.params.user } })
+    Users.findByIdAndUpdate(req.user._id, { $addToSet: { following: req.params.user } })
       .then(user => {
         res.json(user)
       })
@@ -169,7 +169,7 @@ module.exports = {
       })
   },
   unfollow(req, res) {
-    Users.findByIdAndUpdate(req.payload._id, { $pop: { following: req.params.user } })
+    Users.findByIdAndUpdate(req.user._id, { $pop: { following: req.params.user } })
       .then(user => {
         res.json(user)
       })
@@ -179,7 +179,7 @@ module.exports = {
       })
     },
     following(req, res) {
-      Users.findOne({ username: req.params.user}, "following")
+      Users.findByUsername(req.params.user, "following")
       .populate("following", "username first_name last_name")
       .then(user => {
         res.json(user.following)
@@ -190,7 +190,7 @@ module.exports = {
       })
     },
     followers(req, res) {
-      Users.findOne({ username: req.params.user}, "_id username")
+      Users.findByUsername(req.params.user, "_id username")
         .then(user => {
           Users.find({ following: user._id }, "username first_name last_name")
             .then(users => {
@@ -201,5 +201,12 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: "Could not get following" })
       })
+  },
+  byUsername(req, res) {
+    Users.findByUsername(req.params.user)
+      .then(user => {
+        res.json(user)
+      })
+      .catch(console.log)
   }
 }

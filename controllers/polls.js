@@ -1,10 +1,31 @@
 const Polls = require('../models/poll');
+const Circles = require('../models/circle');
 
 module.exports = {
   get(req, res) {
     Polls.findById(req.params.poll)
       .then(poll => {
-        res.json(poll)
+        // let iPoll = { ...poll.toJSON(), hasVoted: req.user.hasVoted(poll._id)}
+        res.json(poll.toJSONFor(req.user))
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not get poll' })
+      })
+  },
+  all(req, res) {
+    /*
+    * 1. Get the circles of the selected user
+    * 2. Select just their IDs
+    * 3. Find all polls whose circles has any of those 
+    */
+    Circles.find({ fellows: [req.user._id]}, "_id")
+    .then(circles => {
+      let circleIds = circles.map(circle => circle._id)
+        Polls.find({ circle : { $in: circleIds } })
+          .then(polls => {
+            res.json(polls)
+          })
       })
       .catch(err => {
         console.log(err)
@@ -37,8 +58,8 @@ module.exports = {
     let newPoll = Object.assign(
       {},
       req.body,
-      { options: req.body.options.map(option => { votes: [], option })},
-      { creator: req.payload.id }
+      { options: req.body.options.map(option => ({ votes: 0, option })) },
+      { creator: req.user.id }
     )
     Polls.create(newPoll)
       .then(poll => {
@@ -71,7 +92,7 @@ module.exports = {
       })
   },
   appropriate(req, res) {
-    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.payload.id }, $pop: { inappropriate: req.payload.id } })
+    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.user.id }, $pop: { inappropriate: req.user.id } })
       .then(poll => {
         res.json(poll)
       })
@@ -92,7 +113,7 @@ module.exports = {
     })
   },
   inappropriate(req, res) {
-    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { inappropriate: req.payload.id }, $pop: { appropriate: req.payload.id } })
+    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { inappropriate: req.user.id }, $pop: { appropriate: req.user.id } })
       .then(poll => {
         res.json(poll)
       })
@@ -112,25 +133,8 @@ module.exports = {
       })
   },
   vote(req, res) {
-    Polls.findOneAndUpdate(
-      { _id: req.params.poll,
-        "options.id": req.body.option,
-      },
-      { $addToSet: { "options.$.votes": req.payload.id } })
-      .then(poll => {
-        res.json(poll)
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(403).json({ err: "could not vote in poll" })
-      })
-  },
-  unVote(req, res) {
-    Polls.findOneAndUpdate(
-      { _id: req.params.id,
-        "options.id": req.body.option,
-       },
-      { $pop: { "options.$.votes": req.payload.id } })
+    Polls.findOneAndUpdate({ _id: req.params.poll, "options.id": req.body.option },
+      { $inc: { "options.$.votes": 1 } })
       .then(poll => {
         res.json(poll)
       })

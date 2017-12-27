@@ -11,26 +11,29 @@ AuthID: 5a3618879662a518502932c0
 }
 
 ###
+GET http://localhost:4300/users/steph
+AuthID: 5a3f821fbdb0421f3c6f7244
 ###
 GET http://localhost:4300/circles/5a3fc5d03245cb3f10ea4573/fellows
 Content-Type: application/json
 AuthID: 5a3f821fbdb0421f3c6f7244
 ###
-GET http://localhost:4300/circles/search?q=
+GET http://localhost:4300/users/ekonash
 Content-Type: application/json
-AuthID: 5a3618879662a518502932c0
+AuthID: 5a3fc9a8879514375c2f8a22
 
 ###
 5a3f80602baa73173860d4d2
 ###
 POST http://localhost:4300/circles/
 Content-Type: application/json
-AuthID: 5a3618879662a518502932c0
+AuthID: 5a3c7ca39c2f611a54441d24
 
 {
-  "name": "DEV GUYS",
-  "handle": "dev-clan",
-  "description": "It's all about the code"
+  "name": "Black People",
+  "handle": "black-people",
+  "description": "We are so black man",
+  "fellows": []
 }
 ###
 POST http://localhost:4300/users
@@ -43,30 +46,27 @@ Content-Type: application/json
 }
 
 ###
-"_id": "5a3618879662a518502932c0",
-    "updatedAt": "2017-12-17T13:39:02.920Z",
-    "createdAt": "2017-12-17T07:11:03.344Z",
-    "email": "ashinzekene@gmail.com",
-    "username": "ekene",
-    "first_name": "ekene",
-GET http://localhost:4300/polls/59ffe5ba6e21d02124914b2b
-authid: 5a3618879662a518502932c0
+
+GET http://localhost:4300/circles/tech-guys
+authid: 5a3f821fbdb0421f3c6f7244
 ###
-GET http://localhost:4300/polls/59ffe5e56e21d02124914b2c
+POST  http://localhost:4300/users
 authid: 5a3618879662a518502932c0
+
+{ "first_name": "Ashinze"}
 ###
-GET http://localhost:4300/users/all
+GET http://localhost:4300/circles/all
 authid: 5a3618879662a518502932c0
 ###
 
-POST http://localhost:4300/polls/
+GET http://localhost:4300/polls/
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 
 {
-  "question": "Who worked more at Beulah?",
-  "comment": "A quick poll to know who did more work during IT at Beulah",
-  "circle": "5a3618e022289662a518502932c1",
-  "options": ["Ekene","Alex","Tolu","Stephanie"]
+  "question": "Which framework is best?",
+  "comment": "Let's know now o",
+  "circle": "5a3fc5d03245cb3f10ea4573",
+  "options": ["Angular","React","Vue","Backbone"]
 }
 

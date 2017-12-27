@@ -16,13 +16,16 @@
 
 - FETCH USER SPECIFIC DATA
   - CIRCLE -
-    - isAdmin
-    - isFellow
+    - isAdmin  ✅
+    - isFellow  ✅
   - USER -
-    - isFollowing
-    - isFollower
-    - isMe
+    - isFollowing  ✅
+    - isFollower  ✅
+    - isMe  ✅
   - POLL -
-    - hasVoted
+    - hasVoted  ✅
     - isEligible
-- RESTRICT ROUTES
+- RESTRICT ROUTES   ❗✅
+
+
+- FETCH ONLY A USER'S POLLS
