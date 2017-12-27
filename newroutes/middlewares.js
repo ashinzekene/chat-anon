@@ -2,65 +2,6 @@ const Users = require('../models/user');
 const Circles = require('../models/circle');
 const Polls = require('../models/poll');
 
-const auth = {
-  optional() {
-    return (req, res, next) => next();
-  },
-  required() {
-    return (req, res, next) => {
-      if (req.payload) {
-        return next();
-      }
-      return res.status(401).json({ err: 'You are not logged in' });
-    };
-  },
-};
-
-function adminPoll() {
-  return (req, res, next) => {
-    const created = req.payload.createdPolls.some(req.poll._id);
-    const isAdmin = req.payload.isAdmin(req.poll.circle);
-    if (created || isAdmin) {
-      return next();
-    }
-    return res.status(401).json({ err: 'You cannot access this route' });
-  };
-}
-
-function fellowPoll() {
-  return (req, res, next) => {
-    if (req.payload.isFellow(req.poll.circle)) {
-      return next();
-    }
-    return res.status(401).json({ err: 'You cannot access this route' });
-  };
-}
-
-function adminCircle(req, res, next) {
-  console.log('Circle ', req.params.circle);
-  if (req.payload.isAdmin(req.params.circle)) {
-    return next();
-  }
-  return res.status(401).json({ err: 'You cannot access this route' });
-}
-
-function fellowCircle(req, res, next) {
-  console.log('Circle ', req.payload._id, req.params.circle);
-  if (req.payload.isFellow(req.params.circle)) {
-    return next();
-  }
-  return res.status(401).json({ err: 'You cannot access this route' });
-}
-
-function hasNotVoted(id) {
-  return (req, res, next) => {
-    if (!req.payload.hasVoted(id)) {
-      return next();
-    }
-    return res.status(401).json({ err: 'You cannot access this route' });
-  };
-}
-
 function extractUser(req, res, next) {
   const id = req.headers.authid;
   Users.findById(id)
@@ -72,18 +13,99 @@ function extractUser(req, res, next) {
       }
       next()
     })
-    .catch(() => {
-      console.log("Could not get the currently logged in user")
+    .catch(err => {
+      console.log(err)
+      console.log("An error occurred, Could not get the currently logged in user")
       next()
     })
 }
 
+const auth = {
+  optional() {
+    return (req, res, next) => next();
+  },
+  required(req, res, next) {
+    if (req.user) {
+      return next();
+    }
+    return res.status(401).json({ err: 'You are not logged in' });
+  },
+};
+
+function allowCircleAdmin(req, res, next) {
+  Circles.findOne({ handle: req.params.circle, admins: { $in : [ req.user._id ]} })
+    .then(circle => {
+      if (circle && circle._id) {
+        next()
+      } else {
+        return res.status(401).json({ err: 'You are not authorized. Only accessible to circle Admins' });
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      return res.status(401).json({ err: 'An error occurred, You are not authorized. Only accessible to circle Admins' });
+    })
+}
+
+function allowCircleFellow(req, res, next) {
+  Circles.findOne({ handle: req.params.circle, fellows: { $in : [ req.user._id ]} })
+    .then(circle => {
+      if (circle && circle._id) {
+        next()
+      } else {
+        return res.status(401).json({ err: 'You are not authorized. Only accessible to circle Fellows' });
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      return res.status(401).json({ err: 'An error occurred, You are not authorized. Only accessible to circle Fellows' });
+    })
+}
+
+function canAccessPoll(req, res, next) {
+  Polls.findById(req.params.poll)
+    .then(poll => {
+      req.poll = poll
+      Circles.findOne({ _id: poll.circle, fellows: { $in: [req.user._id] } })
+        .then(circle => {
+          if (circle && circle._id) {
+            req.circle = circle
+            return next()
+          }
+          return res.status(401).json({ err: 'You are not authorized to view this poll' });
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        return res.status(401).json({ err: 'An error occurred, You are not authorized to view this poll' });  
+    })
+}
+
+function canVotePoll(req, res, next) {
+  if (req.user.hasVoted(req.params.poll)) return res.status(401).json("You have already voted")
+  Polls.findById(req.params.poll)
+    .then(poll => {
+      req.poll = poll
+      Circles.findOne({ _id: poll.circle, fellows: { $in: [req.user._id] } })
+        .then(circle => {
+          if (circle && circle._id) {
+            req.circle = circle
+            return next()
+          }
+          return res.status(401).json({ err: 'You are not authorized to vote this poll' });
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        return res.status(401).json({ err: 'An error occurred, You are not authorized to vote this poll' });  
+    })
+}
+
 module.exports = {
-  adminPoll,
-  fellowPoll,
-  adminCircle,
-  fellowCircle,
-  hasNotVoted,
   extractUser,
   auth,
+  allowCircleAdmin,
+  allowCircleFellow,
+  canVotePoll,
+  canAccessPoll
 };

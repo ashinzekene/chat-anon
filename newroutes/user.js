@@ -1,15 +1,15 @@
 const express = require('express');
 const user = require('../controllers/users')
-const { fellowPoll, auth, extractUser } = require('./middlewares');
+const { auth, extractUser } = require('./middlewares');
 
 const router = express.Router();
 
 router.route('/')
   .get(user.all)
-  .put(user.update)
-  .post(user.create)
+  .post(user.update)
   .delete(user.delete);
-
+  
+router.post('/create', user.create)
 router.get('/me', extractUser, auth.required, user.get)
 
 router.get('/all', user.all)
@@ -24,9 +24,10 @@ router.post('/verify', user.verify)
 router.post('/verify_mail', user.verifyEmail)
 router.post('/verify_username', user.verifyUsername)
 
-router.post('/:poll/star', fellowPoll(), user.starPoll);
+router.post('/:poll/star', user.starPoll);
 
 router.get('/:user', user.getUser)
+
 
 router.route('/:user/follow')
   .all(extractUser, auth.required)

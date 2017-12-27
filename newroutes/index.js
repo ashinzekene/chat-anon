@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { getPayload } = require('./middlewares');
+const { extractUser } = require('./middlewares');
 
 router.get('/', (req, res) => res.json({ hi: 'ok' }));
-router.use(getPayload());
+router.use(extractUser);
 router.use('/circles', require('./circle'));
 router.use('/polls', require('./poll'));
 router.use('/users', require('./user'));
