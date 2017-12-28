@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { Icon } from "semantic-ui-react";
 import propTypes from 'prop-types';
 
-class Header extends Component {
+class MyHeader extends Component {
   constructor(props) {
     super(props)
     this.state = { }
@@ -49,7 +49,7 @@ class Header extends Component {
   }
 }
 
-Header.propTypes = {
+MyHeader.propTypes = {
   header: propTypes.object.isRequired,
   history: propTypes.object.isRequired,
 }
@@ -57,10 +57,15 @@ Header.propTypes = {
 const style = {
   "textAlign": "center",
   "padding": "20px 10px",
-  "margin": "10px",
   "display": "flex",
   "justifyContent": "space-between",
-  "position": "relative",
+  "position": "fixed",
+  "width": "100%",
+  "boxShadow": "1px 1px 12px 5px rgba(140, 140, 140, 0.4)",
+  "top": "0",
+  "backgroundColor": "white",
+  "zIndex": "10000",
+  "left": "0",
 }
 
-export default Header
+export default MyHeader

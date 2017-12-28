@@ -90,10 +90,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <MyHeader history={ this.props.history } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
         <Sidebar.Pushable style={{ height: "100vh" }} as={Segment}>
           <MySidebar currentUser={ this.props.currentUser } visible={ this.props.sidebarVisible } />
-          <Sidebar.Pusher className="full-height">
-            <MyHeader history={ this.props.history } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
+          <Sidebar.Pusher className="full-height" style={{ marginTop: "80px"}}>
             <Switch>
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
