@@ -12,7 +12,7 @@ module.exports = {
       })
   },
   login(req, res) {
-    let {username, password } = req.body
+    let { username, password } = req.body
     Users.findOne({ username, password }, { password: 0 })
       .then(user => {
         if (!user) {
@@ -27,8 +27,8 @@ module.exports = {
   },
   search(req, res) {
     Users.find({ username: RegExp(req.query.q) }, "username first_name")
-    .limit(5)
-    .then(users => {
+      .limit(5)
+      .then(users => {
         res.json(users)
       })
       .catch(err => {
@@ -50,7 +50,7 @@ module.exports = {
       })
   },
   verifyEmail(req, res) {
-    Users.find({ email : req.body.email }, {
+    Users.find({ email: req.body.email }, {
       _id: 0,
       email: 1,
     })
@@ -63,7 +63,7 @@ module.exports = {
       })
   },
   verifyUsername(req, res) {
-    Users.find({ username : req.body.username }, {
+    Users.find({ username: req.body.username }, {
       _id: 0,
       username: 1,
     })
@@ -76,7 +76,7 @@ module.exports = {
       })
   },
   getUser(req, res) {
-    Users.findOne({ username: req.params.user}, "username first_name last_name following")
+    Users.findOne({ username: req.params.user }, "username first_name last_name following")
       .then(user => {
         res.json(user.toJSONFor(req.user))
       })
@@ -112,7 +112,7 @@ module.exports = {
     user.username = username
     user.email = email
     user.password = password
-    let newUser= new Users(user)
+    let newUser = new Users(user)
     newUser.save((err, user) => {
       if (user) {
         return res.json(user)
@@ -177,33 +177,34 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: "Could not unfollow user" })
       })
-    },
-    following(req, res) {
-      Users.findByUsername(req.params.user, "following")
+  },
+  following(req, res) {
+    Users.findOne({ username: req.params.user }, "following")
       .populate("following", "username first_name last_name")
       .then(user => {
+        console.log(user.following)
         res.json(user.following)
       })
       .catch(err => {
         console.log(err)
         res.status(403).json({ err: "Could not get following" })
       })
-    },
-    followers(req, res) {
-      Users.findByUsername(req.params.user, "_id username")
-        .then(user => {
-          Users.find({ following: user._id }, "username first_name last_name")
-            .then(users => {
-              res.json(users)
-            })
-        })
+  },
+  followers(req, res) {
+    Users.findOne({ username: req.params.user }, "_id username")
+      .then(user => {
+        Users.find({ following: user._id }, "username first_name last_name")
+          .then(users => {
+            res.json(users)
+          })
+      })
       .catch(err => {
         console.log(err)
         res.status(403).json({ err: "Could not get following" })
       })
   },
   byUsername(req, res) {
-    Users.findByUsername(req.params.user)
+    Users.findOne({ username: req.params.user })
       .then(user => {
         res.json(user)
       })

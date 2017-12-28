@@ -14,13 +14,14 @@ module.exports = {
       })
   },
   all(req, res) {
-    /*
-    * 1. Get the circles of the selected user
-    * 2. Select just their IDs
-    * 3. Find all polls whose circles has any of those 
-    */
-    Circles.find({ fellows: [req.user._id]}, "_id")
+    /**
+     * 1. Get the circles of the selected user
+     * 2. Select just their IDs
+     * 3. Find all polls whose circles has any of those  
+     */
+    Circles.find({ fellows: { $in: [req.user._id]} }, "_id")
     .then(circles => {
+      console.log("Circles", circles.map(cir => cir._id))
       let circleIds = circles.map(circle => circle._id)
         Polls.find({ circle : { $in: circleIds } })
           .then(polls => {
