@@ -64,6 +64,7 @@ userSchema.static('findByEmail', function (email, cb) {
 userSchema.methods.toJSONFor = function (user) {
   if (!user) {
     return {
+      _id: this._id,
       username: this.username,
       avatar_url: this.avatar_url,
       first_name: this.first_name,
@@ -73,6 +74,7 @@ userSchema.methods.toJSONFor = function (user) {
     }
   }
   return {
+      _id: this._id,
       username: this.username,
       avatar_url: this.avatar_url,
       first_name: this.first_name,
