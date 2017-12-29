@@ -46,7 +46,7 @@ const request = {
 }
 
 const Poll = {
-  _getAll: () => request.get('/polls/all'),
+  // _getAll: () => request.get('/polls/all'),
   getAll: () => request.get('/polls'),
   create: body => request.post('/polls', body),
   circle: circleId => request.get(`/polls/circle/${circleId}`),
@@ -57,7 +57,7 @@ const Poll = {
 };
 
 const Circle = {
-  _getAll: () => request.get('/circles/all'),
+  // _getAll: () => request.get('/circles/all'),
   getAll: () => request.get('/circles'),
   user: userId => request.get(`/circles/user/${userId}`),
   create: body => request.post('/circles', body),
@@ -74,7 +74,7 @@ const Circle = {
 };
 
 const User = {
-  _getAll: () => request.get('/users/all'),
+  // _getAll: () => request.get('/users/all'),
   getAll: () => request.get('/users/'),
   get: username => request.get(`/users/${username}`),
   getMe: () => request.get('/users/me'),

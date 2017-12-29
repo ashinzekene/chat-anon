@@ -9,6 +9,10 @@ class Settings extends Component {
           <Form.Input label="First Name" />
           <Form.Input label="Lasr Name" />
         </Form.Group>
+        <Form.Group>
+          <Form.Input label="First Name" />
+          <Form.Input label="Lasr Name" />
+        </Form.Group>
       </Form>
     )
   }
