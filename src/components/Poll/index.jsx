@@ -53,13 +53,12 @@ class Poll extends Component {
       )
     }
     return (
-      <Container textAlign="center" color="purple">
+      <Container textAlign="center">
         <h4>{ this.props.poll.comment }</h4>
         <Grid>
         { poll.options && poll.options.map((option, i) => (
           <Grid.Column key={ "col"+i } width={ 8 } mobile={ 16 }>
             <Segment
-              color="purple"
               style={ segmentStyle }
               padded
               raised

@@ -8,12 +8,12 @@ import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
 import Rating from "semantic-ui-react/dist/commonjs/modules/Rating/Rating";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 
-import MiniCircleList from './MiniCircleList'
-import UserList from './UserList'
-import agent from "../agent";
-import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED } from "../actions/index";
+import MiniCircleList from '../MiniCircleList'
+import UserList from '../UserList'
+import MyHeaderButton from "./MyHeaderButton";
+import agent from "../../agent";
+import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED } from "../../actions/index";
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -32,32 +32,42 @@ class User extends Component {
     super(props)
     this.state = { menu: "followers", isCurrentUser: false }
     this.switchMenu = this.switchMenu.bind(this)
+    this.fetchCurrentMenu = this.fetchCurrentMenu.bind(this)
   }
   componentDidMount() {
     console.log(this.props)
     this.props.onLoad(agent.User.get(this.props.match.params.id))
+    this.fetchCurrentMenu()
   }
-
+  
   componentWillReceiveProps(nextProps) {
     let { user, match, currentUser } = this.props
+    if (nextProps.match.params.id !== match.params.id) {
+      this.props.onLoad(agent.User.get(nextProps.match.params.id))
+    }
     if (nextProps.user && nextProps.user._id !== user._id) {
       this.setState({ isCurrentUser: currentUser && currentUser._id === nextProps.user._id })
-      console.error("WILL NOW FETCH CURRENT MENU", this.state.menu)
-      switch (this.state.menu) {
-        case "followers" : {
-          this.props.getFollowers(match.params.id)
-          break;
-        }
-        case "following": {
-          this.props.getFollowing(match.params.id)
-          break;
-        }
-        case "circles": {
-          this.props.getCircles(match.params.id)
-          break;
-        }
-        default: {}
+      this.fetchCurrentMenu(nextProps)
+    }
+  }
+  
+  fetchCurrentMenu(nextProps = this.props) {
+    console.error("WILL NOW FETCH CURRENT MENU", this.state.menu)
+    let { match } = nextProps
+    switch (this.state.menu) {
+      case "followers" : {
+        this.props.getFollowers(match.params.id)
+        break;
       }
+      case "following": {
+        this.props.getFollowing(match.params.id)
+        break;
+      }
+      case "circles": {
+        this.props.getCircles(match.params.id)
+        break;
+      }
+      default: {}
     }
   }
   
@@ -81,7 +91,7 @@ class User extends Component {
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           { user.username }
-          { isCurrentUser && <Button floated="right" size="large" content="Edit Profile"/> }
+          <MyHeaderButton isCurrentUser={isCurrentUser} user={ user } />
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
           { isCurrentUser && <div>40 polls voted</div> }

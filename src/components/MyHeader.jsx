@@ -24,9 +24,7 @@ class MyHeader extends Component {
     this.props.toggleSidebar()
   }
   render() {
-    let menu
     let { path } = this.state
-    
     return (
       <h3 style={ style } >
         <LeftIcon
