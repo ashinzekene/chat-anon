@@ -21,7 +21,7 @@ router.get('/circle/:circle', allowCircleFellow, poll.circle);
 
 router
   .route('/:poll')
-  .get(poll.get)
+  .get(canAccessPoll, poll.get)
   .delete(canAccessPoll, poll.delete);
 
 

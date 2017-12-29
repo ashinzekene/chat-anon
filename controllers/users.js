@@ -76,7 +76,7 @@ module.exports = {
       })
   },
   getUser(req, res) {
-    Users.findOne({ username: req.params.user }, "username first_name last_name following")
+    Users.findOne({ username: req.params.user }, "-password")
       .then(user => {
         res.json(user.toJSONFor(req.user))
       })

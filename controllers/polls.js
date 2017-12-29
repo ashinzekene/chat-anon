@@ -6,7 +6,8 @@ module.exports = {
     Polls.findById(req.params.poll)
       .then(poll => {
         // let iPoll = { ...poll.toJSON(), hasVoted: req.user.hasVoted(poll._id)}
-        res.json(poll.toJSONFor(req.user))
+        // poll.toJSONFor(req.user)
+        res.json(poll)
       })
       .catch(err => {
         console.log(err)

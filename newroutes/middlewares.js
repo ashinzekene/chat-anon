@@ -33,7 +33,7 @@ const auth = {
 };
 
 function allowCircleAdmin(req, res, next) {
-  Circles.findOne({ handle: req.params.circle, admins: { $in : [ req.user._id ]} })
+  Circles.findOne({ _id: req.params.circle, admins: { $in : [ req.user._id ]} })
     .then(circle => {
       if (circle && circle._id) {
         next()
@@ -48,8 +48,10 @@ function allowCircleAdmin(req, res, next) {
 }
 
 function allowCircleFellow(req, res, next) {
-  Circles.findOne({ handle: req.params.circle, fellows: { $in : [ req.user._id ]} })
+  console.log(req.params.circle, req.user)
+  Circles.findOne({ _id: req.params.circle, fellows: { $in : [ req.user._id ]} })
     .then(circle => {
+      console.log("CIRCLE -------", circle)
       if (circle && circle._id) {
         next()
       } else {

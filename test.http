@@ -18,7 +18,7 @@ GET http://localhost:4300/circles/5a3fc5d03245cb3f10ea4573/fellows
 Content-Type: application/json
 AuthID: 5a3f821fbdb0421f3c6f7244
 ###
-GET http://localhost:4300/users/ekonash
+GET http://localhost:4300/circles/all
 Content-Type: application/json
 AuthID: 5a3fc9a8879514375c2f8a22
 
