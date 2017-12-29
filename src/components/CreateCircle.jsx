@@ -80,7 +80,7 @@ class CreateCircle extends Component {
   render() {
     const { name, handle, description, loading, users , availableUsers, redirect } = this.state
     return (
-      <Form onSubmit={ this.onSubmit } size="big" loading={ loading } style={ formStyle }>
+      <Form className="my-form" onSubmit={ this.onSubmit } size="big" loading={ loading }>
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }}>Create a Circle</h1>
           <Form.Input required onChange={ this.handleChange } minLength="5" label="Name  of Circle" error={ name.invalid } name="name" placeholder='Circle Name' />
@@ -112,14 +112,6 @@ class CreateCircle extends Component {
       </Form>
     )
   }
-}
-
-const formStyle = {
-  padding: "40px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  justifyItems:"center",
 }
 
 export default CreateCircle

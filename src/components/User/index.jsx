@@ -52,7 +52,7 @@ class User extends Component {
   }
   
   fetchCurrentMenu(nextProps = this.props) {
-    console.error("WILL NOW FETCH CURRENT MENU", this.state.menu)
+    // !!!!!!! ISSUE NOT RUNNING
     let { match } = nextProps
     switch (this.state.menu) {
       case "followers" : {
@@ -82,7 +82,7 @@ class User extends Component {
      return <Loader />
    }
    return (
-      <Container>
+      <Container className="main-user">
         <Image
           size="big"
           shape="circular"

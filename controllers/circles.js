@@ -47,6 +47,7 @@ module.exports = {
   },
   all(req, res) {
     Circles.find({ fellows: { $in: [req.user.id] } })
+      .populate("creator", "username")
       .then(circles => {
         res.json(circles)
       })

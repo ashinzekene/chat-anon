@@ -53,7 +53,7 @@ class Poll extends Component {
       )
     }
     return (
-      <Container textAlign="center">
+      <Container className="main-poll" textAlign="center">
         <h4>{ this.props.poll.comment }</h4>
         <Grid>
         { poll.options && poll.options.map((option, i) => (

@@ -68,7 +68,7 @@ class Circle extends Component {
       )
     }
     return (
-      <Container text= { true } textAlign="center" >
+      <Container className="main-circle" text= { true } textAlign="center" >
         <Image src="/images/bg.jpg" fluid style={{ height: "200px" }} alt="group info" shape="rounded" />
         <Header content={ circle.description } />
         <div style={{ display: "flex", justifyContent: "space-around" }} >

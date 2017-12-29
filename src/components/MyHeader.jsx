@@ -26,7 +26,7 @@ class MyHeader extends Component {
   render() {
     let { path } = this.state
     return (
-      <h3 style={ style } >
+      <h2 style={ style } >
         <LeftIcon
           header={ this.props.header }
           goBack={ this.goBack }
@@ -38,7 +38,7 @@ class MyHeader extends Component {
         <div>
           { path && <RightIcon path={ path } /> }
         </div>
-      </h3>
+      </h2>
     )
   }
 }
@@ -76,7 +76,7 @@ const style = {
   "justifyContent": "space-between",
   "position": "fixed",
   "width": "100%",
-  "boxShadow": "1px 1px 12px 2px rgba(140, 140, 140, 0.3)",
+  "boxShadow": "1px 1px 12px 2px rgba(140, 140, 140, 0.25)",
   "top": "0",
   "backgroundColor": "white",
   "zIndex": "10000",

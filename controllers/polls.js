@@ -22,9 +22,10 @@ module.exports = {
      */
     Circles.find({ fellows: { $in: [req.user._id]} }, "_id")
     .then(circles => {
-      console.log("Circles", circles.map(cir => cir._id))
       let circleIds = circles.map(circle => circle._id)
-        Polls.find({ circle : { $in: circleIds } })
+        Polls.find({ circle : { $in: circleIds } }, "-options")
+          .populate("creator", "username")
+          .populate("circle", "handle name")
           .then(polls => {
             res.json(polls)
           })

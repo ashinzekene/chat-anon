@@ -11,6 +11,7 @@ const userSchema = new Schema({
   avatar_url: String,
   first_name: String,
   last_name: String,
+  theme: String,
   password: {
     type: String,
   },

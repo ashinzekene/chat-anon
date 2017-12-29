@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Card, Icon } from 'semantic-ui-react';
 
 const PollPreview = props => (
-  <Card onClick={ props.onClick } as={Link} to={ `/poll/${props._id}` }>
+  <Card className="poll-preview" onClick={ props.onClick } as={Link} to={ `/poll/${props._id}` }>
       <Card.Content header={ props.question } />
       <Card.Content meta={ props.comment } />
       <Card.Content extra style={{ textTransform: "capitalize" }}>

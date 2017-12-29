@@ -20,3 +20,23 @@ body {
   height: max-content;
   overflow: auto;
 }
+a.ui.card.poll-preview, a.ui.card.circle-preview {
+  box-shadow: 1px 1px 12px 2px rgba(150,150,150,0.25)
+}
+a.ui.card.poll-preview  .content, a.ui.card.circle-preview .content {
+  border: 0px;
+}
+a.ui.card.poll-preview .extra.content, a.ui.card.circle-preview .extra.content {
+  border: 0px;
+  border-top: 0px !important;
+}
+a.ui.card.poll-preview:hover, a.ui.card.circle-preview:hover {
+  box-shadow: 1px 1px 12px 2px rgba(150,150,150,0.25)
+}
+form.my-form {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}

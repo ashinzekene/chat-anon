@@ -81,7 +81,7 @@ class CreatePoll extends Component {
     let { question, comment, options, circle, formLoading } = this.state
     let { circles } = this.props
     return (
-      <Form onSubmit={this.handleSubmit} loading={ formLoading } size="big" style={formStyle}>
+      <Form className="my-form" onSubmit={this.handleSubmit} loading={ formLoading } size="big">
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }}>Create a Poll</h1>
           <Form.Input
@@ -136,14 +136,6 @@ class CreatePoll extends Component {
       </Form>
     )
   }
-}
-
-const formStyle = {
-  padding: "40px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  justifyItems: "center",
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePoll)

@@ -2,7 +2,7 @@ const Users = require('../models/user')
 
 module.exports = {
   get(req, res) {
-    Users.findById(req.user._id, { password: 0 })
+    Users.findById(req.user._id, "-password")
       .then(user => {
         res.json(user)
       })

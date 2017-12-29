@@ -10,7 +10,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 const CirclePreview = props => (
-  <Card onClick={ props.onSelect(props) } as={ Link } to={`/circle/${props.handle}`} >
+  <Card className="circle-preview" onClick={ props.onSelect(props) } as={ Link } to={`/circle/${props.handle}`} >
     <Card.Content header={ props.name } />
     <Card.Content meta={ props.description } />
     <Card.Content extra>

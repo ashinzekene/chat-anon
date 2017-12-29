@@ -14,6 +14,9 @@ import CreateCircle from './CreateCircle';
 import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
+import Settings from './Settings';
+import User from './User';
+import Explore from './Explore';
 import {
   CIRCLE_LIST_LOADED,
   CIRCLE_CREATED,
@@ -28,7 +31,6 @@ import {
   CIRCLE_SELECTED
 } from '../actions'
 import agent from '../agent';
-import User from './User';
 
 const mapStateToProps = state => ({
   polls: state.polls,
@@ -102,7 +104,9 @@ class App extends Component {
               <Route path="/circles" render={ props => <CircleList {...props} circles={ this.props.circles } selectCircle={ this.selectCircle } onLoad={ this.props.onCircleLoad(agent.Circle.getAll()) } /> } />
               <Route path="/polls" render={ props => <PollList {...props} polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll.getAll()) } /> } />
               <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
+              <Route path="/settings" render={ props => <Settings {...props} currentUser={ this.props.currentUser } /> } />
               <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
+              <Route path="/explore" render={ props => <Explore { ...props } /> } />
               <Route path="/@:id" render={ props => <User {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
