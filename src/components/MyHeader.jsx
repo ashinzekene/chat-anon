@@ -11,7 +11,6 @@ class MyHeader extends Component {
   componentWillReceiveProps(nextProps) {
     let { history } = nextProps
     let { pathname } = history.location
-    console.log("NEXT PROPS", pathname)
     if (pathname === "/circles" || pathname === "/polls") {
       this.setState({ path: `/create${pathname}` })
     } else {
@@ -27,31 +26,49 @@ class MyHeader extends Component {
   render() {
     let menu
     let { path } = this.state
-    if (this.props.header.back) {
-      menu = <Icon size="large" onClick={ this.goBack } name="arrow left" />
-    } else {
-      menu =
-        <Icon size="large" onClick={ this.toggleSidebar } name="sidebar" />
-    }
+    
     return (
-      <h2 style={ style } >
-        { menu }
+      <h3 style={ style } >
+        <LeftIcon
+          header={ this.props.header }
+          goBack={ this.goBack }
+          toggleSidebar={ this.toggleSidebar }
+          sidebarVisible={ this.props.sidebarVisible } />
         <div style={{ padding: "5px 30px" }}>
           { this.props.header.title }
         </div>
         <div>
-        { path && <Link style={{ color: "rgba(0,0,0,.87)" }} to={ path }>
-          <Icon size="large" name="add" />
-        </Link> }
+          { path && <RightIcon path={ path } /> }
         </div>
-      </h2>
+      </h3>
     )
   }
+}
+
+const LeftIcon = props => {
+  let menu ="";
+  if (props.header.back) {
+    menu = <Icon size="large" onClick={ props.goBack } name="arrow left" />
+  } else if (props.sidebarVisible) {
+    menu = <Icon size="large" onClick={ props.toggleSidebar } name="cancel" />
+  } else {
+    menu = <Icon size="large" onClick={ props.toggleSidebar } name="sidebar" />
+  }
+    return menu
+}
+
+const RightIcon = props => {
+  return (
+    <Link style={{ color: "rgba(0,0,0,.87)" }} to={ props.path }>
+      <Icon size="large" name="add" />
+    </Link>
+  )
 }
 
 MyHeader.propTypes = {
   header: propTypes.object.isRequired,
   history: propTypes.object.isRequired,
+  sidebarVisible: propTypes.bool.isRequired,
 }
 
 const style = {
@@ -61,7 +78,7 @@ const style = {
   "justifyContent": "space-between",
   "position": "fixed",
   "width": "100%",
-  "boxShadow": "1px 1px 12px 5px rgba(140, 140, 140, 0.4)",
+  "boxShadow": "1px 1px 12px 2px rgba(140, 140, 140, 0.3)",
   "top": "0",
   "backgroundColor": "white",
   "zIndex": "10000",

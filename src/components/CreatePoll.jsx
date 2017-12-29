@@ -18,6 +18,7 @@ class CreatePoll extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      formLoading: false,
       question: { value: "" },
       comment: { value: "" },
       option: { value: "" },
@@ -36,7 +37,7 @@ class CreatePoll extends Component {
   }
 
   componentDidMount() {
-    this.props.getCircles(agent.Circle._getAll())
+    this.props.getCircles(agent.Circle.getAll())
     this.props.changeHeader({ title: APP_NAME, back: true })
   }
 
@@ -72,16 +73,15 @@ class CreatePoll extends Component {
         options: options.map(option => option.value)
       }
       console.log(poll)
-      setTimeout(() => this.setState({ formLoading: false }), 1000)
-      // this.props.createPoll(agent.Poll.create(poll))
+      this.props.createPoll(agent.Poll.create(poll))
     }
   }
 
   render() {
-    let { question, comment, options, circle } = this.state
+    let { question, comment, options, circle, formLoading } = this.state
     let { circles } = this.props
     return (
-      <Form onSubmit={this.handleSubmit} size="big" style={formStyle}>
+      <Form onSubmit={this.handleSubmit} loading={ formLoading } size="big" style={formStyle}>
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }}>Create a Poll</h1>
           <Form.Input
