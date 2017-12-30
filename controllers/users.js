@@ -128,8 +128,9 @@ module.exports = {
     //   })
   },
   update(req, res) {
+    let { first_name, last_name, gender, theme } = req.body
     console.log(req.body)
-    Users.findByIdAndUpdate(req.user._id, req.body)
+    Users.findByIdAndUpdate(req.user._id, { first_name, last_name, gender, theme }, { new: true })
       .then(user => {
         res.json(user)
       })
