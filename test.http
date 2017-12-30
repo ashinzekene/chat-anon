@@ -59,7 +59,7 @@ GET http://localhost:4300/users/ekonash/following
 authid: 5a3618879662a518502932c0
 ###
 
-GET http://localhost:4300/polls
+GET http://localhost:4300/polls/
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 

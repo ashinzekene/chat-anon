@@ -3,7 +3,8 @@ import {
   SIGNUP,
   LOGOUT,
   APP_LOAD,
-  MY_PROFILE_LOADED
+  MY_PROFILE_LOADED,
+  EDIT_PROFILE
 } from "../actions/index";
 
 export default (state = {}, action) => {
@@ -16,6 +17,9 @@ export default (state = {}, action) => {
     }
     case LOGOUT: {
       return {}
+    }
+    case EDIT_PROFILE: {
+      return Object.assign({}, state, action.payload)
     }
     default: {
       return state

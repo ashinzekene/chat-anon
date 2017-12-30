@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
       return { ...state, redirectTo: "/circles" }
     }
     case EDIT_PROFILE: {
-      return { ...state, redirectTo: "/profile" }
+      return { ...state, redirectTo: `@${action.payload.username}` || "/"  }
     }
     case LOGIN: {
       return { ...state, redirectTo: "/" }

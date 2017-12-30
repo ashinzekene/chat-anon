@@ -38,10 +38,12 @@ class Signup extends Component {
   handleChange(e, { name, value }) {
     let invalid = !e.target.checkValidity()
     if (value.length && (name === "username" || name === "email")) {
+      // Set value before asyc call so it does not reset ater the call is made
+      this.setState({ [name]: value})
       agent.User.verify({ [name]: value }).then(res => {
         let message = !!res.length ? `${name} already exists` : `${name} must have more than 5 characters`
         invalid = invalid || !!res.length
-        this.setState({ [name]: { invalid, value, message }})
+        this.setState({ [name]: { invalid, message }})
       })
     } else {
       let message = `${name} must have more than 5 characters`
