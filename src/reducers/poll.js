@@ -19,10 +19,7 @@ export default (state = {}, action) => {
       return {};
     }
     case POLL_VOTED: {
-      return Object.assign({}, state, state.options.map((option) => {
-        option.votes += option.name === action.payload.name ? 1 : 0;
-        return option;
-      }));
+      return Object.assign({}, state, action.payload);
     }
     default: {
       return state;

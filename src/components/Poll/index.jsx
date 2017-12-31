@@ -4,6 +4,7 @@ import { POLL_PAGE_LOADED, POLL_VOTED } from '../../actions'
 import { RESET_HEADER } from '../../actions' 
 import { connect } from 'react-redux';
 import agent from '../../agent'
+import Progress from "semantic-ui-react/dist/commonjs/modules/Progress/Progress";
 
 const mapStateToProps = state => ({
   poll: state.poll
@@ -16,9 +17,13 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Poll extends Component {
-  state = {
-    selected: null,
-    isSelected: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      selected: null,
+      isSelected: false
+    }
+    this.vote = this.vote.bind(this)
   }
   componentDidMount() {
     this.props.loadPoll(agent.Poll.get(this.props.match.params.id))
@@ -29,9 +34,9 @@ class Poll extends Component {
       nextProp.changeHeader({title: nextProp.poll.question, back: true })
     }
   }
-  selectOption = (option) => () =>  {
+  vote = (option) => () =>  {
     this.setState({ selected: option.option, isSelected: true })
-    // this.props.vote(this.props.poll._id, option._id)
+    this.props.vote(this.props.poll._id, option._id)
     console.log("You selected", option._id)
   }
 
@@ -45,16 +50,14 @@ class Poll extends Component {
         </Dimmer>
       )
     }
-    if (isSelected) {
+    if (isSelected || poll.hasVoted) {
       return (
-        <h1>
-          You have Selected { this.state.selected }
-        </h1>
+        <Stats poll={ poll } />
       )
     }
     return (
       <Container className="main-poll" textAlign="center">
-        <h4>{ this.props.poll.comment }</h4>
+        <h2 style={{ paddingTop: "20px", paddingBottom: "40px" }} >{ this.props.poll.comment }</h2>
         <Grid>
         { poll.options && poll.options.map((option, i) => (
           <Grid.Column key={ "col"+i } width={ 8 } mobile={ 16 }>
@@ -63,7 +66,7 @@ class Poll extends Component {
               padded
               raised
               content={ option.option }
-              onClick={ this.selectOption(option) } 
+              onClick={ this.vote(option) } 
               key={ i } 
               />
             </Grid.Column>
@@ -74,13 +77,21 @@ class Poll extends Component {
   }
 }
 
+const Stats = props => {
+  let total = props.poll.options && props.poll.options.reduce((ini, opt) => ini + opt.votes, 0)
+  return (
+    <div style={{ padding: "30px" }}>
+      <h2 style={{ paddingTop: "20px", paddingBottom: "40px" }} >{ props.poll.comment }</h2>
+      { props.poll.options && props.poll.options.map((option, i) => (
+        <Progress key={i} content={ option.option } precision={2} value={ option.votes } progress total={ total } />
+      )) }
+    </div>
+  )
+}
+
 const segmentStyle = {
   cursor: "pointer",
 }
-// const circleSegment = {
-//   height: "200px",
-//   margin: "auto",
-//   width: "200px",
-// } 
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Poll);

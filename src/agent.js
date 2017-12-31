@@ -53,7 +53,7 @@ const Poll = {
   get: pollId => request.get(`/polls/${pollId}`),
   delete: pollId => request.delete(`/polls/${pollId}`),
   search: query => request.get(`/polls/search?q=${query}`),
-  vote: (pollId, optionId) => request.post(`/polls/${pollId}/vote/${optionId}`),
+  vote: (pollId, option) => request.post(`/polls/${pollId}/vote/`, { option }),
 };
 
 const Circle = {
