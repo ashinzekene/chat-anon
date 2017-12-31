@@ -37,17 +37,18 @@ class User extends Component {
   componentDidMount() {
     console.log(this.props)
     this.props.onLoad(agent.User.get(this.props.match.params.id))
+    this.setState({ isCurrentUser: this.props.currentUser && this.props.currentUser._id === this.props.user._id })    
     this.fetchCurrentMenu()
   }
   
   componentWillReceiveProps(nextProps) {
-    let { user, match, currentUser } = this.props
+    let { user, match } = this.props
     if (nextProps.match.params.id !== match.params.id) {
       this.props.onLoad(agent.User.get(nextProps.match.params.id))
     }
     if (nextProps.user && nextProps.user._id !== user._id) {
-      this.setState({ isCurrentUser: currentUser && currentUser._id === nextProps.user._id })
       this.fetchCurrentMenu(nextProps)
+      this.setState({ isCurrentUser: nextProps.currentUser && nextProps.currentUser._id === nextProps.user._id })
     }
   }
   

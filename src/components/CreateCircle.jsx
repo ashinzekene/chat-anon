@@ -30,7 +30,6 @@ class CreateCircle extends Component {
       let username = options.find(option => option.value === value[value.length-1]).text
       this.setState(({ users }) => users.push(username))
       this.setState({ [name] : { value }})
-      console.log(this.state)
       return
     }
     if (name === "handle") {
@@ -40,7 +39,6 @@ class CreateCircle extends Component {
     this.setState({ [name] : { invalid: !e.target.checkValidity(), value }})
   }
   handleSearchChange(e, { searchQuery }) {
-    console.log("Getting users --", searchQuery)
     searchQuery.length > 2 && agent.User.search(searchQuery).then(users => {
       let iUsers = users.map(user => ({
         value: user._id,
@@ -54,7 +52,6 @@ class CreateCircle extends Component {
 
   removeFellow(i) {
     return () => {
-      console.log("Removing", i)
       this.setState(prevState => ({
         users: prevState.users.filter((user, ind) => ind !== i)
       }))

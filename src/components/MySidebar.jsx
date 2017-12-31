@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Sidebar, Icon, Menu, Button } from "semantic-ui-react";
 
 const MySidebar = props => (
-  <Sidebar style={ style } as={Menu} animation='uncover' direction='left' width='wide' borderless visible={ props.visible } icon='labeled' vertical >
+  <Sidebar className="my-sidebar" as={Menu} animation='uncover' direction='left' width='wide' borderless visible={ props.visible } icon='labeled' vertical >
     <Menu.Item style={ menuItemStyle } as={ NavLink } to="/" exact name='home'>
       <Icon name='home' />
       Home
@@ -37,11 +37,6 @@ const MySidebar = props => (
   </Sidebar>
 )
 
-const style = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}
 const menuItemStyle = {
   borderRadius: "50%",
   width: "100%"

@@ -1,4 +1,4 @@
-export const APP_NAME = 'CHAT ANON';
+export const APP_NAME = 'POLLEY';
 export const AVATAR_URL = '/images/avatars/guy-1-sm.png';
 export const PROFILE_IMG_URL = '/images/avatars/guy-2-lg.png';
 export const APP_LOAD = 'APP_LOAD';
@@ -70,3 +70,7 @@ export const POLL_LIST_LOADED = "POLL_LIST_LOADED";
 export const POLL_LIST_UNLOADED = "POLL_LIST_UNLOADED"; 
 export const POLL_VOTED = 'POLL_VOTED';
 export const POLL_SELECTED = "POLL_SELECTED";
+
+export const SEARCH_POLLS = 'SEARCH_POLLS';
+export const SEARCH_CIRCLES = 'SEARCH_CIRCLES';
+export const SEARCH_USERS = 'SEARCH_USERS';

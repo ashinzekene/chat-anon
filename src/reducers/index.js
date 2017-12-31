@@ -6,6 +6,7 @@ import currentUser from "./currentUser";
 import common from "./common";
 import poll from "./poll";
 import polls from "./polls";
+import search from "./search";
 import user from "./user";
 import users from "./users";
 
@@ -17,6 +18,7 @@ export default combineReducers({
   currentUser,
   poll,
   polls,
+  search,
   user,
   users,
 })
