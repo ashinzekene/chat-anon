@@ -15,14 +15,26 @@ module.exports = {
   },
   search(req, res) {
     console.log("Searching", req.query.q)
-    Circles.find({ handle: RegExp(req.query.q, "i") }, "name handle")
+    Circles.find({ handle: RegExp(req.query.q, "i") }, "name handle description")
+    .or({ name: RegExp(req.query.q, "i") })
     .limit(5)
     .then(circles => {
       res.json(circles)
     })
     .catch(err => {
       console.log(err)
-      res.atatus(403).json({ err: "could not search for circles" })
+      res.status(403).json({ err: "could not search for circles" })
+    })
+  },
+  verify(req, res) {
+    Circles.find({ handle: req.query.q }, "name handle")
+    .limit(5)
+    .then(circles => {
+      res.json(circles)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(403).json({ err: "could not search for circles" })
     })
   },
   update(req, res) {

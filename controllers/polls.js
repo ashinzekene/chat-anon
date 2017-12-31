@@ -46,11 +46,12 @@ module.exports = {
       })
       .catch(err => {
         console.log(err)
-        res.status(403).json({ err: 'Could not get all polls:::' })
+        res.status(403).json({ err: 'Could not get all polls' })
       })
   },
   search(req, res) {
-    Polls.find({ question: RegExp(req.query.q, "i") }, "question")
+    Polls.find({ question: RegExp(req.query.q, "i") }, "question comment")
+    .limit(5)
     .then(polls => {
       res.json(polls)
     })
@@ -108,17 +109,6 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: "Could not delete poll" })
       })
-  },
-  search(req, res) {
-    Polls.find({ handle: req.query.q })
-    .limit(5)
-    .then(polls =>{
-      res.json(polls)
-    })
-    .catch(err => {
-      console.log(err)
-      res.atatus(403).json({ err: "could not search for polls" })
-    })
   },
   inappropriate(req, res) {
     Polls.findByIdAndUpdate(req.params.poll, {
