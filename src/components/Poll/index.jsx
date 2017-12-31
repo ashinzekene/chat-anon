@@ -57,10 +57,10 @@ class Poll extends Component {
     }
     return (
       <Container className="main-poll" textAlign="center">
-        <h2 style={{ paddingTop: "20px", paddingBottom: "40px" }} >{ this.props.poll.comment }</h2>
+        <h2 style={{ paddingTop: "20px", paddingBottom: "30px" }} >{ this.props.poll.comment }</h2>
         <Grid>
         { poll.options && poll.options.map((option, i) => (
-          <Grid.Column key={ "col"+i } width={ 8 } mobile={ 16 }>
+          <Grid.Column key={ "col-"+i } width={ 8 } mobile={ 16 }>
             <Segment
               style={ segmentStyle }
               padded
@@ -81,7 +81,7 @@ const Stats = props => {
   let total = props.poll.options && props.poll.options.reduce((ini, opt) => ini + opt.votes, 0)
   return (
     <div style={{ padding: "30px" }}>
-      <h2 style={{ paddingTop: "20px", paddingBottom: "40px" }} >{ props.poll.comment }</h2>
+      <h2 style={{ paddingTop: "20px", paddingBottom: "30px" }} >{ props.poll.comment }</h2>
       { props.poll.options && props.poll.options.map((option, i) => (
         <Progress key={i} content={ option.option } precision={2} value={ option.votes } progress total={ total } />
       )) }

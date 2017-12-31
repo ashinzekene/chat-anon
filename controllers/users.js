@@ -106,7 +106,6 @@ module.exports = {
       })
   },
   create(req, res) {
-    console.log(req.body)
     let user = {}
     let { username, email, password } = req.body
     user.username = username
@@ -129,8 +128,10 @@ module.exports = {
   },
   update(req, res) {
     let { first_name, last_name, gender, theme } = req.body
-    console.log(req.body)
-    Users.findByIdAndUpdate(req.user._id, { first_name, last_name, gender, theme }, { new: true })
+    Users.findByIdAndUpdate(
+      req.user._id,
+      { first_name, last_name, gender, theme },
+      { new: true })
       .then(user => {
         res.json(user)
       })
@@ -140,7 +141,11 @@ module.exports = {
       })
   },
   starPoll(req, res) {
-    Users.findByIdAndUpdate(req.user._id, { $addToSet: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { starred_polls: req.body.poll } },
+      { new: true }
+    )
       .then(user => {
         res.json(user)
       })
@@ -150,7 +155,11 @@ module.exports = {
       })
   },
   unstarPoll(req, res) {
-    Users.findByIdAndUpdate(req.user._id, { $pop: { starred_polls: req.body.poll } })
+    Users.findByIdAndUpdate(
+      req.user._id,
+      { $pop: { starred_polls: req.body.poll } },
+      { new: true }
+    )
       .then(user => {
         res.json(user)
       })
@@ -160,7 +169,11 @@ module.exports = {
       })
   },
   follow(req, res) {
-    Users.findByIdAndUpdate(req.user._id, { $addToSet: { following: req.params.user } })
+    Users.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { following: req.params.user } },
+      { new: true }
+    )
       .then(user => {
         res.json(user)
       })
@@ -170,7 +183,11 @@ module.exports = {
       })
   },
   unfollow(req, res) {
-    Users.findByIdAndUpdate(req.user._id, { $pop: { following: req.params.user } })
+    Users.findByIdAndUpdate(
+      req.user._id,
+      { $pop: { following: req.params.user } },
+      { new: true }
+    )
       .then(user => {
         res.json(user)
       })

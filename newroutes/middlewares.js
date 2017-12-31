@@ -84,7 +84,7 @@ function canAccessPoll(req, res, next) {
 }
 
 function canVotePoll(req, res, next) {
-  if (req.user.hasVoted(req.params.poll)) return res.status(401).json("You have already voted")
+  if (req.user.hasVoted(req.params.poll)) return res.status(401).json({ err: "You have already voted" })
   Polls.findById(req.params.poll)
     .then(poll => {
       req.poll = poll

@@ -47,25 +47,18 @@ pollSchema.methods.vote = function (option) {
 };
 
 pollSchema.methods.toJSONFor = function (user) {
-  if (!user.hasVoted(this._id)) {
-    return {
-      question: this.question,
-      comment: this.comment,
-      creator: this.creator,
-      circle: this.circle,
-      createdAt: this.createdAt, 
-      updatedAt: this.updatedAt, 
-      otions: this.options,
-      hasVoted: user.hasVoted(this._id)
-    }
-  }
   return {
-    creator: this.creator, 
-    circle: this.circle, 
-    comment: this.comment, 
-    question: this.question, 
-    hasVoted: user.hasVoted(this._id),
-  } 
+    _id: this._id,
+    appropriate: this.appropriate,
+    question: this.question,
+    comment: this.comment,
+    creator: this.creator,
+    circle: this.circle,
+    createdAt: this.createdAt, 
+    updatedAt: this.updatedAt, 
+    otions: this.options,
+    hasVoted: user.hasVoted(this._id)
+  }
 };
 
 const Poll = mongoose.model('Poll', pollSchema);

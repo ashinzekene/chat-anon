@@ -59,14 +59,11 @@ GET http://localhost:4300/users/ekonash/following
 authid: 5a3618879662a518502932c0
 ###
 
-GET http://localhost:4300/polls/
+POST http://localhost:4300/polls/5a45c7b5c8ce8a27a0431d12/vote
 Content-Type: application/json
 AuthID: 5a3618879662a518502932c0
 
 {
-  "question": "Which framework is best?",
-  "comment": "Let's know now o",
-  "circle": "5a3fc5d03245cb3f10ea4573",
-  "options": ["Angular","React","Vue","Backbone"]
+  "option": "5a45c7b5c8ce8a27a0431d14"
 }
 

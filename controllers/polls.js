@@ -1,5 +1,6 @@
 const Polls = require('../models/poll');
 const Circles = require('../models/circle');
+const Users = require('../models/user');
 
 module.exports = {
   get(req, res) {
@@ -7,7 +8,8 @@ module.exports = {
       .then(poll => {
         // let iPoll = { ...poll.toJSON(), hasVoted: req.user.hasVoted(poll._id)}
         // poll.toJSONFor(req.user)
-        res.json(poll)
+        let newPoll = Object.assign({}, poll.toJSON(), { hasVoted: req.user.hasVoted(req.params.poll) })
+        res.json(newPoll)
       })
       .catch(err => {
         console.log(err)
@@ -95,7 +97,10 @@ module.exports = {
       })
   },
   appropriate(req, res) {
-    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { appropriate: req.user.id }, $pop: { inappropriate: req.user.id } })
+    Polls.findByIdAndUpdate(req.params.poll,{
+      $addToSet: { appropriate: req.user.id },
+      $pop: { inappropriate: req.user.id } 
+    })
       .then(poll => {
         res.json(poll)
       })
@@ -116,7 +121,10 @@ module.exports = {
     })
   },
   inappropriate(req, res) {
-    Polls.findByIdAndUpdate(req.params.poll, { $addToSet: { inappropriate: req.user.id }, $pop: { appropriate: req.user.id } })
+    Polls.findByIdAndUpdate(req.params.poll, {
+      $addToSet: { inappropriate: req.user.id },
+      $pop: { appropriate: req.user.id }
+    }, { new: true })
       .then(poll => {
         res.json(poll)
       })
@@ -125,21 +133,27 @@ module.exports = {
         res.status(403).json({ err: "Could not delete poll" })
       })
   },
-  edit(req, res) {
-    Polls.findByIdAndUpdate(req.params.poll, req.body)
-      .then(poll => {
-        res.json(poll)
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(403).json({ err: "Could not update poll" })
-      })
-  },
+  // edit(req, res) {
+  //   Polls.findByIdAndUpdate(req.params.poll, req.body)
+  //     .then(poll => {
+  //       res.json(poll)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //       res.status(403).json({ err: "Could not update poll" })
+  //     })
+  // },
   vote(req, res) {
-    Polls.findOneAndUpdate({ _id: req.params.poll, "options.id": req.body.option },
-      { $inc: { "options.$.votes": 1 } })
+    Polls.findOneAndUpdate(
+      { _id: req.params.poll, "options._id": req.body.option },
+      { $inc: { "options.$.votes": 1 } },
+      { new: true }
+    )
       .then(poll => {
-        res.json(poll)
+        Users.findByIdAndUpdate(req.user._id, { $push: { voted_polls: poll._id } })
+         .then(() => {
+           res.json(poll)
+         })
       })
       .catch(err => {
         console.log(err)

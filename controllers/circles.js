@@ -26,7 +26,7 @@ module.exports = {
     })
   },
   update(req, res) {
-    Circles.findByIdAndUpdate(req.params.circle, req.body)
+    Circles.findByIdAndUpdate(req.params.circle, req.body, { new: true })
       .then(circle => {
         res.json(circle)
       })
@@ -90,7 +90,10 @@ module.exports = {
       })
   },
   addFellow(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle, { $addToSet: { fellows: req.params.fellow } })
+    Circles.findByIdAndUpdate(req.body.circle,
+      { $addToSet: { fellows: req.params.fellow } },
+      { new: true }
+    )
       .then(circle => {
         res.json(circle)
       })
@@ -100,7 +103,10 @@ module.exports = {
       })
   },
   addAdmin(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle, { $addToSet: { admins: req.params.fellow } })
+    Circles.findByIdAndUpdate(req.body.circle,
+      { $addToSet: { admins: req.params.fellow } },
+      { new: true }
+    )
       .then(circle => {
         res.json(circle)
       })
@@ -110,7 +116,10 @@ module.exports = {
       })
   },
   removeFellow(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle, { $pop: { fellows: req.params.fellow } })
+    Circles.findByIdAndUpdate(req.body.circle,
+      { $pop: { fellows: req.params.fellow } },
+      { new: true }
+    )
       .then(circle => {
         res.json(circle)
       })
@@ -120,7 +129,10 @@ module.exports = {
       })
   },
   removeAdmin(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle, { $pop: { admins: req.params.fellow } })
+    Circles.findByIdAndUpdate(req.body.circle,
+      { $pop: { admins: req.params.fellow } },
+      { new: true }
+    )
       .then(circle => {
         res.json(circle)
       })
