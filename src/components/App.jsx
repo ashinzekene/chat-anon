@@ -17,6 +17,7 @@ import CircleList from './CircleList';
 import Settings from './Settings';
 import User from './User';
 import Explore from './Explore';
+import AddFellow from './Circle/AddFellow';
 import {
   CIRCLE_LIST_LOADED,
   CIRCLE_CREATED,
@@ -98,6 +99,8 @@ class App extends Component {
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
             <Switch>
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
+              <Route path="/circle/:id/add" component={AddFellow} />
+              <Route path="/hey" component={AddFellow} />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />

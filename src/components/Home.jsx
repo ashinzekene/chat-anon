@@ -5,8 +5,8 @@ import { APP_NAME } from '../actions/index';
 
 const Home = (props) => (
   <Segment basic style={{ paddingTop: "30px"}}>
-    <Header style={{ textAlign: "center", fontFamily: "'cursive'" }} size="huge">{ APP_NAME }</Header>
-    <h2 style={{ fontWeight: 200, textAlign: "center", fontFamily: "'cursive'" }} >Create Polls. Understand what people feel, find out people's views</h2>
+    <Header style={{ textAlign: "center" }} size="huge">{ APP_NAME }</Header>
+    <h2 style={{ fontWeight: 200, textAlign: "center" }} >Create Polls. Understand what people feel, find out people's views</h2>
   </Segment>
 )
 

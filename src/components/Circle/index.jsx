@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Header from "semantic-ui-react/dist/commonjs/elements/Header/Header";
-import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider/Divider";
 import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
@@ -11,17 +9,19 @@ import Dimmer from "semantic-ui-react/dist/commonjs/modules/Dimmer/Dimmer";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
 
 import agent from '../../agent';
 import { CIRCLE_PAGE_LOADED, CIRCLE_FELLOWS_REQUEST, CIRCLE_POLLS_REQUEST } from '../../actions';
 import { RESET_HEADER } from '../../actions';
-import UserList from "../UserList";
-import MiniPollList from '../MiniPollList'
+import CirclePollList from "./CirclePollList";
+import FellowList from './FellowList'
+// import AddFellow from './AddFellow'
+
 
 const mapStateToProps = state => ({
   polls: state.polls,
-  circle: state.circle
+  circle: state.circle,
+  users: state.users
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -93,9 +93,9 @@ class Circle extends Component {
           </Menu.Item>
         </Menu>
         { menu === "fellows" ? 
-        <FellowList onLoad={ this.getFellows } fellows={ this.props.circle.fellows } /> 
+        <FellowList circleName={ circle.handle } onLoad={ this.getFellows } fellows={ this.props.circle.fellows } /> 
         :
-        <GroupPollList onLoad={ this.getPolls } polls={ this.props.circle.polls } /> 
+        <CirclePollList onLoad={ this.getPolls } polls={ this.props.circle.polls } /> 
         }
       </Container>
     )
@@ -103,21 +103,4 @@ class Circle extends Component {
 };
 
 
-const FellowList = props => (
-  <Segment style={{ marginBottom: "20px" }}>
-    <Header content="Fellows"/>
-    <Button content="Add Admin" icon='add' labelPosition='left' />
-    <Button style={{ marginBottom: "20px" }} content="Add Fellow" icon='add' labelPosition='right' />
-    <UserList onLoad={ props.onLoad } users={ props.fellows } />
-  </Segment> 
-)
-
-const GroupPollList = props => (
-  <Segment style={{ marginBottom: "20px" }}>
-    <Header content="Polls"/>
-    <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' />
-    <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/polls` } content="Create Poll" icon='add' labelPosition='right' />
-    <MiniPollList onLoad={ props.onLoad } polls={ props.polls } />
-  </Segment>
-)
 export default connect(mapStateToProps, mapDispatchToProps)(Circle);
