@@ -11,12 +11,32 @@ const mapDispatchToProps = dispatch => ({
   onSelect: payload => dispatch({ type: USER_SELECTED, payload })
 })
 
-const UserList = props => {
-  const onSelect = user => () => props.onSelect(user)
+const UserList = ({ users, onSelect, noLink }) => {
+  if(noLink) {
+    return (
+      <div style={{ textAlign: "left" }}>
+      <Item.Group divided unstackable>
+        { users.map((user, i) => (
+          <Item key={`item${i}`}>
+            <img alt={user.username} height="50px" width="50px" style={userImg} src={user.avatar_url || AVATAR_URL} />
+            <Item.Content>
+              <Item.Description key={`meta${i}`} >
+                {`@${user.username}`}
+              </Item.Description>
+              <Item.Meta key={`header${i}`}>
+                {`${user.first_name || ""} ${user.last_name || ""}`}
+              </Item.Meta>
+            </Item.Content>
+          </Item>
+        ))}
+      </Item.Group>
+    </div>
+    )
+  }
   return (
     <div style={{ textAlign: "left" }}>
       <Item.Group divided unstackable>
-        { props.users.map((user, i) => (
+        { users.map((user, i) => (
           <Item as={Link} onClick={onSelect(user)} to={`/@${user.username}`} key={`item${i}`}>
             <img alt={user.username} height="50px" width="50px" style={userImg} src={user.avatar_url || AVATAR_URL} />
             <Item.Content>

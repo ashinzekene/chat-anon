@@ -15,7 +15,6 @@ import { CIRCLE_PAGE_LOADED, CIRCLE_FELLOWS_REQUEST, CIRCLE_POLLS_REQUEST } from
 import { RESET_HEADER } from '../../actions';
 import CirclePollList from "./CirclePollList";
 import FellowList from './FellowList'
-// import AddFellow from './AddFellow'
 
 
 const mapStateToProps = state => ({
@@ -48,7 +47,7 @@ class Circle extends Component {
     }
   }
   getFellows() {
-    this.props.getFellows(agent.Circle.fellows(this.props.circle._id))
+    this.props.getFellows(agent.Circle.fellows(this.props.circle.handle))
   }
   getPolls() {
     this.props.getPolls(agent.Poll.circle(this.props.circle._id))

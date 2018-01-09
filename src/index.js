@@ -18,4 +18,4 @@ ReactDOM.render((
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();

@@ -17,6 +17,7 @@ import CircleList from './CircleList';
 import Settings from './Settings';
 import User from './User';
 import Explore from './Explore';
+import ConditionalRoute from '../containers/ConditionalRoute';
 import AddFellow from './Circle/AddFellow';
 import {
   CIRCLE_LIST_LOADED,
@@ -36,8 +37,10 @@ import agent from '../agent';
 const mapStateToProps = state => ({
   polls: state.polls,
   circles: state.circles,
+  circle: state.circle,
   currentUser: state.currentUser,
   user: state.user,
+  users: state.users,
   redirectTo: state.common.redirectTo,
   header: state.common.header,
   sidebarVisible: state.common.sidebarVisible
@@ -98,9 +101,8 @@ class App extends Component {
           <MySidebar currentUser={ this.props.currentUser } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
             <Switch>
+              <ConditionalRoute path="/circle/:id/add" fellows={ this.props.circle.fellows } shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ AddFellow } />
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
-              <Route path="/circle/:id/add" component={AddFellow} />
-              <Route path="/hey" component={AddFellow} />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />

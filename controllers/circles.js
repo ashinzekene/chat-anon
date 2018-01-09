@@ -91,7 +91,7 @@ module.exports = {
       })
     },
   fellows(req, res) {
-    Circles.findById(req.params.circle, "fellows")
+    Circles.findOne({ handle: req.params.circle }, "fellows")
       .populate("fellows", "username first_name last_name")
       .then(circle => {
         res.json(circle.fellows)
