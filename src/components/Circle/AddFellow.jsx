@@ -57,7 +57,7 @@ class AddFellow extends Component {
       onChange={ this.onChange }
       placeholder='Search...' />
       <div style={{ paddingTop: "40px" }}>
-        <UserList noLink users={ unaddedUsers } additional={ addButton } />
+        <UserList noLink users={ unaddedUsers } />
       </div>
     </Container>
     )
