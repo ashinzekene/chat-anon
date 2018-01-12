@@ -8,7 +8,7 @@ import Async from "../HOCs/Async";
 import { AVATAR_URL, USER_SELECTED } from "../actions/index";
 
 const mapDispatchToProps = dispatch => ({
-  onSelect: payload => dispatch({ type: USER_SELECTED, payload })
+  onSelect: payload => () => dispatch({ type: USER_SELECTED, payload })
 })
 
 const UserList = ({ users, onSelect, noLink }) => {
