@@ -7,7 +7,7 @@ const ConditionalRoute = ({ redirect, shouldRender, component: Component, ...res
   return (
     <Route { ...rest} render={ props =>
       shouldRender ?
-      <Component {...props}/>
+      <Component {...props} {...rest}/>
       :
       <Redirect to={ redirect } />
     }/>

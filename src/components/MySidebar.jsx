@@ -16,7 +16,7 @@ const MySidebar = props => (
       <Icon name='users' />
       Cirlces
     </Menu.Item>
-    <Menu.Item style={ menuItemStyle } as={ NavLink } to={ `@${props.currentUser.username}` } name='profile'>
+    <Menu.Item style={ menuItemStyle } as={ NavLink } to={ props.currentUser.username ? `@${props.currentUser.username}` : "login" } name='profile'>
       <Icon name='user' />
       Profile
     </Menu.Item>
@@ -27,7 +27,7 @@ const MySidebar = props => (
     {
       props.currentUser && props.currentUser.hasOwnProperty("username") ?
       <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
-        <Button icon="log out" content="Log Out" />
+        <Button onClick={ props.onLogout } icon="log out" content="Log Out" />
       </Menu.Item>
       :
       <Menu.Item style={ menuItemStyle } as={ NavLink } to="/signup">
