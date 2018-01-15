@@ -1,6 +1,5 @@
 import React from "react";
 import Item from "semantic-ui-react/dist/commonjs/views/Item/Item";
-import Button from "semantic-ui-react/dist/commonjs/elements/Button/Button";
 import Link from "react-router-dom/Link";
 import { connect } from "react-redux";
 
@@ -42,7 +41,6 @@ const UserList = ({ users, onSelect, noLink }) => {
             <Item.Content>
               <Item.Description key={`meta${i}`} >
                 {`@${user.username}`}
-                <Button size="mini" floated="right" circular icon="minus" />
               </Item.Description>
               <Item.Meta key={`header${i}`}>
                 {`${user.first_name || ""} ${user.last_name || ""}`}

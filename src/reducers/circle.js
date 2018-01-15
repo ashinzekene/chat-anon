@@ -33,7 +33,7 @@ export default (state = {}, action) => {
       })
     }
     case CIRCLE_FELLOW_REMOVED: {
-      return Object.assign({}, state, state.fellows.filter(id => id === action.payload))
+      return Object.assign({}, state, { fellows: state.fellows.filter(fellow => fellow._id !== action.payload._id) })
     }
     case CIRCLE_ADMIN_ADDED: {
       return Object.assign({}, state, {
@@ -41,7 +41,7 @@ export default (state = {}, action) => {
       })
     }
     case CIRCLE_ADMIN_REMOVED: {
-      return Object.assign({}, state, state.admins.filter(id => id === action.payload))
+      return Object.assign({}, state, { admins: state.admins.filter(id => id === action.payload._id) })
     }
     default: {
       return state

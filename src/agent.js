@@ -40,8 +40,8 @@ const request = {
   put(url, body) {
     return fetch(url, { method: "PUT", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   },
-  delete(url) {
-    return fetch(url, { method: "DELETE", headers: getHeaders() }).then(getJsonResponse)
+  delete(url, body) {
+    return fetch(url, { method: "DELETE", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   }
 }
 
@@ -70,7 +70,7 @@ const Circle = {
   addAdmin: (userId, circleId) => request.post(`/circles/${circleId}/admins`, { admin: userId }),
   addFellow: (userId, circleId) => request.post(`/circles/${circleId}/fellows`, { fellow: userId }),
   removeAdmin: (userId, circleId) => request.delete(`/circles/${circleId}/admins`, { admin: userId }),
-  removefellow: (userId, circleId) => request.delete(`/circles/${circleId}/fellows`, { fellow: userId }),
+  removeFellow: (userId, circleId) => request.delete(`/circles/${circleId}/fellows`, { fellow: userId }),
 };
 
 const User = {
