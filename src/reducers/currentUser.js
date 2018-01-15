@@ -13,7 +13,7 @@ export default (state = {}, action) => {
     case APP_LOAD:
     case SIGNUP:
     case LOGIN: {
-      return action.payload
+      return action.payload || {}
     }
     case LOGOUT: {
       return {}

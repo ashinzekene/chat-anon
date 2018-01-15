@@ -101,7 +101,7 @@ class App extends Component {
       <div>
         <MyHeader history={ this.props.history } sidebarVisible={ this.props.sidebarVisible } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
         <Sidebar.Pushable style={{ height: "100vh" }} as={Segment}>
-          <MySidebar onLogout={ this.props.logOut } currentUser={ this.props.currentUser } visible={ this.props.sidebarVisible } />
+          <MySidebar onLogout={ this.props.logOut } currentUser={ this.props.currentUser } toggleSidebar= { this.props.toggleSidebar } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
             <Switch>
               <ConditionalRoute path="/circle/:id/add" fellows={ this.props.circle.fellows } shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ AddFellow } />

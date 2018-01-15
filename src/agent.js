@@ -67,10 +67,10 @@ const Circle = {
   search: query => request.get(`/circles/search?q=${query}`),
   join: cirlceId => request.post(`/circles/${cirlceId}/join`),
   fellows: cirlceId => request.get(`/circles/${cirlceId}/fellows`),
-  addAdmin: (payload, circleId) => request.post(`/circles/${circleId}/admins`, payload),
-  addfellow: (payload, circleId) => request.post(`/circles/${circleId}/fellows`, payload),
-  removeAdmin: (payload, circleId) => request.delete(`/circles/${circleId}/admins`, payload),
-  removefellow: (payload, circleId) => request.delete(`/circles/${circleId}/fellows`, payload),
+  addAdmin: (userId, circleId) => request.post(`/circles/${circleId}/admins`, { admin: userId }),
+  addFellow: (userId, circleId) => request.post(`/circles/${circleId}/fellows`, { fellow: userId }),
+  removeAdmin: (userId, circleId) => request.delete(`/circles/${circleId}/admins`, { admin: userId }),
+  removefellow: (userId, circleId) => request.delete(`/circles/${circleId}/fellows`, { fellow: userId }),
 };
 
 const User = {

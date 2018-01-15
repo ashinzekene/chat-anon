@@ -29,7 +29,7 @@ export default (state = {}, action) => {
     }
     case CIRCLE_FELLOW_ADDED: {
       return Object.assign({}, state, {
-        fellows: state.fellows.push(action.payload)
+        fellows: [ ...state.fellows, action.payload]
       })
     }
     case CIRCLE_FELLOW_REMOVED: {
@@ -37,7 +37,7 @@ export default (state = {}, action) => {
     }
     case CIRCLE_ADMIN_ADDED: {
       return Object.assign({}, state, {
-        admins: state.admins.push(action.payload)
+        admins: [ ...state.admins, action.payload]
       })
     }
     case CIRCLE_ADMIN_REMOVED: {

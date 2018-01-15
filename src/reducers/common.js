@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
     }
     default:{
       // This resets this state. For things like the name and sidebar INSTEAD OF: return state
-      return initialState;
+      return state;
     }
   }
 }
