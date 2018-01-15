@@ -102,7 +102,7 @@ module.exports = {
       })
   },
   addFellow(req, res) {
-    console.log("REQUEST BODY",req.body)
+    console.log("REQUEST BODY", req.body)
     Circles.findByIdAndUpdate(req.params.circle,
       { $addToSet: { fellows: req.body.fellow } },
       { new: true }
@@ -143,12 +143,20 @@ module.exports = {
       })
   },
   removeFellow(req, res) {
+    console.log("BODY", req.body)
     Circles.findByIdAndUpdate(req.params.circle,
-      { $pop: { fellows: req.body.fellow } },
+      { $pop: { fellows: req.body.fellow, admins: req.body.fellow } },
       { new: true }
     )
-      .then(circle => {
-        res.json(circle)
+      .then(() => {
+        User.findById(req.body.fellow)
+          .then(user => {
+            res.json(user)
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(403).json("could not remove Fellow")
+          })
       })
       .catch(err => {
         console.log(err)
