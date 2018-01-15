@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { Sidebar, Segment } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
 import MyHeader from './MyHeader';
 import MySidebar from './MySidebar';
@@ -122,6 +123,33 @@ class App extends Component {
       </div> 
     ) 
   }
+}
+
+App.propTypes = {
+  polls: PropTypes.array,
+  circles: PropTypes.array,
+  circle: PropTypes.object,
+  currentUser: PropTypes.object,
+  user: PropTypes.object,
+  users: PropTypes.array,
+  redirectTo: PropTypes.string,
+  header: PropTypes.shape({
+    title: PropTypes.string,
+    back: PropTypes.bool,
+  }),
+  sidebarVisible: PropTypes.bool,
+  createCircle: PropTypes.func.isRequired,
+  selectPoll: PropTypes.func.isRequired,
+  selectCircle: PropTypes.func.isRequired,
+  onAppLoad: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  onSignup: PropTypes.func.isRequired,
+  onCircleLoad: PropTypes.func.isRequired,
+  onPollLoad: PropTypes.func.isRequired,
+  changeHeader: PropTypes.func.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired,
+  onRedirect: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
