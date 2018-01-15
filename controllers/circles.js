@@ -10,32 +10,32 @@ module.exports = {
       })
       .catch(err => {
         console.log(err)
-        res.status(403).json({ err: 'Could not get circle'})
+        res.status(403).json({ err: 'Could not get circle' })
       })
   },
   search(req, res) {
     console.log("Searching", req.query.q)
     Circles.find({ handle: RegExp(req.query.q, "i") }, "name handle description")
-    .or({ name: RegExp(req.query.q, "i") })
-    .limit(5)
-    .then(circles => {
-      res.json(circles)
-    })
-    .catch(err => {
-      console.log(err)
-      res.status(403).json({ err: "could not search for circles" })
-    })
+      .or({ name: RegExp(req.query.q, "i") })
+      .limit(5)
+      .then(circles => {
+        res.json(circles)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "could not search for circles" })
+      })
   },
   verify(req, res) {
     Circles.find({ handle: req.query.q }, "name handle")
-    .limit(5)
-    .then(circles => {
-      res.json(circles)
-    })
-    .catch(err => {
-      console.log(err)
-      res.status(403).json({ err: "could not search for circles" })
-    })
+      .limit(5)
+      .then(circles => {
+        res.json(circles)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: "could not search for circles" })
+      })
   },
   update(req, res) {
     Circles.findByIdAndUpdate(req.params.circle, req.body, { new: true })
@@ -80,8 +80,8 @@ module.exports = {
       })
   },
   create(req, res) {
-    const newCircle = Object.assign({}, req.body, { creator: req.user.id, admins: [req.user.id], fellows: [ ...req.body.fellows, req.user.id] })
-    Circles.create(newCircle)   
+    const newCircle = Object.assign({}, req.body, { creator: req.user.id, admins: [req.user.id], fellows: [...req.body.fellows, req.user.id] })
+    Circles.create(newCircle)
       .then(circle => {
         res.json(circle)
       })
@@ -89,7 +89,7 @@ module.exports = {
         console.log(err)
         res.status(403).json({ err: 'Could not create circle' })
       })
-    },
+  },
   fellows(req, res) {
     Circles.findOne({ handle: req.params.circle }, "fellows")
       .populate("fellows", "username first_name last_name")
@@ -102,12 +102,20 @@ module.exports = {
       })
   },
   addFellow(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle,
-      { $addToSet: { fellows: req.params.fellow } },
+    console.log("REQUEST BODY",req.body)
+    Circles.findByIdAndUpdate(req.params.circle,
+      { $addToSet: { fellows: req.body.fellow } },
       { new: true }
     )
-      .then(circle => {
-        res.json(circle)
+      .then(() => {
+        User.findById(req.body.fellow, "-password")
+          .then(user => {
+            res.json(user)
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(403).json("could not add Fellow")
+          })
       })
       .catch(err => {
         console.log(err)
@@ -115,12 +123,19 @@ module.exports = {
       })
   },
   addAdmin(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle,
-      { $addToSet: { admins: req.params.fellow } },
+    Circles.findByIdAndUpdate(req.params.circle,
+      { $addToSet: { admins: req.body.fellow } },
       { new: true }
     )
-      .then(circle => {
-        res.json(circle)
+      .then(() => {
+        User.findById(req.body.fellow, "-password")
+          .then(user => {
+            res.json(user)
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(403).json("could not add Fellow")
+          })
       })
       .catch(err => {
         console.log(err)
@@ -128,8 +143,8 @@ module.exports = {
       })
   },
   removeFellow(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle,
-      { $pop: { fellows: req.params.fellow } },
+    Circles.findByIdAndUpdate(req.params.circle,
+      { $pop: { fellows: req.body.fellow } },
       { new: true }
     )
       .then(circle => {
@@ -141,8 +156,8 @@ module.exports = {
       })
   },
   removeAdmin(req, res) {
-    Circles.findByIdAndUpdate(req.body.circle,
-      { $pop: { admins: req.params.fellow } },
+    Circles.findByIdAndUpdate(req.params.circle,
+      { $pop: { admins: req.body.fellow } },
       { new: true }
     )
       .then(circle => {
@@ -154,16 +169,16 @@ module.exports = {
       })
   },
   user(req, res) {
-    User.findOne({ username: req.params.user}, "_id username")
+    User.findOne({ username: req.params.user }, "_id username")
       .then(user => {
         Circles.find({ fellows: { $in: [user._id] } })
-        .then(circles => {
-          res.json(circles)
-        })
+          .then(circles => {
+            res.json(circles)
+          })
       })
-    .catch(err => {
-      console.log(err)
-      res.status(403).json({ err: 'Could not get user cirlces' })
-    })
+      .catch(err => {
+        console.log(err)
+        res.status(403).json({ err: 'Could not get user cirlces' })
+      })
   }
 }
