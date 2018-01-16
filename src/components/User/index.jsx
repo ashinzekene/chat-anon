@@ -13,7 +13,7 @@ import MiniCircleList from '../MiniCircleList'
 import UserList from '../UserList'
 import MyHeaderButton from "./MyHeaderButton";
 import agent from "../../agent";
-import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED } from "../../actions/index";
+import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED, CHANGE_HEADER, APP_NAME } from "../../actions/index";
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -25,6 +25,7 @@ const mapDispatchToProps = dispatch => ({
   getFollowing: userId => () => dispatch({ type: FOLLOWING_REQUESTED, payload: agent.User.following(userId) }),
   getCircles: userId => () => dispatch({ type: USER_CIRCLES_REQUESTED, payload: agent.Circle.user(userId) }),
   onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
+  changeHeader: () => dispatch({ type: CHANGE_HEADER, header: { back: false, title: APP_NAME } })
 })
 
 class User extends Component {

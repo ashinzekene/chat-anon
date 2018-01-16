@@ -124,11 +124,11 @@ module.exports = {
   },
   addAdmin(req, res) {
     Circles.findByIdAndUpdate(req.params.circle,
-      { $addToSet: { admins: req.body.fellow } },
+      { $addToSet: { admins: req.body.admin } },
       { new: true }
     )
       .then(() => {
-        User.findById(req.body.fellow, "-password")
+        User.findById(req.body.admin, "-password")
           .then(user => {
             res.json(user)
           })

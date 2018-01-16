@@ -79,9 +79,9 @@ class FellowList extends Component {
 }
 
 FellowList.propTypes = {
-  circleName: propTypes.string.isRequired,
+  circle: propTypes.object.isRequired,
   onLoad: propTypes.func.isRequired,
-  fellows: propTypes.array.isRequired
+  removeFellow: propTypes.func.isRequired,
 }
 
 export default FellowList;

@@ -3,14 +3,15 @@ import Form from "semantic-ui-react/dist/commonjs/collections/Form/Form";
 import agent from "../agent";
 import Message from "semantic-ui-react/dist/commonjs/collections/Message/Message";
 import { connect } from "react-redux";
-import { EDIT_PROFILE } from "../actions/index";
+import { EDIT_PROFILE, CHANGE_HEADER } from "../actions/index";
 
 const mapStateToProps = state => ({
   user: state.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
-  editProfile: payload => dispatch({ type: EDIT_PROFILE, payload })
+  editProfile: payload => dispatch({ type: EDIT_PROFILE, payload }),
+  onLoad: ()=> dispatch({ type: CHANGE_HEADER, header: { back: true, title: "Edit Profile" }})
 })
 
 class Settings extends Component {
@@ -25,6 +26,7 @@ class Settings extends Component {
     }
   }
   componentDidMount() {
+    this.props.onLoad()
     let { first_name, last_name, gender, theme } = this.props.user
     this.setState({
       first_name: first_name ? { value: first_name }  : { value: "" },

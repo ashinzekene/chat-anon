@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Label, Icon } from "semantic-ui-react";
-import { APP_NAME } from "../constants";
+import { APP_NAME } from "../actions";
 import agent from "../agent"
 import Message from "semantic-ui-react/dist/commonjs/collections/Message/Message";
 
