@@ -9,8 +9,8 @@ import MiniPollList from '../MiniPollList'
 const CirclePollList = props => (
   <Segment style={{ marginBottom: "20px" }}>
     <Header content="Polls"/>
-    <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' />
-    <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/polls` } content="Create Poll" icon='add' labelPosition='right' />
+    { (props.isAdmin || props.isCreator) && <Button style={{ marginBottom: "20px" }} content="Delete Poll" icon='minus' labelPosition='left' /> }
+    { (props.isAdmin || props.isCreator) && <Button style={{ marginBottom: "20px" }} as={ Link } to={ `/create/polls` } content="Create Poll" icon='add' labelPosition='right' /> }
     <MiniPollList onLoad={ props.onLoad } polls={ props.polls } />
   </Segment>
 )

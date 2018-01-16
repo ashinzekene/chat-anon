@@ -100,7 +100,7 @@ class Circle extends Component {
           </Menu.Item>
         </Menu>
         {menu === "fellows" ?
-          <FellowList removeFellow={ this.removeFellow } circleName={circle.handle} onLoad={this.getFellows} fellows={this.props.circle.fellows} />
+          <FellowList removeFellow={ this.removeFellow } circle={ this.props.circle } onLoad={this.getFellows} />
           :
           <CirclePollList onLoad={this.getPolls} polls={this.props.circle.polls} />
         }

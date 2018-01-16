@@ -19,7 +19,7 @@ import Settings from './Settings';
 import User from './User';
 import Explore from './Explore';
 import ConditionalRoute from '../containers/ConditionalRoute';
-import AddFellow from './Circle/AddFellow';
+import Add from './Circle/Add';
 import {
   CIRCLE_LIST_LOADED,
   CIRCLE_CREATED,
@@ -104,7 +104,8 @@ class App extends Component {
           <MySidebar onLogout={ this.props.logOut } currentUser={ this.props.currentUser } toggleSidebar= { this.props.toggleSidebar } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
             <Switch>
-              <ConditionalRoute path="/circle/:id/add" fellows={ this.props.circle.fellows } shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ AddFellow } />
+              <ConditionalRoute path="/circle/:id/add-fellow" fellows={ this.props.circle.fellows } shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ Add } />
+              <ConditionalRoute path="/circle/:id/add-admin" type="admin" shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ Add } />
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />

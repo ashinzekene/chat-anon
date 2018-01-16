@@ -11,7 +11,8 @@
   - LOGGED IN ( CIRCLE FELLOW ) ✅
   - LOGGED IN ✅
   - NOT LOGGED IN
-- CHECK HANDLE BEFORE CREATING CIRCLES
+- THEMING
+- FIXED SIDEBAR FOR WIDESCREEN
 - REDUX ERROR HANDLING ❗
 
 ### BACKEND (NODE)
@@ -24,6 +25,8 @@
     - isFollowing  ✅
     - isFollower  ✅
     - isMe  ✅
+    - Password recovery
+    - Email verification on signup
   - POLL -
     - hasVoted  ✅ ❗
     - isEligible ❗

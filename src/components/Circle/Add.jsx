@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   circle: state.circle
 })
 
-class AddFellow extends Component {
+class Add extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -99,9 +99,9 @@ const AddFellowList = ({ fellows, addFellow }) => (
   </div>
 )
 
-AddFellow.propTypes = {
+Add.propTypes = {
   fellows: propTypes.array.isRequired,
   users: propTypes.array,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFellow);
+export default connect(mapStateToProps, mapDispatchToProps)(Add);
