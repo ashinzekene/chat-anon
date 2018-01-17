@@ -32,7 +32,8 @@ import {
   REDIRECT, 
   POLL_SELECTED,
   CIRCLE_SELECTED,
-  LOGOUT
+  LOGOUT,
+  REMOVE_AUTH_ERROR
 } from '../actions'
 import agent from '../agent';
 
@@ -61,7 +62,8 @@ const mapDispatchToProps = dispatch => ({
   changeHeader: header => dispatch({ type: CHANGE_HEADER, header }),  
   toggleSidebar: () => dispatch({ type: SIDEBAR_TOGGLE }),
   logOut: () => dispatch({ type: LOGOUT }),
-  onRedirect: () => dispatch({ type: REDIRECT })
+  onRedirect: () => dispatch({ type: REDIRECT }),
+  removeAuthError: key => () => dispatch({ type: REMOVE_AUTH_ERROR, key })
 })
 
 class App extends Component {
@@ -113,8 +115,8 @@ class App extends Component {
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/circles" render={ props => <CircleList {...props} changeHeader={ this.props.changeHeader } circles={ this.props.circles } selectCircle={ this.selectCircle } onLoad={ this.props.onCircleLoad(agent.Circle.getAll()) } /> } />
               <Route path="/polls" render={ props => <PollList {...props} changeHeader={ this.props.changeHeader } polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll.getAll()) } /> } />
-              <Route path="/login" render={ props => <Login {...props} errors={ this.props.authErrors } onLogin={ this.onLogin } /> } />
-              <Route path="/settings" render={ props => <Settings {...props} currentUser={ this.props.currentUser } /> } />
+              <Route path="/login" render={ props => <Login removeAuthError={ this.props.removeAuthError } {...props} errors={ this.props.authErrors } onLogin={ this.onLogin } /> } />
+              <Route path="/settings" render={ props => <Settings removeAuthError={ this.props.removeAuthError } {...props} currentUser={ this.props.currentUser } /> } />
               <Route path="/signup" render={ props => <Signup {...props} errors={ this.props.authErrors } signUp={ this.onSignup } /> } />
               <Route path="/explore" render={ props => <Explore { ...props } /> } />
               <Route path="/@:id" render={ props => <User {...props} /> } />

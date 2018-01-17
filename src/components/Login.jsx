@@ -39,9 +39,9 @@ class Login extends Component {
     let { usernameError, passwordError, redirect } = this.state
     return (
       <Form onSubmit={ this.login } size="big" style={ formStyle }>
-        <Errors errors={ this.props.errors } />
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }} >Welcome Back</h1>
+          <Errors remove={this.props.removeAuthError} errors={ this.props.errors } />
           <Form.Input onChange={ this.onChange } error={ usernameError } name="username" label="Username" placeholder='username' />
           <Form.Input onChange={ this.onChange } error={ passwordError } name="password" label="Password" placeholder='password' type="password"/>
           <Form.Button size="big" fluid type='submit'>Get Back In</Form.Button>

@@ -18,6 +18,7 @@ export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
 export const LOGIN = 'LOGIN';
 export const SIGNUP = 'SIGNUP';
 export const LOGOUT = 'LOGOUT';
+export const REMOVE_AUTH_ERROR = 'REMOVE_AUTH_ERROR';
 
 export const ASYNC_START = 'ASYNC_START';
 export const ASYNC_END = 'ASYNC_END';

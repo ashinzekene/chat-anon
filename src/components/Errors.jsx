@@ -11,10 +11,10 @@ class Errors extends Component {
     this.removeError = this.removeError.bind(this)
   }
 
-  componentWillReceiveProps(newProps) {
-    console.error("NEW PROPS", newProps)
-    if (newProps.errors && newProps.errors !== this.props.errors) {
-      this.setState({ errors: Object.assign({}, this.props.errors) })
+  componentWillReceiveProps(nextProps) {
+    console.error("NEW PROPS", nextProps)
+    if (nextProps.errors && nextProps.errors !== this.props.errors) {
+      this.setState({ errors: [...nextProps.errors]})
     }
   }
 
@@ -26,10 +26,9 @@ class Errors extends Component {
   
   render() {
     let { errors } = this.state
-    console.log("ERRRRRRRRRROROORORORROROROR", errors)
     return(
       errors && errors.map((error, i) => (
-        <Message error content={error} key={ "msg-"+i } onDismiss={ this.removeError(i) } />
+        <Message error content={error} key={ "msg-"+i } onDismiss={ this.props.remove(i) } size="tiny" visible />
       ))
     )
   }

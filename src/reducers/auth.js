@@ -1,6 +1,10 @@
-import { SIGNUP, LOGIN, LOGIN_PAGE_UNLOADED, REGISTER_PAGE_UNLOADED, ASYNC_START } from "../actions";
+import { SIGNUP, LOGIN, LOGIN_PAGE_UNLOADED, REGISTER_PAGE_UNLOADED, ASYNC_START, REMOVE_AUTH_ERROR } from "../actions";
 
-export default (state = {}, action) => {
+let initialState = {
+  errors: []
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case SIGNUP:
     case LOGIN: {
@@ -12,6 +16,9 @@ export default (state = {}, action) => {
       }
     };
     case LOGIN_PAGE_UNLOADED:
+    case REMOVE_AUTH_ERROR: {
+      return Object.assign({}, state, { errors: state.errors.map((err,i) => i !== action.id) })
+    }
     case REGISTER_PAGE_UNLOADED:
       return {};
     case ASYNC_START:
