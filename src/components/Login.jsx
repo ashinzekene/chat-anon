@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Message } from "semantic-ui-react";
 import Link from "react-router-dom/Link";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import Errors from "./Errors";
 
 class Login extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class Login extends Component {
     let { usernameError, passwordError, redirect } = this.state
     return (
       <Form onSubmit={ this.login } size="big" style={ formStyle }>
+        <Errors errors={ this.props.errors } />
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }} >Welcome Back</h1>
           <Form.Input onChange={ this.onChange } error={ usernameError } name="username" label="Username" placeholder='username' />

@@ -31,19 +31,19 @@ export default (state = initialState, action) => {
       return { ...state, redirectTo: null }
     }
     case POLL_CREATED: {
-      return { ...state, redirectTo: "/polls" }
+      return { ...state, redirectTo: action.error ? null: "/polls" }
     }
     case CIRCLE_CREATED: {
-      return { ...state, redirectTo: "/circles" }
+      return { ...state, redirectTo: action.error ? null: "/circles" }
     }
     case EDIT_PROFILE: {
-      return { ...state, redirectTo: `@${action.payload.username}` || "/"  }
+      return { ...state, redirectTo: action.error ? null: `@${action.payload.username}` || "/"  }
     }
     case LOGIN: {
-      return { ...state, redirectTo: "/" }
+      return { ...state, redirectTo: action.error ? null: "/" }
     }
     case SIGNUP: {
-      return { ...state, redirectTo: "/" }
+      return { ...state, redirectTo: action.error ? null: "/" }
     }
     default:{
       // This resets this state. For things like the name and sidebar INSTEAD OF: return state

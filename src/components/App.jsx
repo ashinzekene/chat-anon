@@ -37,6 +37,7 @@ import {
 import agent from '../agent';
 
 const mapStateToProps = state => ({
+  authErrors: state.auth.errors,
   polls: state.polls,
   circles: state.circles,
   circle: state.circle,
@@ -112,9 +113,9 @@ class App extends Component {
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/circles" render={ props => <CircleList {...props} changeHeader={ this.props.changeHeader } circles={ this.props.circles } selectCircle={ this.selectCircle } onLoad={ this.props.onCircleLoad(agent.Circle.getAll()) } /> } />
               <Route path="/polls" render={ props => <PollList {...props} changeHeader={ this.props.changeHeader } polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll.getAll()) } /> } />
-              <Route path="/login" render={ props => <Login {...props} onLogin={ this.onLogin } /> } />
+              <Route path="/login" render={ props => <Login {...props} errors={ this.props.authErrors } onLogin={ this.onLogin } /> } />
               <Route path="/settings" render={ props => <Settings {...props} currentUser={ this.props.currentUser } /> } />
-              <Route path="/signup" render={ props => <Signup {...props} signUp={ this.onSignup } /> } />
+              <Route path="/signup" render={ props => <Signup {...props} errors={ this.props.authErrors } signUp={ this.onSignup } /> } />
               <Route path="/explore" render={ props => <Explore { ...props } /> } />
               <Route path="/@:id" render={ props => <User {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />

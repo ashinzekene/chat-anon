@@ -31,6 +31,10 @@ export const promiseMiddleware = store => next => action => {
           return
         }
         console.log('RESULT', res);
+        if (res.err) {
+          action.error = true
+          action.errors = typeof res.err === "string" ? [res.err] : res.err
+        }
         action.payload = res;
         console.log('action', action);
         store.dispatch({ type: ASYNC_END, promise: action.payload });
