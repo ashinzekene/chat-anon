@@ -9,7 +9,7 @@ const { isProduction } = require('./utils');
 require('./utils/mongoose');
 
 
-const port = 4300 || process.env.PORT;
+const port = process.env.PORT || 4300;
 const app = express();
 
 if (!isProduction) {

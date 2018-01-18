@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let token
-const API_ROOT = 'http://localhost:3200/';
+const API_ROOT = 'https://polley.herokuapp.com/';
 
 const setToken = (_token) => { 
   token = _token;
