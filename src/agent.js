@@ -78,7 +78,7 @@ const User = {
   getAll: () => request.get('/users/'),
   get: username => request.get(`/users/${username}`),
   getMe: () => request.get('/users/me'),
-  signup: body => request.post('/users', body),
+  signup: body => request.post('/users/create', body),
   login: body => request.post('/users/login', body),
   editProfile: body => request.post('/users/', body),
   search: query => request.get(`/users/search?q=${query}`),
