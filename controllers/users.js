@@ -111,15 +111,14 @@ module.exports = {
     user.username = username
     user.email = email
     user.password = password
-    // let newUser = new Users(user)
-    res.json(user)
-    // newUser.save((err, user) => {
-    //   if (user) {
-    //     return res.json(user)
-    //   } else {
-    //     res.status(403).json({ err: 'Could not create account' })
-    //   }
-    // })
+    let newUser = new Users(user)
+    newUser.save((err, user) => {
+      if (user) {
+        return res.json(user)
+      } else {
+        res.status(403).json({ err: 'Could not create account' })
+      }
+    })
     // Users.create(user, { password: 0 })
     //   .then(user => {
     //   })

@@ -37,6 +37,7 @@ class Signup extends Component {
 
   handleChange(e, { name, value }) {
     let invalid = !e.target.checkValidity()
+    // Verify that email and usernme has not been used 
     if (value.length && (name === "username" || name === "email")) {
       // Set value before asyc call so it does not reset ater the call is made
       this.setState({ [name]: { value }})
