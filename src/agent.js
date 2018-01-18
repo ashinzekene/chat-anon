@@ -32,16 +32,16 @@ const getJsonResponse = res => res.json();
 
 const request = {
   get(url) {
-    return fetch(url, { headers: getHeaders() }).then(getJsonResponse)
+    return fetch(API_ROOT+ url, { headers: getHeaders() }).then(getJsonResponse)
   },
   post(url, body) {
-    return fetch(url, { method: "POST", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
+    return fetch(API_ROOT+ url, { method: "POST", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   },
   put(url, body) {
-    return fetch(url, { method: "PUT", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
+    return fetch(API_ROOT+ url, { method: "PUT", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   },
   delete(url, body) {
-    return fetch(url, { method: "DELETE", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
+    return fetch(API_ROOT+ url, { method: "DELETE", body: JSON.stringify(body), headers: getHeaders() }).then(getJsonResponse)
   }
 }
 
