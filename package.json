@@ -7,12 +7,14 @@
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "express-session": "^1.15.6",
     "express-static": "^1.2.4",
+    "gh-pages": "^1.1.0",
     "graphql": "^0.11.7",
     "history": "^4.7.2",
     "jsonwebtoken": "^8.1.0",
@@ -47,9 +49,10 @@
     "react-test-renderer": "^16.0.0"
   },
   "scripts": {
-    "server": "node server.js",
+    "start": "node server.js",
+    "deploy": "gh-pages -d build",
     "server-w": "nodemon --watch newroutes --watch controllers --watch models  server.js",
-    "start": "react-scripts start",
+    "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const routes = require('./newroutes');
 const { isProduction } = require('./utils');
@@ -15,6 +16,7 @@ if (!isProduction) {
   app.use(morgan('dev'));
 }
 
+app.use(cors({origin: "https://ashinzekene.github.io"}))
 app.use((req, res, next) => {
   res.setHeader("x-powered-by", "Chat-anon")
   next()

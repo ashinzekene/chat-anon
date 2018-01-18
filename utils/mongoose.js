@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = require('bluebird')
 
-const DB_URI = 'mongodb://127.0.0.1/chat-anon';
+const DB_URI = process.env.DB_URL || 'mongodb://127.0.0.1/chat-anon';
 
 mongoose.connect(DB_URI, { useMongoClient: true }, (err) => {
   if (err) console.log(err);

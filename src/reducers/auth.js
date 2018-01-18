@@ -14,10 +14,10 @@ export default (state = initialState, action) => {
         error: action.error,
         errors: action.errors
       }
-    };
+    }
     case LOGIN_PAGE_UNLOADED:
     case REMOVE_AUTH_ERROR: {
-      return Object.assign({}, state, { errors: state.errors.filter((err,i) => i !== action.key) })
+      return Object.assign({}, state, { errors: state.errors.filter((err, i) => i !== action.key) })
     }
     case REGISTER_PAGE_UNLOADED:
       return {};
