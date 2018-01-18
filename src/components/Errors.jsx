@@ -8,7 +8,6 @@ class Errors extends Component {
     this.state = {
       errors: []
     }
-    this.removeError = this.removeError.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -18,11 +17,11 @@ class Errors extends Component {
     }
   }
 
-  removeError(i) {
-    return () => {
-      this.state.errors.filter((err, ind) => ind !== i )
-    }
-  }
+  // removeError(i) {
+  //   return () => {
+  //     this.state.errors.filter((err, ind) => ind !== i )
+  //   }
+  // }
   
   render() {
     let { errors } = this.state
