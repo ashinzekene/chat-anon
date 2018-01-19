@@ -13,7 +13,7 @@ import MiniCircleList from '../MiniCircleList'
 import UserList from '../UserList'
 import MyHeaderButton from "./MyHeaderButton";
 import agent from "../../agent";
-import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED, CHANGE_HEADER, APP_NAME } from "../../actions/index";
+import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED, CHANGE_HEADER, APP_NAME, BASENAME } from "../../actions/index";
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -89,7 +89,7 @@ class User extends Component {
           size="big"
           shape="circular"
           alt="user image"
-          src={ user.avatar_url || PROFILE_IMG_URL }
+          src={ user.avatar_url ? BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL }
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           { user.username }

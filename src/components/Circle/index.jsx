@@ -11,7 +11,7 @@ import Container from "semantic-ui-react/dist/commonjs/elements/Container/Contai
 import { connect } from 'react-redux';
 
 import agent from '../../agent';
-import { CIRCLE_PAGE_LOADED, CIRCLE_FELLOWS_REQUEST, CIRCLE_POLLS_REQUEST, CIRCLE_FELLOW_REMOVED } from '../../actions';
+import { CIRCLE_PAGE_LOADED, CIRCLE_FELLOWS_REQUEST, CIRCLE_POLLS_REQUEST, CIRCLE_FELLOW_REMOVED, BASENAME } from '../../actions';
 import { RESET_HEADER } from '../../actions';
 import CirclePollList from "./CirclePollList";
 import FellowList from './FellowList'
@@ -76,7 +76,7 @@ class Circle extends Component {
     }
     return (
       <Container className="main-circle" text={true} textAlign="center" >
-        <Image src="/images/bg.jpg" fluid style={{ height: "200px" }} alt="group info" shape="rounded" />
+        <Image src={BASENAME +"/images/bg.jpg" } fluid style={{ height: "200px" }} alt="group info" shape="rounded" />
         <Header content={circle.description} />
         <div style={{ display: "flex", justifyContent: "space-around" }} >
           <div>

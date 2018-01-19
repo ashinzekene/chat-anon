@@ -13,12 +13,12 @@
   - NOT LOGGED IN
 - REDUX ERROR HANDLING ✅
 - Error with edit profile
-- Navigation header edit profile
-- images not working
-- absolute and relative url for `/polley`
+- Navigation header edit profile ✅
+- images not working ✅
+- absolute and relative url for `/polley` ✅
 - Show that polls and circles are empty
-- SIGNUP SENDING ONLY PASSWORD BODY
-- SIGN UP SHOULD ALSO LOGIN
+- SIGNUP SENDING ONLY PASSWORD BODY ✅
+- SIGN UP SHOULD ALSO LOGIN  ✅
 - THEMING
 - CHANGE PICTURE
 - ADD PROPTYPES

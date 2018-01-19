@@ -4,7 +4,7 @@ import Link from "react-router-dom/Link";
 import { connect } from "react-redux";
 
 import Async from "../HOCs/Async";
-import { AVATAR_URL, USER_SELECTED } from "../actions/index";
+import { AVATAR_URL, USER_SELECTED, BASENAME } from "../actions/index";
 
 const mapDispatchToProps = dispatch => ({
   onSelect: payload => () => dispatch({ type: USER_SELECTED, payload })
@@ -17,7 +17,7 @@ const UserList = ({ users, onSelect, noLink }) => {
       <Item.Group divided unstackable>
         { users.map((user, i) => (
           <Item key={`item${i}`}>
-            <img alt={user.username} height="50px" width="50px" className="user-list-img" src={user.avatar_url || AVATAR_URL} />
+            <img alt={user.username} height="50px" width="50px" className="user-list-img" src={ BASENAME + user.avatar_url || AVATAR_URL} />
             <Item.Content>
               <Item.Description key={`meta${i}`} >
                 {`@${user.username}`}
@@ -37,7 +37,7 @@ const UserList = ({ users, onSelect, noLink }) => {
       <Item.Group divided unstackable>
         { users.map((user, i) => (
           <Item as={Link} onClick={onSelect(user)} to={`/@${user.username}`} key={`item${i}`}>
-            <img alt={user.username} height="50px" width="50px" className="user-list-img" src={user.avatar_url || AVATAR_URL} />
+            <img alt={user.username} height="50px" width="50px" className="user-list-img" src={  user.avatar_url ? BASENAME + user.avatar_url : BASENAME + AVATAR_URL } />
             <Item.Content>
               <Item.Description key={`meta${i}`} >
                 {`@${user.username}`}
