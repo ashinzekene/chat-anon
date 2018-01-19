@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 import { store, history } from './store'
 import registerServiceWorker from './registerServiceWorker';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
@@ -12,9 +12,9 @@ import './index.css';
 ReactDOM.render((
   <Provider store={ store } >
     <ConnectedRouter history={ history }>
-      <Switch>
+      <BrowserRouter basename="/polley">
         <Route path="/" component={App} />
-      </Switch>
+      </BrowserRouter>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));
