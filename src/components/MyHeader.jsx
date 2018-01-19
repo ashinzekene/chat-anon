@@ -56,11 +56,14 @@ const LeftIcon = props => {
 }
 
 const RightIcon = props => {
-  return (
-    <Link style={{ color: "rgba(0,0,0,.87)" }} to={ props.path }>
-      <Icon size="large" name="add" />
-    </Link>
-  )
+  if (this.props.currentUser && this.props.currentUser._id) {
+    return (
+      <Link style={{ color: "rgba(0,0,0,.87)" }} to={ props.path }>
+        <Icon size="large" name="add" />
+      </Link>
+    )
+  }
+  return ""
 }
 
 MyHeader.propTypes = {

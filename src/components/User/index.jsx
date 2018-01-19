@@ -86,6 +86,7 @@ class User extends Component {
    return (
       <Container className="main-user">
         <Image
+          style={{ width: "300px", margin: "auto" }}
           size="big"
           shape="circular"
           alt="user image"

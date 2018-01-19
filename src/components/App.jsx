@@ -102,7 +102,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MyHeader history={ this.props.history } sidebarVisible={ this.props.sidebarVisible } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
+        <MyHeader currentUser={ this.props.currentUser } history={ this.props.history } sidebarVisible={ this.props.sidebarVisible } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
         <Sidebar.Pushable style={{ height: "100vh" }} as={Segment}>
           <MySidebar onLogout={ this.props.logOut } currentUser={ this.props.currentUser } toggleSidebar= { this.props.toggleSidebar } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
