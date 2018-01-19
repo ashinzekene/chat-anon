@@ -11,11 +11,12 @@
   - LOGGED IN ( CIRCLE FELLOW ) ✅
   - LOGGED IN ✅
   - NOT LOGGED IN
-- REDUX ERROR HANDLING ✅
 - Error with edit profile ✅
+- REDUX ERROR HANDLING ✅
 - Navigation header edit profile ✅
 - images not working ✅
 - absolute and relative url for `/polley` ✅
+
 - Show that polls and circles are empty ✅
 - SIGNUP SENDING ONLY PASSWORD BODY ✅
 - SIGN UP SHOULD ALSO LOGIN  ✅

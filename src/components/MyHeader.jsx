@@ -36,7 +36,7 @@ class MyHeader extends Component {
           { this.props.header.title }
         </div>
         <div>
-          { path && <RightIcon path={ path } /> }
+          { path && <RightIcon currentUser={ this.props.currentUser } path={ path } /> }
         </div>
       </h2>
     )
@@ -56,7 +56,7 @@ const LeftIcon = props => {
 }
 
 const RightIcon = props => {
-  if (this.props.currentUser && this.props.currentUser._id) {
+  if (props.currentUser && props.currentUser._id) {
     return (
       <Link style={{ color: "rgba(0,0,0,.87)" }} to={ props.path }>
         <Icon size="large" name="add" />
