@@ -18,10 +18,16 @@ class PollList extends Component {
   }
   
   render() {
+    let { polls } = this.props
+    if(polls.length === 0) {
+      return (
+        <h3 style={{ textAlign: "center", paddingTop: "40px" }}>You presently do not have any polls to participate in. You can create one using a circle</h3>
+      )
+    }
     return (
       <CardGroup className="card-list" style={{ padding: "10px" }} stackable itemsPerRow={2}>
         {
-          this.props.polls.map((poll, ind) => (
+          polls.map((poll, ind) => (
             <PollPreview onClick={ this.selectPoll(poll) } key={ind} { ...poll } />
           ))
         }

@@ -16,11 +16,18 @@ class CircleList extends Component {
   selectCircle(circle) {
     return () => this.props.selectCircle(circle)
   }
+  
   render() {
+    let { circles } = this.props
+    if(circles.length === 0) {
+      return (
+        <h3 style={{ textAlign: "center", paddingTop: "40px" }}>You are not presently in any circle. You can create one or join an already existing circle</h3>
+      )
+    }
     return (
       <CardGroup className="card-list" style={{ padding: "10px" }} stackable itemsPerRow={2}>
         {
-          this.props.circles.map((circle, ind) => (
+          circles.map((circle, ind) => (
             <CirclePreview key={ind} onClick={ this.selectCircle(circle) } { ...circle } />
           ))
         }

@@ -113,9 +113,22 @@ class App extends Component {
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
-              <Route path="/circles" render={ props => <CircleList {...props} changeHeader={ this.props.changeHeader } circles={ this.props.circles } selectCircle={ this.selectCircle } onLoad={ this.props.onCircleLoad(agent.Circle.getAll()) } /> } />
-              <Route path="/polls" render={ props => <PollList {...props} changeHeader={ this.props.changeHeader } polls={ this.props.polls } selectPoll={ this.selectPoll } onLoad={ this.props.onPollLoad(agent.Poll.getAll()) } /> } />
-              <Route path="/login" render={ props => <Login removeAuthError={ this.props.removeAuthError } {...props} errors={ this.props.authErrors } onLogin={ this.onLogin } /> } />
+              <Route path="/circles" render={ props => <CircleList 
+                {...props} 
+                changeHeader={ this.props.changeHeader } 
+                circles={ this.props.circles } 
+                selectCircle={ this.selectCircle } 
+                onLoad={ this.props.onCircleLoad(agent.Circle.getAll()) } /> } />
+              <Route path="/polls" render={ props => <PollList 
+                {...props} 
+                changeHeader={ this.props.changeHeader } 
+                polls={ this.props.polls } 
+                selectPoll={ this.selectPoll } 
+                onLoad={ this.props.onPollLoad(agent.Poll.getAll()) } /> } />
+              <Route path="/login" render={ props => <Login
+                removeAuthError={ this.props.removeAuthError } {...props} 
+                errors={ this.props.authErrors } 
+                onLogin={ this.onLogin } /> } />
               <Route path="/settings" render={ props => <Settings removeAuthError={ this.props.removeAuthError } {...props} currentUser={ this.props.currentUser } /> } />
               <Route path="/signup" render={ props => <Signup {...props} errors={ this.props.authErrors } signUp={ this.onSignup } /> } />
               <Route path="/explore" render={ props => <Explore { ...props } /> } />
