@@ -103,7 +103,7 @@ class User extends Component {
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           {user.username}
-          <MyHeaderButton isCurrentUser={isCurrentUser} currentUserIsFollowing={ user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username) } />
+          <MyHeaderButton isCurrentUser={isCurrentUser} currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
             {isCurrentUser && <div>40 polls voted</div>}

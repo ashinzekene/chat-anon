@@ -3,7 +3,7 @@ const User = require('../models/user');
 const Polls = require('../models/poll');
 const { fellowPoll, auth } = require('./middlewares');
 
-const router = express.Router();
+const route = express.Router();
 
 function handleError(res, err = 'An error occurred') {
   return (error) => {
@@ -12,7 +12,7 @@ function handleError(res, err = 'An error occurred') {
   };
 }
 
-router.route('/')
+route.route('/')
   .get(auth.required(), (req, res) => res.json(req.payload))
   .put((req, res) => {
     User.findByIdAndUpdate(req.params.user, { $set: req.body }, (err, user) => {
@@ -27,14 +27,13 @@ router.route('/')
       return res.json(user);
     });
   })
-
   .post((req, res) => {
     User.create(req.body)
       .then(user => res.json(user))
       .catch(handleError(res));
   });
 
-router.route('/all')
+route.route('/all')
   .get((req, res) => {
     User.find()
       .then(users => res.json(users))
@@ -50,7 +49,7 @@ router.route('/all')
     })
   })
 
-router.post('/star/:poll', fellowPoll(), (req, res) => {
+route.post('/star/:poll', fellowPoll(), (req, res) => {
   if (req.payload.hasStarred) {
     Polls.findByIdAndUpdate(req.params.poll, { $inc: { stars: 1 } })
       .then(poll => res.json(poll))
@@ -62,7 +61,7 @@ router.post('/star/:poll', fellowPoll(), (req, res) => {
   }
 });
 
-router.route('/:user')
+route.route('/:user')
   .get((req, res) => {
     User.findById(req.params.user)
       .then(user => res.json(user))
@@ -87,4 +86,20 @@ router.route('/:user')
       .catch(handleError(res));
   });
 
-module.exports = router;
+route.post('/follow/:user', (req, res) => {
+  User.findByIdAndUpdate(req.payload._id, { $addToSet: { following: req.user } })
+    .then(user => {
+      res.json(user)
+    })
+    .catch(handleError(res, "Could not follow user"))
+})
+
+route.post('/unfollow/:user', (req, res) => {
+  User.findByIdAndUpdate(req.payload._id, { $popAll: { following: req.user } })
+    .then(user => {
+      res.json(user)
+    })
+    .catch(handleError(res, "Could not follow user"))
+})
+
+module.exports = route;
