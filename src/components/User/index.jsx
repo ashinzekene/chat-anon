@@ -13,7 +13,16 @@ import MiniCircleList from '../MiniCircleList'
 import UserList from '../UserList'
 import MyHeaderButton from "./MyHeaderButton";
 import agent from "../../agent";
-import { FOLLOWERS_REQUESTED, FOLLOWING_REQUESTED, PROFILE_IMG_URL, PROFILE_PAGE_LOADED, USER_CIRCLES_REQUESTED, CHANGE_HEADER, APP_NAME, BASENAME } from "../../actions/index";
+import {
+  FOLLOWERS_REQUESTED,
+  FOLLOWING_REQUESTED,
+  PROFILE_IMG_URL,
+  PROFILE_PAGE_LOADED,
+  USER_CIRCLES_REQUESTED,
+  CHANGE_HEADER,
+  APP_NAME,
+  BASENAME
+} from "../../actions/index";
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -38,10 +47,10 @@ class User extends Component {
   componentDidMount() {
     console.log(this.props)
     this.props.onLoad(agent.User.get(this.props.match.params.id))
-    this.setState({ isCurrentUser: this.props.currentUser && this.props.currentUser._id === this.props.user._id })    
+    this.setState({ isCurrentUser: this.props.currentUser && this.props.currentUser._id === this.props.user._id })
     this.fetchCurrentMenu()
   }
-  
+
   componentWillReceiveProps(nextProps) {
     let { user, match } = this.props
     if (nextProps.match.params.id !== match.params.id) {
@@ -52,12 +61,12 @@ class User extends Component {
       this.setState({ isCurrentUser: nextProps.currentUser && nextProps.currentUser._id === nextProps.user._id })
     }
   }
-  
+
   fetchCurrentMenu(nextProps = this.props) {
     // !!!!!!! ISSUE NOT RUNNING
     let { match } = nextProps
     switch (this.state.menu) {
-      case "followers" : {
+      case "followers": {
         this.props.getFollowers(match.params.id)
         break;
       }
@@ -69,64 +78,64 @@ class User extends Component {
         this.props.getCircles(match.params.id)
         break;
       }
-      default: {}
+      default: { }
     }
   }
-  
+
   switchMenu(e, { name }) {
     this.setState({ menu: name })
   }
-  
+
   render() {
-    let { match, user } = this.props
+    let { match, user, currentUser } = this.props
     let { menu, isCurrentUser } = this.state
-   if(!user) {
-     return <Loader />
-   }
-   return (
+    if (!user) {
+      return <Loader />
+    }
+    return (
       <Container className="main-user">
         <Image
           style={{ width: "300px", margin: "auto" }}
           size="big"
           shape="circular"
           alt="user image"
-          src={ user.avatar_url ? BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL }
+          src={user.avatar_url ? BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL}
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
-          { user.username }
-          <MyHeaderButton isCurrentUser={isCurrentUser} user={ user } />
+          {user.username}
+          <MyHeaderButton isCurrentUser={isCurrentUser} currentUserIsFollowing={ user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username) } />
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
-          { isCurrentUser && <div>40 polls voted</div> }
+            {isCurrentUser && <div>40 polls voted</div>}
           </Header.Subheader>
         </Header>
-        { user._id && 
-          ( 
-          <div>
-            <Menu secondary pointing widths={3}>
-              <Menu.Item name="followers" active={ menu === "followers" } onClick={ this.switchMenu }>
-              <Icon name="user" />
-                Followers
-                { user.followers && <Label circular content={ user.followers.length } /> }
-              </Menu.Item>
-              <Menu.Item name="circles" active={ menu === "circles" } onClick={ this.switchMenu }>
-              <Icon name="users" />
-                Circles
-                { user.circles && <Label circular content={ user.circles.length } /> }
-              </Menu.Item>
-              <Menu.Item name="following" active={ menu === "following" } onClick={ this.switchMenu }>
-              <Icon name="user" />
-                Following
-                { user.following && <Label circular content={ user.following.length } /> }
-              </Menu.Item>
-            </Menu>
+        {user._id &&
+          (
             <div>
-              { menu === "following" && <UserList onLoad={ this.props.getFollowing(match.params.id) } users={ user.following } /> }
-              { menu === "circles" && <MiniCircleList onLoad={ this.props.getCircles(match.params.id) } circles={ user.circles } /> }
-              { menu === "followers" && <UserList onLoad={ this.props.getFollowers(match.params.id) } users={ user.followers } /> }
+              <Menu secondary pointing widths={3}>
+                <Menu.Item name="followers" active={menu === "followers"} onClick={this.switchMenu}>
+                  <Icon name="user" />
+                  Followers
+                {user.followers && <Label circular content={user.followers.length} />}
+                </Menu.Item>
+                <Menu.Item name="circles" active={menu === "circles"} onClick={this.switchMenu}>
+                  <Icon name="users" />
+                  Circles
+                {user.circles && <Label circular content={user.circles.length} />}
+                </Menu.Item>
+                <Menu.Item name="following" active={menu === "following"} onClick={this.switchMenu}>
+                  <Icon name="user" />
+                  Following
+                {user.following && <Label circular content={user.following.length} />}
+                </Menu.Item>
+              </Menu>
+              <div>
+                {menu === "following" && <UserList onLoad={this.props.getFollowing(match.params.id)} users={user.following} />}
+                {menu === "circles" && <MiniCircleList onLoad={this.props.getCircles(match.params.id)} circles={user.circles} />}
+                {menu === "followers" && <UserList onLoad={this.props.getFollowers(match.params.id)} users={user.followers} />}
+              </div>
             </div>
-          </div>
-          ) 
+          )
         }
       </Container>
     );
