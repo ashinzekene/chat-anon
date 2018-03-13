@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
       if (action.subtype === LOGIN || action.subtype === SIGNUP) {
         return { ...state, inProgress: true };
       }
+      return state;
     default: {
       return state
     }

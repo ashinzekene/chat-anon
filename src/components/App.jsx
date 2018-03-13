@@ -142,13 +142,6 @@ class App extends Component {
   }
 }
 
-function renderIf(a, b, c) {
-  if (a) {
-    return b
-  }
-  return c
-} 
-
 App.propTypes = {
   polls: PropTypes.array,
   circles: PropTypes.array,
