@@ -11,8 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   editProfile: payload => dispatch({ type: EDIT_PROFILE, payload }),
-  onLoad: ()=> dispatch({ type: CHANGE_HEADER, header: { back: true, title: "Edit Profile" }}),
-  leave: ()=> dispatch({ type: CHANGE_HEADER, header: { back: false, title: APP_NAME }})
+  onLoad: () => dispatch({ type: CHANGE_HEADER, header: { back: true, title: "Edit Profile" }}),
+  leave: () => dispatch({ type: CHANGE_HEADER, header: { back: false, title: APP_NAME }})
 })
 
 class Settings extends Component {
@@ -30,10 +30,10 @@ class Settings extends Component {
     this.props.onLoad()
     let { first_name, last_name, gender, theme } = this.props.user
     this.setState({
-      first_name: first_name ? { value: first_name }  : { value: "" },
-      last_name: last_name ? { value: last_name }  : { value: "" },
-      gender: gender ? { value: gender }  : { value: "" },
-      theme: theme ? { value: theme }  : { value: "" },
+      first_name: { value:  first_name ||  "" },
+      last_name: { value:  last_name ||  "" },
+      gender: { value:  gender ||  "" },
+      theme: { value:  theme ||  "" },
     })  
   }
 
@@ -101,18 +101,18 @@ const genderOptions = [
 
 const colorOptions = [
   { text: 'Default', value: 'default', name: 'default' },
-  { text: 'Red', value: 'red', name: 'red' },
   { text: 'Orange', value: 'orange', name: 'orange' },
   { text: 'Yellow', value: 'yellow', name: 'yellow' },
-  { text: 'Olive', value: 'olive', name: 'olive' },
-  { text: 'Green', value: 'green', name: 'green' },
-  { text: 'Teal', value: 'teal', name: 'teal' },
-  { text: 'Blue', value: 'blue', name: 'blue' },
   { text: 'Violet', value: 'violet', name: 'violet' },
   { text: 'Purple', value: 'purple', name: 'purple' },
-  { text: 'Pink', value: 'pink', name: 'pink' },
-  { text: 'Brown', value: 'brown', name: 'brown' },
-  { text: 'Grey', value: 'grey', name: 'grey' },
   { text: 'Black', value: 'black', name: 'black' },
+  { text: 'Olive', value: 'olive', name: 'olive' },
+  { text: 'Green', value: 'green', name: 'green' },
+  { text: 'Brown', value: 'brown', name: 'brown' },
+  { text: 'Teal', value: 'teal', name: 'teal' },
+  { text: 'Blue', value: 'blue', name: 'blue' },
+  { text: 'Pink', value: 'pink', name: 'pink' },
+  { text: 'Grey', value: 'grey', name: 'grey' },
+  { text: 'Red', value: 'red', name: 'red' },
 ]
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

@@ -101,13 +101,13 @@ class User extends Component {
           alt="user image"
           src={ user.avatar_url ? + BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL }
         />
-        <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
+        <Header size="huge" style={{ padding: "20px 5px" }} dividing>
           {user.username}
           <MyHeaderButton user={ user } 
             isCurrentUser={isCurrentUser} 
             currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
           <Header.Subheader>
-            <Rating icon='star' defaultRating={4} maxRating={4} disabled />
+            <Rating icon='star' defaultRating={4} maxRating={5} disabled />
             {isCurrentUser && <div>40 polls voted</div>}
           </Header.Subheader>
         </Header>
@@ -133,15 +133,23 @@ class User extends Component {
               </Menu>
               <div style={{ paddingBottom: "30px" }}>
                 {menu === "following" && <ProfileUserList 
-                  emptyText="Sorry, You do not have anyone following you" 
+                  emptyText={ isCurrentUser ?
+                    "Sorry, You do not have anyone following you" :
+                    `No one is following ${user.username}. You can be the first`
+                  }
                   onLoad={this.props.getFollowing(match.params.id)}
                   users={user.following} />}
                 {menu === "circles" && <ProfileCircleList
-                  emptyText="Sorry, you are currently not in any circle. You can create one or join"
+                  emptyText={ isCurrentUser ? 
+                    "Sorry, you are currently not in any circle. You can create one or join" :
+                    `${user.username} is not in any circle` }
                   onLoad={this.props.getCircles(match.params.id)}
                   circles={user.circles} />}
                 {menu === "followers" && <ProfileUserList
-                  emptyText="You are not following anyone, not fair!"
+                  emptyText={ isCurrentUser ? 
+                    "You are not following anyone, not fair!" : 
+                    `${user.username} is not following anyone, pls talk to  ${ user.gender === 'male' ? 'him' : 'her' }`
+                  }
                   onLoad={this.props.getFollowers(match.params.id)}
                   users={user.followers} />}
               </div>
