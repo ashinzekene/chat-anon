@@ -102,16 +102,30 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MyHeader currentUser={ this.props.currentUser } history={ this.props.history } sidebarVisible={ this.props.sidebarVisible } toggleSidebar= { this.props.toggleSidebar } header={ this.props.header } />
+        <MyHeader 
+          currentUser={ this.props.currentUser } 
+          history={ this.props.history } 
+          sidebarVisible={ this.props.sidebarVisible } 
+          toggleSidebar= { this.props.toggleSidebar } 
+          header={ this.props.header } />
         <Sidebar.Pushable style={{ height: "100vh" }} as={Segment}>
-          <MySidebar onLogout={ this.props.logOut } currentUser={ this.props.currentUser } toggleSidebar= { this.props.toggleSidebar } visible={ this.props.sidebarVisible } />
+          <MySidebar onLogout={ this.props.logOut } 
+            currentUser={ this.props.currentUser } 
+            toggleSidebar= { this.props.toggleSidebar } visible={ this.props.sidebarVisible } />
           <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px"}}>
             <Switch>
-              <ConditionalRoute path="/circle/:id/add-fellow" type="fellow" shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ Add } />
-              <ConditionalRoute path="/circle/:id/add-admin" type="admin" shouldRender={ !!this.props.circle.fellows } redirect="/circles" component={ Add } />
+              <ConditionalRoute path="/circle/:id/add-fellow" type="fellow" 
+                shouldRender={ !!this.props.circle.fellows } 
+                redirect="/circles" component={ Add } />
+              <ConditionalRoute path="/circle/:id/add-admin" type="admin" 
+                shouldRender={ !!this.props.circle.fellows } 
+                redirect="/circles" component={ Add } />
               <Route path="/circle/:id" render={ props => <Circle { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/poll/:id" render={ props => <Poll { ...props } changeHeader={ this.props.changeHeader }/> } />
-              <Route path="/create/circles" render={ props => <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/> } />
+              <Route path="/create/circles" 
+                render={ props => ( 
+                  <CreateCircle { ...props } createCircle={ this.createCircle } changeHeader={ this.props.changeHeader }/>
+                )} />
               <Route path="/create/polls" render={ props => <CreatePoll { ...props } changeHeader={ this.props.changeHeader }/> } />
               <Route path="/circles" render={ props => <CircleList 
                 {...props} 
@@ -129,8 +143,12 @@ class App extends Component {
                 removeAuthError={ this.props.removeAuthError } {...props} 
                 errors={ this.props.authErrors } 
                 onLogin={ this.onLogin } /> } />
-              <Route path="/settings" render={ props => <Settings removeAuthError={ this.props.removeAuthError } {...props} currentUser={ this.props.currentUser } /> } />
-              <Route path="/signup" render={ props => <Signup {...props} errors={ this.props.authErrors } signUp={ this.onSignup } /> } />
+              <Route path="/settings" render={ props => (
+                <Settings removeAuthError={ this.props.removeAuthError } {...props} currentUser={ this.props.currentUser } /> 
+              )} />
+              <Route path="/signup" render={ props => ( 
+                <Signup {...props} removeAuthError={ this.props.removeAuthError } rrors={ this.props.authErrors } signUp={ this.onSignup } /> 
+              )} />
               <Route path="/explore" render={ props => <Explore { ...props } /> } />
               <Route path="/@:id" render={ props => <User {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />

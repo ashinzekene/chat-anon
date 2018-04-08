@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { Message } from "semantic-ui-react";
+import propTypes from 'prop-types' 
 
 class Errors extends Component {
   constructor(props) {
@@ -24,6 +24,11 @@ class Errors extends Component {
       ))
     )
   }
+}
+
+Errors.propTypes = {
+  remove: propTypes.func,
+  errors: propTypes.array
 }
 
 export default Errors;

@@ -4,6 +4,7 @@ import Link from "react-router-dom/Link";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import agent from "../agent";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment/Segment";
+import Errors from "./Errors";
 
 class Signup extends Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class Signup extends Component {
     const { username, password, email, formLoading, redirect, terms } = this.state
     return (
       <Form loading={ formLoading } onSubmit={ this.createAccount } size="big" style={ formStyle }>
+      <Errors errors={ this.props.errorserr } remove={ this.props.removeAuthError }/>
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h1 style={{ textAlign: "center" }} >Come, Join Us</h1>
           <Form.Input
