@@ -9,8 +9,8 @@ import Rating from "semantic-ui-react/dist/commonjs/modules/Rating/Rating";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
 
-import MiniCircleList from '../MiniCircleList'
-import UserList from '../UserList'
+import ProfileCircleList from './ProfileCircleList'
+import ProfileUserList from './ProfileUserList'
 import MyHeaderButton from "./MyHeaderButton";
 import agent from "../../agent";
 import {
@@ -99,11 +99,13 @@ class User extends Component {
           size="big"
           shape="circular"
           alt="user image"
-          src={user.avatar_url ? BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL}
+          src={ user.avatar_url ? + BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL }
         />
         <Header size="huge" style={{ textTransform: "capitalize", padding: "20px 5px" }} dividing>
           {user.username}
-          <MyHeaderButton user={ user } isCurrentUser={isCurrentUser} currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
+          <MyHeaderButton user={ user } 
+            isCurrentUser={isCurrentUser} 
+            currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={4} disabled />
             {isCurrentUser && <div>40 polls voted</div>}
@@ -129,10 +131,19 @@ class User extends Component {
                 {user.following && <Label circular content={user.following.length} />}
                 </Menu.Item>
               </Menu>
-              <div>
-                {menu === "following" && <UserList onLoad={this.props.getFollowing(match.params.id)} users={user.following} />}
-                {menu === "circles" && <MiniCircleList onLoad={this.props.getCircles(match.params.id)} circles={user.circles} />}
-                {menu === "followers" && <UserList onLoad={this.props.getFollowers(match.params.id)} users={user.followers} />}
+              <div style={{ paddingBottom: "30px" }}>
+                {menu === "following" && <ProfileUserList 
+                  emptyText="Sorry, You do not have anyone following you" 
+                  onLoad={this.props.getFollowing(match.params.id)}
+                  users={user.following} />}
+                {menu === "circles" && <ProfileCircleList
+                  emptyText="Sorry, you are currently not in any circle. You can create one or join"
+                  onLoad={this.props.getCircles(match.params.id)}
+                  circles={user.circles} />}
+                {menu === "followers" && <ProfileUserList
+                  emptyText="You are not following anyone, not fair!"
+                  onLoad={this.props.getFollowers(match.params.id)}
+                  users={user.followers} />}
               </div>
             </div>
           )

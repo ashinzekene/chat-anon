@@ -34,7 +34,8 @@ a.ui.card.poll-preview:hover, a.ui.card.circle-preview:hover {
   box-shadow: 1px 1px 12px 2px rgba(150,150,150,0.25)
 }
 form.my-form {
-  padding: 40px;
+  padding: 20px;
+  padding-bottom: 80px;
   display: flex;
   justify-content: center;
   align-items: center;

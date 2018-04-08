@@ -45,10 +45,10 @@ class Settings extends Component {
     if (nextProps.user !== this.props.user) {
       let { first_name, last_name, gender, theme } = nextProps.user
       this.setState({
-        first_name: first_name ? { value: first_name }  : { value: "" },
-        last_name: last_name ? { value: last_name }  : { value: "" },
-        gender: gender ? { value: gender }  : { value: "" },
-        theme: theme ? { value: theme }  : { value: "" },
+        first_name: { value: first_name || "" },
+        last_name: { value: last_name || "" },
+        gender: { value: gender || "" },
+        theme: { value: theme || "" },
       })
     }
   }
@@ -77,7 +77,7 @@ class Settings extends Component {
   render() {
     let { first_name, last_name, theme, gender, formLoading } = this.state
     return (
-      <Form onSubmit={ this.editProfile } loading={formLoading} className="my-form" style={{ padding: "20px" }} size="huge">
+      <Form onSubmit={ this.editProfile } loading={formLoading} className="my-form" size="huge">
         <div style={{ width: "100%", maxWidth: "500px" }}>
           <h2 style={{ textAlign: "center" }}>Edit Your Profile</h2>
           <Form.Input error={ first_name.invalid } onChange={ this.handleChange } minLength={5} name="first_name" value={ first_name.value } label="First Name" />
@@ -86,7 +86,7 @@ class Settings extends Component {
           <Message className="form-message" size="tiny" hidden={ !last_name.invalid } content={ last_name.message } />
           <Form.Select error={ gender.invalid } onChange={ this.handleChange } name="gender" value={ gender.value} label="Gender" options={genderOptions} />
           <Form.Select error={ theme.invalid } onChange={ this.handleChange } name="theme" value={ theme.value } label="Theme Color" options={colorOptions} />
-          <Form.Button content="Edit Profile"/>
+          <Form.Button size="big" content="Edit Profile"/>
         </div>
       </Form>
     )

@@ -18,7 +18,6 @@ const Async = propName => WrappedComponent => {
       ) : (
         <WrappedComponent { ...this.props} />
       )
-
     }
   }
 }

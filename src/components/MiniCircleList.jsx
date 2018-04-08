@@ -10,7 +10,6 @@ const MiniCircleList = props => (
       { props.circles.map((circle, i) => (
         <Item as={ Link } to={ `/circle/${ circle.handle }`} key={`item${i}`}>
           <Item.Content>
-
             <Item.Description key={`header${i}`}>{ circle.name }
               { circle.canVote && <Button floated="right" circular icon="inbox" />}
             </Item.Description>

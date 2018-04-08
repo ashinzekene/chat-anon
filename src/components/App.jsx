@@ -16,7 +16,7 @@ import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';
 import Settings from './Settings';
-import User from './User';
+import Profile from './Profile';
 import Explore from './Explore';
 import ConditionalRoute from '../containers/ConditionalRoute';
 import Add from './Circle/Add';
@@ -150,7 +150,7 @@ class App extends Component {
                 <Signup {...props} removeAuthError={ this.props.removeAuthError } rrors={ this.props.authErrors } signUp={ this.onSignup } /> 
               )} />
               <Route path="/explore" render={ props => <Explore { ...props } /> } />
-              <Route path="/@:id" render={ props => <User {...props} /> } />
+              <Route path="/@:id" render={ props => <Profile {...props} /> } />
               <Route path="/" render={ props => <Home { ...props } /> } />
             </Switch>
           </Sidebar.Pusher>
