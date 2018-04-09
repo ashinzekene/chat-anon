@@ -53,7 +53,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "heroku-build": "npm run build && npm start",
+    "heroku-postbuild": "npm run build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "server-w": "nodemon --watch newroutes --watch controllers --watch models  server.js",
