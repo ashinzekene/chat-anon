@@ -170,7 +170,7 @@ module.exports = {
   },
   follow(req, res) {
     Users.findByIdAndUpdate(
-      req.user._id,
+        req.user._id,
       { $addToSet: { following: req.params.user } },
       { new: true }
     )
@@ -183,9 +183,13 @@ module.exports = {
       })
   },
   unfollow(req, res) {
+    console.log(req.user._id, req.params.user)
+    Users.findById(req.user._id)
+      // .populate('')
+      .then(user => console.log("Following ", user.following))
     Users.findByIdAndUpdate(
       req.user._id,
-      { $pop: { following: req.params.user } },
+      { $pop: { following: [ req.params.user ] } },
       { new: true }
     )
       .then(user => {
@@ -200,7 +204,6 @@ module.exports = {
     Users.findOne({ username: req.params.user }, "following")
       .populate("following", "username first_name last_name")
       .then(user => {
-        console.log(user.following)
         res.json(user.following)
       })
       .catch(err => {

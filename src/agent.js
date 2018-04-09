@@ -91,8 +91,8 @@ const User = {
   verifyUsername: body => request.post('/users/verify_username', body),
   favouritePoll: pollId => request.post(`/users/star/${pollId}`),
   unfavouritePoll: pollId => request.post(`/users/star/${pollId}`),
-  follow: userId => request.post(`/users/follow/${userId}`),
-  unfollow: userId => request.post(`/users/unfollow/${userId}`),
+  follow: userId => request.post(`/users/${userId}/follow`),
+  unfollow: userId => request.delete(`/users/${userId}/follow`),
 };
 
 export default {

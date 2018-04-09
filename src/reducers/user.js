@@ -7,6 +7,8 @@ import {
   FOLLOWERS_REQUESTED,
   FOLLOWING_REQUESTED,
   USER_CIRCLES_REQUESTED,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
 } from '../actions'
 
 export default (state = {}, action) => {
@@ -28,6 +30,12 @@ export default (state = {}, action) => {
     }
     case FOLLOWING_REQUESTED: {
       return { ...state, following: action.payload }
+    }
+    case FOLLOW_USER: {
+      return { ...state, following: [...state.following, action.payload] }
+    }
+    case UNFOLLOW_USER: {
+      return { ...state, following: state.following.filter && state.following.filter(({ _id }) => _id === action.payload._id ) }
     }
     default: {
       return state;

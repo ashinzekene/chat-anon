@@ -28,7 +28,6 @@ router.post('/:poll/star', user.starPoll);
 
 router.get('/:user', user.getUser)
 
-
 router.route('/:user/follow')
   .all(extractUser, auth.required)
   .post(user.follow)

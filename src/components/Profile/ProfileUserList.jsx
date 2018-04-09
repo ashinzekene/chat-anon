@@ -17,7 +17,7 @@ const ProfileUserList = ({ users, emptyText }) => (
             <img alt={user.username} 
               height="50px" width="50px" 
               className="user-list-img" 
-              src={BASENAME + user.avatar_url || AVATAR_URL} />
+              src={ user.avatar_url ? BASENAME + user.avatar_url : BASENAME + AVATAR_URL} />
             <Item.Content>
               <Item.Description key={`meta${i}`} >
                 {`@${user.username}`}
