@@ -10,7 +10,7 @@ const JWTStrategy = passportJWT.Strategy;
 
 const jwtOptions = {
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken('token'),
-  secretOrKey: 'vdcsecret',
+  secretOrKey: process.env.PASSPORT_SECRET || 'secret',
   expiresIn: '14d',
   // issuer = 'vdcoupon.com',
   // audience = 'vdcoupon.ncom',

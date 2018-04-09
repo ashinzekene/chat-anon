@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const SALT_FACTOR = 6;
+const SALT_FACTOR = process.env.SALT_FACTOR || 5;
 
 
 function hash(whatToHash) {
