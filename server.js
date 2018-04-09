@@ -9,7 +9,7 @@ const { isProduction } = require('./utils');
 require('./utils/mongoose');
 
 
-const port = process.env.PORT || 4300;
+// const port = process.env.PORT || 4300;
 const app = express();
 
 if (!isProduction) {
@@ -51,9 +51,9 @@ app.use((err, req, res, next) => {
 });
 
 
-module.exports = app.listen(port, (err) => {
+module.exports = app.listen(process.env.PORT || 4300, (err) => {
   if (err) {
     console.log(err);
   }
-  console.log('Listening on %s ', port);
+  console.log('Listening... ');
 });
