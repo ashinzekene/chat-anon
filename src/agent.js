@@ -2,8 +2,8 @@ import axios from 'axios';
 
 let token
 const API_ROOT = process.env.NODE_ENV === 'production' ?
-  'https://polley.herokuapp.com':
-  '';
+  'https://polley.herokuapp.com/api':
+  '/api';
 
 const setToken = (_token) => { 
   token = _token;
