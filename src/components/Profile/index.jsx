@@ -5,7 +5,6 @@ import Image from "semantic-ui-react/dist/commonjs/elements/Image/Image";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label";
 import Menu from "semantic-ui-react/dist/commonjs/collections/Menu/Menu";
-import Rating from "semantic-ui-react/dist/commonjs/modules/Rating/Rating";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container/Container";
 import Loader from "semantic-ui-react/dist/commonjs/elements/Loader/Loader";
 
@@ -41,8 +40,6 @@ class User extends Component {
   constructor(props) {
     super(props)
     this.state = { menu: "followers", isCurrentUser: false }
-    this.switchMenu = this.switchMenu.bind(this)
-    this.fetchCurrentMenu = this.fetchCurrentMenu.bind(this)
   }
   componentDidMount() {
     console.log(this.props)
@@ -62,27 +59,29 @@ class User extends Component {
     }
   }
 
-  fetchCurrentMenu(nextProps = this.props) {
+  fetchCurrentMenu = (nextProps) => {
     // !!!!!!! ISSUE NOT RUNNING
-    let { match } = nextProps
+    console.table([nextProps, this.props])
+    let { match } = nextProps || this.props
     switch (this.state.menu) {
       case "followers": {
-        this.props.getFollowers(match.params.id)
+        console.warn(this.state.menu)
+        this.props.getFollowers(match.params.id)()
         break;
       }
       case "following": {
-        this.props.getFollowing(match.params.id)
+        this.props.getFollowing(match.params.id)()
         break;
       }
       case "circles": {
-        this.props.getCircles(match.params.id)
+        this.props.getCircles(match.params.id)()
         break;
       }
       default: { }
     }
   }
 
-  switchMenu(e, { name }) {
+  switchMenu = (e, { name }) => {
     this.setState({ menu: name })
   }
 
@@ -107,7 +106,6 @@ class User extends Component {
             isCurrentUser={isCurrentUser} 
             currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
           <Header.Subheader>
-            <Rating icon='star' defaultRating={4} maxRating={5} disabled />
             { isCurrentUser  && user.voted_polls && <div>{ user.voted_polls.length } polls voted</div>
                 // user.voted_polls && user.voted_polls.length === 1 ? <div>{ user.voted_polls.length } poll voted</div> : <div>{ user.voted_polls.length } polls voted</div>
             }
@@ -136,7 +134,7 @@ class User extends Component {
               <div style={{ paddingBottom: "30px" }}>
                 {menu === "following" && <ProfileUserList 
                   emptyText={ isCurrentUser ?
-                    "Sorry, You do not have anyone following you" :
+                    "Sorry, you do not have anyone following you" :
                     `No one is following ${user.username}. You can be the first`
                   }
                   onLoad={this.props.getFollowing(match.params.id)}

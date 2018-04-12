@@ -4,6 +4,7 @@ import { Item } from 'semantic-ui-react';
 
 import Async from '../../HOCs/Async';
 import { BASENAME, AVATAR_URL } from '../../actions';
+import Link from 'react-router-dom/Link';
 
 const ProfileUserList = ({ users, emptyText }) => (
   <div style={{ textAlign: "left" }}>
@@ -13,7 +14,7 @@ const ProfileUserList = ({ users, emptyText }) => (
       ) : (
       <Item.Group divided unstackable>
         { users.map((user, i) => (
-          <Item key={`item${i}`}>
+          <Item as={Link} to={`/@${user.username}`} key={`item${i}`}>
             <img alt={user.username} 
               height="50px" width="50px" 
               className="user-list-img" 
