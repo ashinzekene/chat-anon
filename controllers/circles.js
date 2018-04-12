@@ -80,7 +80,12 @@ module.exports = {
       })
   },
   create(req, res) {
-    const newCircle = Object.assign({}, req.body, { creator: req.user.id, admins: [req.user.id], fellows: [...req.body.fellows, req.user.id] })
+    const newCircle = Object.assign({}, req.body, 
+      { 
+        creator: req.user.id, 
+        admins: [req.user.id], 
+        fellows: [...req.body.fellows, req.user.id]
+      })
     Circles.create(newCircle)
       .then(circle => {
         res.json(circle)

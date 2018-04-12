@@ -73,6 +73,7 @@ userSchema.methods.toJSONFor = function (user) {
       gender: this.gender,
       updatedAt: this.updatedAt,
       createdAt: this.createdAt,
+      voted_polls: this.voted_polls
     }
   }
   return {
@@ -86,6 +87,7 @@ userSchema.methods.toJSONFor = function (user) {
       follower: this.following.some(id => `${id}` === `${user._id}`),
       updatedAt: this.updatedAt,
       createdAt: this.createdAt,
+      voted_polls: this.voted_polls      
     };
     // following: this.following.toProfileJSONFor(user)
 };

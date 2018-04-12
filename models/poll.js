@@ -27,7 +27,6 @@ const pollSchema = new Schema({
   circle: {
     type: Schema.Types.ObjectId,
     ref: 'Circle',
-    required: true,
   },
   options: [optionSchema],
 }, { timestamps: true });

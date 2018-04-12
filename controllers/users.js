@@ -230,5 +230,9 @@ module.exports = {
         res.json(user)
       })
       .catch(console.log)
+  },
+  votedPolls(req, res) {
+    Users.findById(req.user._id)
+      .then()
   }
 }

@@ -37,7 +37,8 @@
     "redux-logger": "^3.0.6",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.75.1",
-    "sendmail": "^1.4.1"
+    "sendmail": "^1.4.1",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

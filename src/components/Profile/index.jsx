@@ -95,8 +95,8 @@ class User extends Component {
     return (
       <Container className="main-user">
         <Image
-          style={{ width: "300px", margin: "auto" }}
-          size="big"
+          style={{ width: "150px", margin: "auto" }}
+          size="medium"
           shape="circular"
           alt="user image"
           src={ user.avatar_url ? + BASENAME + user.avatar_url : BASENAME + PROFILE_IMG_URL }
@@ -108,7 +108,9 @@ class User extends Component {
             currentUserIsFollowing={user.followers && user.followers.length && user.followers.find(({ username }) => username === currentUser.username)} />
           <Header.Subheader>
             <Rating icon='star' defaultRating={4} maxRating={5} disabled />
-            {isCurrentUser && <div>40 polls voted</div>}
+            { isCurrentUser  && user.voted_polls && <div>{ user.voted_polls.length } polls voted</div>
+                // user.voted_polls && user.voted_polls.length === 1 ? <div>{ user.voted_polls.length } poll voted</div> : <div>{ user.voted_polls.length } polls voted</div>
+            }
           </Header.Subheader>
         </Header>
         {user._id &&

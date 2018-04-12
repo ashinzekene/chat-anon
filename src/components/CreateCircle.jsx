@@ -17,15 +17,12 @@ class CreateCircle extends Component {
       description: {},
       fellows: {}
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.handleSearchChange = this.handleSearchChange.bind(this)
-    this.removeFellow = this.removeFellow.bind(this)
   }
   componentDidMount() {
     this.props.changeHeader({ title: APP_NAME, back: true })
   }
-  handleChange(e, { name, value, options }) {
+  
+  handleChange = (e, { name, value, options }) => {
     if (name === "fellows") {
       let username = options.find(option => option.value === value[value.length-1]).text
       this.setState(({ users }) => users.push(username))
@@ -38,7 +35,7 @@ class CreateCircle extends Component {
     }
     this.setState({ [name] : { invalid: !e.target.checkValidity(), value }})
   }
-  handleSearchChange(e, { searchQuery }) {
+  handleSearchChange = (e, { searchQuery }) => {
     searchQuery.length > 2 && agent.User.search(searchQuery).then(users => {
       let iUsers = users.map(user => ({
         value: user._id,
@@ -50,7 +47,7 @@ class CreateCircle extends Component {
     return
   }
 
-  removeFellow(i) {
+  removeFellow = (i) => {
     return () => {
       this.setState(prevState => ({
         users: prevState.users.filter((user, ind) => ind !== i)
@@ -58,9 +55,8 @@ class CreateCircle extends Component {
     }
   }
   
-  onSubmit(e) {
+  onSubmit = (e) => {
     let { name, description, fellows, handle  } = this.state
-    console.log(e.target.checkValidity())
     if (e.target.checkValidity() && fellows.value) {
       let result = {
         name: name.value,
@@ -68,7 +64,6 @@ class CreateCircle extends Component {
         fellows: fellows.value,
         handle: handle.value
       }
-      console.log(result)
       this.setState({ loading: true })
       this.props.createCircle(result)
     }
