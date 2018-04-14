@@ -37,6 +37,10 @@ const MySidebar = props => (
   </Sidebar>
 )
 
+function isLargeScreen() {
+  return window.matchMedia("(min-width: 768px)").matches
+}
+
 const menuItemStyle = {
   borderRadius: "50%",
   width: "100%"
