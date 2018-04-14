@@ -1,6 +1,6 @@
 export const APP_NAME = 'POLLEY';
 
-export const BASENAME =  process.env.NODE_ENV === 'production' ? '/': ''
+export const BASENAME =  process.env.NODE_ENV === 'production' ? '': ''
 export const AVATAR_URL = '/images/avatars/guy-1-sm.png';
 export const PROFILE_IMG_URL = '/images/avatars/guy-2-lg.png';
 export const APP_LOAD = 'APP_LOAD';
