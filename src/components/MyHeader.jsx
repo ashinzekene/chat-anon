@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from "semantic-ui-react";
 import propTypes from 'prop-types';
+import { isLargeScreen } from './App';
 
 class MyHeader extends Component {
   constructor(props) {
@@ -26,26 +27,31 @@ class MyHeader extends Component {
   render() {
     let { path } = this.state
     return (
-      <h2 style={ style } >
-        <LeftIcon
-          header={ this.props.header }
-          goBack={ this.goBack }
-          toggleSidebar={ this.toggleSidebar }
-          sidebarVisible={ this.props.sidebarVisible } />
-        <div style={{ padding: "5px 30px" }}>
-          { this.props.header.title }
-        </div>
-        <div>
-          { path && <RightIcon currentUser={ this.props.currentUser } path={ path } /> }
-        </div>
-      </h2>
+      <div>
+        <h2 className="app-header" style={ style } >
+          <LeftIcon
+            header={ this.props.header }
+            goBack={ this.goBack }
+            toggleSidebar={ this.toggleSidebar }
+            sidebarVisible={ this.props.sidebarVisible } />
+          <Link to="/" style={{ color: "#333", padding: "5px 30px" }}>
+            { this.props.header.title }
+          </Link>
+          <div>
+            { path && <RightIcon currentUser={ this.props.currentUser } path={ path } /> }
+          </div>
+        </h2>
+        <div style={{ height: "42px", width:"100%" }}></div>
+      </div>
     )
   }
 }
 
 const LeftIcon = props => {
   let menu ="";
-  if (props.header.back) {
+  if (isLargeScreen()) {
+    menu = <div>&nbsp;</div>
+  } else if (props.header.back) {
     menu = <Icon size="large" onClick={ props.goBack } name="arrow left" />
   } else if (props.sidebarVisible) {
     menu = <Icon size="large" onClick={ props.toggleSidebar } name="cancel" />
@@ -63,7 +69,7 @@ const RightIcon = props => {
       </Link>
     )
   }
-  return ""
+  return <div></div>
 }
 
 MyHeader.propTypes = {
@@ -74,7 +80,7 @@ MyHeader.propTypes = {
 
 const style = {
   "textAlign": "center",
-  "padding": "20px 10px",
+  "padding": "15px 10px",
   "display": "flex",
   "justifyContent": "space-between",
   "position": "fixed",

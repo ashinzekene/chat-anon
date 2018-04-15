@@ -12,7 +12,7 @@ import './index.css';
 ReactDOM.render((
   <Provider store={ store } >
     <ConnectedRouter history={ history }>
-      <BrowserRouter basename="/polley">
+      <BrowserRouter basename="/">
         <Route path="" component={App} />
       </BrowserRouter>
     </ConnectedRouter>

@@ -9,7 +9,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const JWTStrategy = passportJWT.Strategy;
 
 const jwtOptions = {
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken('token'),
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.PASSPORT_SECRET || 'secret',
   expiresIn: '14d',
   // issuer = 'vdcoupon.com',
@@ -27,15 +27,15 @@ function extractPayload(req, res, next) {
   return next();
 }
 
-function signJWT(id, role) {
-  return jwt.sign({ id, role }, jwtOptions.secretOrKey, { expiresIn: jwtOptions.expiresIn });
+function signJWT(id, username) {
+  return jwt.sign({ id, username }, jwtOptions.secretOrKey, { expiresIn: jwtOptions.expiresIn });
 }
+
 passport.use(new JWTStrategy(jwtOptions, (payload, done) => {
-  Users.findById(payload.id, (err, user) => {
-    if (err) return done(err);
-    if (user) return done(null, user);
-    return done();
-  });
+  console.log("Authing user", payload)
+  Users.findById(payload.id)
+    .then(user => done(null, user))
+    .catch(err => done)
 }));
 
 
