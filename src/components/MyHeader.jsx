@@ -7,7 +7,7 @@ import { isLargeScreen } from './App';
 class MyHeader extends Component {
   constructor(props) {
     super(props)
-    this.state = { }
+    this.state = {}
   }
   componentWillReceiveProps(nextProps) {
     let { history } = nextProps
@@ -28,43 +28,44 @@ class MyHeader extends Component {
     let { path } = this.state
     return (
       <div>
-        <h2 className="app-header" style={ style } >
+        <h2 className="app-header" style={style} >
           <LeftIcon
-            header={ this.props.header }
-            goBack={ this.goBack }
-            toggleSidebar={ this.toggleSidebar }
-            sidebarVisible={ this.props.sidebarVisible } />
+            header={this.props.header}
+            goBack={this.goBack}
+            toggleSidebar={this.toggleSidebar}
+            sidebarVisible={this.props.sidebarVisible} />
           <Link to="/" style={{ color: "#333", padding: "5px 30px" }}>
-            { this.props.header.title }
+            {this.props.header.title}
           </Link>
           <div>
-            { path && <RightIcon currentUser={ this.props.currentUser } path={ path } /> }
+            {path && <RightIcon currentUser={this.props.currentUser} path={path} />}
           </div>
         </h2>
-        <div style={{ height: "42px", width:"100%" }}></div>
+        {<div style={{ height: "45px", width: "100%" }}></div>}
       </div>
     )
   }
 }
 
 const LeftIcon = props => {
-  let menu ="";
-  if (isLargeScreen()) {
+  let menu = "";
+  if (props.header.back) {
+    menu = <Icon size="large" onClick={props.goBack} name="arrow left" />
+  } else if (isLargeScreen()) {
+    // Do not show the hamburger menu on large screen
     menu = <div>&nbsp;</div>
-  } else if (props.header.back) {
-    menu = <Icon size="large" onClick={ props.goBack } name="arrow left" />
   } else if (props.sidebarVisible) {
-    menu = <Icon size="large" onClick={ props.toggleSidebar } name="cancel" />
+    menu = <Icon size="large" onClick={props.toggleSidebar} name="cancel" />
   } else {
-    menu = <Icon size="large" onClick={ props.toggleSidebar } name="sidebar" />
+    menu = <Icon size="large" onClick={props.toggleSidebar} name="sidebar" />
   }
-    return menu
+  return menu
 }
 
 const RightIcon = props => {
   if (props.currentUser && props.currentUser._id) {
     return (
-      <Link style={{ color: "rgba(0,0,0,.87)" }} to={ props.path }>
+      <Link style={{ color: "rgba(0,0,0,.87)" }} to={props.path}>
         <Icon size="large" name="add" />
       </Link>
     )

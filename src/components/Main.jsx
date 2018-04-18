@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 
 import Home from './Home.jsx';
@@ -96,6 +96,7 @@ class Main extends Component {
   render() {
     return (
       <div>
+        <div style={{ paddingTop: "15px" }}></div>
         <Switch>
           <ConditionalRoute path="/circle/:id/add-fellow" type="fellow"
             shouldRender={!!this.props.circle.fellows}
@@ -168,4 +169,4 @@ Main.propTypes = {
   onRedirect: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

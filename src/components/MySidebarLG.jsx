@@ -2,10 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Icon, Menu, Button, GridColumn, Input } from "semantic-ui-react";
 
-let activeItem = 'updates'
 const MySidebarLG = props => (
-  <GridColumn className="my-sidebar" tablet="6" laptop="5" widescreen="5" largeScreen="4">
-    <Menu size="huge" pointing vertical style={{height: "99vh" }}>
+  <GridColumn className="my-sidebar" tablet="6" laptop="5" width="4" widescreen="5" largeScreen="4">
+    <Menu size="huge" pointing vertical style={{height: "99vh", width: "100%" }}>
       <Menu.Item as={NavLink} to="/" exact name='home'>
         <Icon name='home' />
         Home
@@ -26,9 +25,6 @@ const MySidebarLG = props => (
         <Icon name='announcement' />
         Explore
       </Menu.Item>
-      <Menu.Item>
-        <Input icon='search' placeholder='Search mail...' />
-      </Menu.Item>
     {
       props.currentUser && props.currentUser.hasOwnProperty("username") ?
       <Menu.Item as={NavLink} to="/signup">
@@ -36,17 +32,11 @@ const MySidebarLG = props => (
         </Menu.Item>
         :
         <Menu.Item as={NavLink} to="/signup">
-          <Button icon="signup" content="Sign Up/In" />
+          <Button size="huge" icon="signup" content="Sign Up/In" />
         </Menu.Item>
     }
     </Menu>
   </GridColumn>
 )
-
-
-const menuItemStyle = {
-  borderRadius: "50%",
-  width: "100%"
-}
 
 export default MySidebarLG

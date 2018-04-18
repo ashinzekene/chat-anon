@@ -3,7 +3,6 @@ import Main from './Main'
 import MySidebar from './MySidebar';
 import MyHeader from './MyHeader';
 import { Sidebar, Segment } from "semantic-ui-react";
-import { SIDEBAR_TOGGLE, LOGOUT } from '../actions';
 
 const Mobile = props => (
   <div>
@@ -17,7 +16,7 @@ const Mobile = props => (
       <MySidebar onLogout={props.logOut}
         currentUser={props.currentUser}
         toggleSidebar={props.toggleSidebar} visible={props.sidebarVisible} />
-      <Sidebar.Pusher className="full-height" style={{ paddingTop: "80px" }}>
+      <Sidebar.Pusher className="full-height">
         <Main />
       </Sidebar.Pusher>
     </Sidebar.Pushable>

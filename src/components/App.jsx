@@ -4,7 +4,7 @@ import LargeScreen from './LargeScreen';
 import { SIDEBAR_TOGGLE, LOGOUT } from '../actions';
 import { connect } from "react-redux";
 
-export const isLargeScreen = () => window.matchMedia("(min-width: 768px)").matches
+export const isLargeScreen = () => window.matchMedia("(min-width: 769px)").matches
 
 const mapStateToProps = state => ({
   header: state.common.header,

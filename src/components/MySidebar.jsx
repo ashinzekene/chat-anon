@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Sidebar, Icon, Menu, Button } from "semantic-ui-react";
 
 const MySidebar = props => (
-  <Sidebar className="my-sidebar" as={Menu} animation='uncover' direction='left' width='wide' borderless visible={ props.visible } icon='labeled' vertical >
+  <Sidebar style={{ height: "121%" }} className="my-sidebar" as={Menu} animation='uncover' direction='left' width='wide' borderless visible={ props.visible } icon='labeled' vertical >
     <Menu.Item style={ menuItemStyle } onClick={ props.toggleSidebar } as={ NavLink } to="/" exact name='home'>
       <Icon name='home' />
       Home
@@ -31,7 +31,7 @@ const MySidebar = props => (
       </Menu.Item>
       :
       <Menu.Item style={ menuItemStyle } onClick={ props.toggleSidebar } as={ NavLink } to="/signup">
-        <Button icon="signup" content="Sign Up/In" />
+        <Button size="huge" icon="signup" content="Sign Up/In" />
       </Menu.Item>
     }
   </Sidebar>
