@@ -55,6 +55,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "dev": "npm run serve && npm run server-w",
     "heroku-postbuild": "npm run build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

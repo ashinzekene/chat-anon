@@ -5,7 +5,7 @@ const { auth, extractUser, canVotePoll, allowCircleFellow, canAccessPoll } = req
 const router = express.Router();
 
 // ensure anyone accessing these routes is authenticated
-// router.use(auth.required());
+router.use(auth.required);
 
 router
   .route('/')
@@ -21,8 +21,8 @@ router.get('/circle/:circle', allowCircleFellow, poll.circle);
 
 router
   .route('/:poll')
-  .get(canAccessPoll, poll.get)
-  .delete(canAccessPoll, poll.delete);
+  .get(poll.get)
+  .delete(poll.delete);
 
 
 router.post('/:poll/appropriate', canVotePoll, poll.appropriate);

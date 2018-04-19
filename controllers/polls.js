@@ -13,6 +13,7 @@ module.exports = {
       })
       .catch(err => {
         console.log(err)
+        console.log(req.user)
         res.status(403).json({ err: 'Could not get poll' })
       })
   },
