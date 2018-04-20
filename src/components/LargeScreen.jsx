@@ -18,7 +18,7 @@ const LargeScreen = props => (
       <MySidebarLG onLogout={props.logOut}
         currentUser={props.currentUser}
         toggleSidebar={props.toggleSidebar} visible={props.sidebarVisible} />
-      <Grid.Column tablet="10" computer="11" width="12" widescreen="11" largeScreen="12">
+      <Grid.Column style={{ overflow: "scroll" }} tablet="10" computer="11" width="12" widescreen="11" largeScreen="12">
         <Main />
       </Grid.Column>
     </Grid.Row>

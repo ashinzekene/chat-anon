@@ -8,7 +8,7 @@ import Circle from './Circle'
 import Poll from './Poll'
 import Signup from './Signup';
 import Login from './Login';
-import CreateCircle from './CreateCircle';
+import CreateCircle from './CreateCircle/index';
 import CreatePoll from './CreatePoll';
 import PollList from './PollList';
 import CircleList from './CircleList';

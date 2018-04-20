@@ -20,7 +20,6 @@ const getHeaders = () => {
   return token ?
    { "authid": token, "Content-Type": "application/json" } :
    { "Content-Type": "application/json" }
-
 }
 
 // const getResponseData = res => res.data;

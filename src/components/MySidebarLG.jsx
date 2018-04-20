@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Icon, Menu, Button, GridColumn, Input } from "semantic-ui-react";
+import { Icon, Menu, Button, GridColumn } from "semantic-ui-react";
 
 const MySidebarLG = props => (
   <GridColumn className="my-sidebar" tablet="6" laptop="5" width="4" widescreen="5" largeScreen="4">
