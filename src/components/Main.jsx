@@ -96,7 +96,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div style={{ paddingTop: "15px" }}></div>
+        {/* <div style={{ paddingTop: "15px" }}></div> */}
         <Switch>
           <ConditionalRoute path="/circle/:id/add-fellow" type="fellow"
             shouldRender={!!this.props.circle.fellows}

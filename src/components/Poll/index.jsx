@@ -37,7 +37,6 @@ class Poll extends Component {
   vote = (option) => () =>  {
     this.setState({ selected: option.option, isSelected: true })
     this.props.vote(this.props.poll._id, option._id)
-    console.log("You selected", option._id)
   }
 
   render() {

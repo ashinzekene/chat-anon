@@ -66,11 +66,9 @@ class Settings extends Component {
       theme : theme.value,
     }
     if (e.target.checkValidity()) {
-      console.log(user)
       this.setState({ formLoading: true })
       this.props.editProfile(agent.User.editProfile(Object.assign({}, this.props.user, user)))
     } else {
-      console.log("Form not valid")
     }
   }
   

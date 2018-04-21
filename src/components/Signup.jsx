@@ -22,7 +22,6 @@ class Signup extends Component {
   }
   
   createAccount(e) {
-    console.log(e.target.checkValidity())
     let { username, password, email, terms } = this.state
     if(e.target.checkValidity() && !username.invalid && !email.invalid && !password.invalid && terms) {
       this.setState({ formLoading: true })

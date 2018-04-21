@@ -72,7 +72,6 @@ class CreatePoll extends Component {
         circle: circle.value,
         options: options.map(option => option.value)
       }
-      console.log(poll)
       this.props.createPoll(agent.Poll.create(poll))
     }
   }

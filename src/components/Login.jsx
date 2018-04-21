@@ -31,7 +31,6 @@ class Login extends Component {
       this.setState({ passwordError: true })
       return
     }
-    console.log("Logging...")
     this.props.onLogin({ username, password })
   }
 

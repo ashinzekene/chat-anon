@@ -42,7 +42,6 @@ class User extends Component {
     this.state = { menu: "followers", isCurrentUser: false }
   }
   componentDidMount() {
-    console.log(this.props)
     this.props.onLoad(agent.User.get(this.props.match.params.id))
     this.setState({ isCurrentUser: this.props.currentUser && this.props.currentUser._id === this.props.user._id })
     this.fetchCurrentMenu()
@@ -60,12 +59,9 @@ class User extends Component {
   }
 
   fetchCurrentMenu = (nextProps) => {
-    // !!!!!!! ISSUE NOT RUNNING
-    console.table([nextProps, this.props])
     let { match } = nextProps || this.props
     switch (this.state.menu) {
       case "followers": {
-        console.warn(this.state.menu)
         this.props.getFollowers(match.params.id)()
         break;
       }
