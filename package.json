@@ -48,7 +48,7 @@
     "eslint": "4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-react": "7.4.0",
-    "mocha": "^4.0.1",
+    "mocha": "^6.2.0",
     "react-addons-test-utils": "^15.6.2",
     "react-scripts": "1.0.14",
     "react-test-renderer": "^16.0.0"
